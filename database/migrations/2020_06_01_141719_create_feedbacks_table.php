@@ -25,7 +25,8 @@ class CreateFeedbacksTable extends Migration
             $table->float('learining');
             $table->float('workflow');
             $table->float('humor');
-            $table->string('comment')->nullable();
+            $table->string('positive')->nullable();
+            $table->string('negative')->nullable();
             $table->timestamps();
         });
     }

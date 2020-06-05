@@ -18,7 +18,15 @@ class CreateProfilesTable extends Migration
             $table->bigInteger("user_id")->unsigned();
             $table->string("image");
             $table->string("position");
-            $table->float("score");
+            $table->float("score")->nullable();
+            $table->float('leadership')->nullable();
+            $table->float('english')->nullable();
+            $table->float('communication')->nullable();
+            $table->float('problemSolving')->nullable();
+            $table->float('programming')->nullable();
+            $table->float('learining')->nullable();
+            $table->float('workflow')->nullable();
+            $table->float('humor')->nullable();
             $table->timestamps();
         });
     }

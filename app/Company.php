@@ -2,9 +2,10 @@
 
 namespace App;
 use Illuminate\Database\Eloquent\Model;
+
 use App\User;
 
-class Feedback extends Model
+class Company extends Model
 {
 
     public function user() {
@@ -13,9 +14,9 @@ class Feedback extends Model
 
     }
 
-    public function comentator() {
+    public function admin() {
 
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class);
 
     }
 

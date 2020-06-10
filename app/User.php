@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 
 use App\Profile;
 use App\Feedback;
+use App\Company;
 
 class User extends Authenticatable
 {
@@ -48,6 +49,12 @@ class User extends Authenticatable
     public function feedback() {
 
         return $this->hasMany(Feedback::class);
+
+    }
+
+    public function company() {
+
+        return $this->hasOne(Company::class);
 
     }
 

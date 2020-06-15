@@ -12,41 +12,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Moj kod -->
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js" 
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" 
-        crossorigin="anonymous">
-    </script>
-
-    <script>
-        jQuery(document).ready(function() {
-            jQuery('#ajaxSubmit').click(function(e) {
-                e.preventDefault();
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    }
-                });
-                jQuery.ajax({
-                    url: "{{ url('/') }}",
-                    method: 'post',
-                    data: {
-                        name: jQuery('#name').val(),
-                        email: jQuery('#email').val(),
-                        password: jQuery('#password').val()
-                    },
-                    success: function(result) {
-                        jQuery('.alert').show();
-                        jQuery('.alert').html(result.success);
-                    }
-                });
-            });
-        });
-    </script>
-
-
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>;
+    
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -113,5 +80,4 @@
         </main>
     </div>
 </body>
-
 </html>

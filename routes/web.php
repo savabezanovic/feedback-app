@@ -16,10 +16,12 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
-// Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/', 'HomeController@home')->name('home');
-Route::post('/', 'HomeController@store')->name('store');
-Route::get('/home', 'HomeController@home')->name('home');
+Route::get('/', 'HomeController@getUserProfile')->name('home');
+Route::get('/home', 'HomeController@getUserProfile')->name('home');
 
-Route::get('/test', 'HomeController@test')->name('test');
-Route::post('/test', 'HomeController@store')->name('test-store');
+Route::get('/user-profile', 'HomeController@getUserProfile')->name('user-profile');
+
+Route::get('/user-profile-edit', 'HomeController@editUserProfile')->name('user-profile-edit');
+Route::post('/user-profile-save', 'HomeController@editUserSave')->name('user-profile-save');
+
+Route::post('/create-user', 'HomeController@createUser')->name('create-user');

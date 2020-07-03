@@ -1,5 +1,6 @@
+// Save new user to database
 jQuery(document).ready(function () {
-    jQuery('#sub-btn').click(function (e) {
+    jQuery('#create-user-btn').click(function (e) {
         e.preventDefault();
         $.ajaxSetup({
             headers: {
@@ -7,7 +8,7 @@ jQuery(document).ready(function () {
             }
         });
         jQuery.ajax({
-            url: '/test',
+            url: '/create-user',
             method: 'post',
             data: {
                 name: jQuery('#name').val(),
@@ -22,4 +23,27 @@ jQuery(document).ready(function () {
         });
     });
 });
-console.log('Custom JS File!');
+
+// Get your profile data
+jQuery(document).ready(function () {
+    jQuery('#profile-btn').click(function (e) {
+        e.preventDefault();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        jQuery.ajax({
+            url: '/user-profile',
+            method: 'get',
+            data: {
+                userId: jQuery('#userId').val(),
+            },
+            success: function (result) {
+                jQuery('.alert').show();
+                jQuery('.alert').html(result.success);
+                console.log('Uspesno!');
+            }
+        });
+    });
+});

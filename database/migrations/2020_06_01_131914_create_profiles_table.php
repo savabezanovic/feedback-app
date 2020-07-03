@@ -15,19 +15,13 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("user_id")->unsigned();
-            $table->string("image");
-            $table->string("position");
-            $table->float("score")->nullable();
-            $table->float('leadership')->nullable();
-            $table->float('english')->nullable();
-            $table->float('communication')->nullable();
-            $table->float('problemSolving')->nullable();
-            $table->float('programming')->nullable();
-            $table->float('learining')->nullable();
-            $table->float('workflow')->nullable();
-            $table->float('humor')->nullable();
+            $table->string('picture')->nullable();
+            $table->bigInteger('job_title_id')->unsigned()->nullable();
+            $table->bigInteger('user_id')->unsigned();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('job_title_id')->references('id')->on('job_titles')->onDelete('set null');
+
         });
     }
 

@@ -28,18 +28,18 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function test()
+    public function getUserProfile()
     {
-        return view('test');
+        
+        return view("user.user-profile");
     }
 
-    public function store(Request $request)
+    public function createUser(Request $request)
     {
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-
         $user->save();
         return response()->json(['success' => 'Data is successfully added']);
     }

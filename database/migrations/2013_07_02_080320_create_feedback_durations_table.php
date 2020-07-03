@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class KeysCompaniesTable extends Migration
+class CreateFeedbackDurationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class KeysCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::table('companies', function (Blueprint $table) {
-            $table->foreign("admin_id")->references("id")->on("users")->onDelete('cascade');
+        Schema::create('feedback_durations', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->integer('value'); // in seconds
+            $table->timestamps();
         });
     }
 
@@ -25,6 +28,6 @@ class KeysCompaniesTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('feedback_durations');
     }
 }

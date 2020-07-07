@@ -1,22 +1,24 @@
 <?php
 
 namespace App;
+
 use Illuminate\Database\Eloquent\Model;
-use App\User;
 
 class Feedback extends Model
 {
+    protected $fillable = [
+        'creator_id', 'target_user_id', 'comment_wrong', 'comment_improve'
+    ];
 
-    public function user() {
-
-        return $this->belongsToMany(User::class);
-
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class, 'feedback_skill')
+            ->withPivot('score')
+            ->withTimestamps();
     }
 
-    public function comentator() {
-
-        return $this->belongsToMany(User::class);
-
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'creator_id');
     }
-
 }

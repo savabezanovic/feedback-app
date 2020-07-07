@@ -20,10 +20,8 @@ class CreateFeedbackTable extends Migration
             $table->text('comment_wrong');
             $table->text('comment_improve');
             $table->timestamps();
-
             $table->foreign('creator_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('target_user_id')->references('id')->on('users')->onDelete('cascade');
-
         });
     }
 

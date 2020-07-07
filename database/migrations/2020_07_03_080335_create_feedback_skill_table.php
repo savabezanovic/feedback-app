@@ -21,7 +21,6 @@ class CreateFeedbackSkillTable extends Migration
             $table->timestamps();
             $table->foreign('feedback_id')->references('id')->on('feedback')->onDelete('cascade');
             $table->foreign('skill_id')->references('id')->on('skills')->onDelete('cascade');
-
         });
     }
 

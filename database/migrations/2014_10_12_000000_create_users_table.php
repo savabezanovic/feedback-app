@@ -17,7 +17,6 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('slug');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -25,12 +24,10 @@ class CreateUsersTable extends Migration
             $table->bigInteger('company_id')->unsigned()->nullable();
             $table->rememberToken();
             $table->timestamps();
-
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-
         });
     }
-
+    
     /**
      * Reverse the migrations.
      *

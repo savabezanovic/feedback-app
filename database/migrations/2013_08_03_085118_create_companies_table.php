@@ -16,8 +16,8 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string("name")->unique();
-            $table->date("feedback_session");
-            $table->bigInteger("admin_id")->unsigned();
+            $table->date("feedback_session")->nullable();
+            $table->bigInteger("admin_id")->unsigned()->nullable();
             $table->timestamps();
         });
     }

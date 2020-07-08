@@ -166,7 +166,7 @@
 
 @section('script')
     <script>
-        var skills = {!! $skills !!};
+        var skills = {!! $skills !!}
 
         $(document).ready(function () {
 

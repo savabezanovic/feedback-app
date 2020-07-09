@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ShowCompanyRequest extends FormRequest
 {
@@ -13,9 +14,9 @@ class ShowCompanyRequest extends FormRequest
      */
     public function authorize()
     {
-        if (\Auth::check()) {
+        if (Auth::check()) {
 
-            if(auth()->user()->hasRole('superadmin') || auth()->user()->hasRole('admin')) {
+            if(auth()->user()->role == 'superadmin' || auth()->user()->role == 'admin') {
                 return true;
                 }
         }

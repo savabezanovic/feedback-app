@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class AdminUpdateCompanyRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class AdminUpdateCompanyRequest extends FormRequest
      */
     public function authorize()
     {
-        if (\Auth::check() && auth()->user()->hasRole('admin')) {
+        if (Auth::check() && auth()->user()->role == 'admin') {
 
             return true;
         }

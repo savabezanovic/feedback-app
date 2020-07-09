@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CreateAdminRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class CreateAdminRequest extends FormRequest
      */
     public function authorize()
     {
-        if (\Auth::check() && auth()->user()->hasRole('superadmin')) {
+        if (Auth::check() && auth()->user()->role == 'superadmin') {
 
             return true;
         }

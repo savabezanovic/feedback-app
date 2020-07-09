@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'PageController@index')->name('home')->middleware('guest');
+Route::get('/home', 'PageController@index')->name('home')->middleware('guest');
 Route::get('/dashboard', 'PageController@dashboard')->name('user.dashboard');
 Route::get('/profile/{id}', 'PageController@profile')->name('user.profile');
 Route::get('/feedback', 'PageController@feedback')->name('user.feedback');

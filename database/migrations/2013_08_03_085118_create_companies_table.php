@@ -15,10 +15,13 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->string("name")->unique();
-            $table->date("feedback_session")->nullable();
-            $table->bigInteger("admin_id")->unsigned()->nullable();
+            $table->string('name');
+            $table->bigInteger('feedback_duration_id')->default(2)->unsigned()->nullable(); // ~ 3 months
+            $table->boolean('active')->default(true);
             $table->timestamps();
+
+            $table->foreign('feedback_duration_id')->references('id')->on('feedback_durations')->onDelete('set null');
+
         });
     }
 

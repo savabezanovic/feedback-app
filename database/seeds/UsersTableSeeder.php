@@ -4,6 +4,7 @@ use App\Services\CompanyService;
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 use App\User;
 
 class UsersTableSeeder extends Seeder
@@ -33,7 +34,7 @@ class UsersTableSeeder extends Seeder
     {
         $companies = $this->companyService->all()->pluck('id')->toArray();
 
-        for ($i = 0; $i < 30; $i++) {
+        for ($i = 0; $i < 5; $i++) {
 
             $user = new User();
 
@@ -42,7 +43,7 @@ class UsersTableSeeder extends Seeder
             $user->email = $this->faker->unique()->safeEmail;
             $user->email_verified_at = now();
             $user->password = Hash::make(12345678);
-            $user->remember_token = Str::random(10);
+            $user->remember_token = Str::random(30);
             $user->company_id = $companies[array_rand($companies)];
 
             $user->save();

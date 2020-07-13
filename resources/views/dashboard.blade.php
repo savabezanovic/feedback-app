@@ -128,7 +128,7 @@
             <div class="profile-form-name-profession">{{$user->profile->jobTitle->name}}</div>
         </div>
         <div class="profile-form-esc-x-container">
-            <div class="profile-form-name-x-button js-profile-form-close-{{$user->id}}">&#10006;</div>
+            <div class="profile-form-name-x-button js-profile-form-close">&#10006;</div>
             <div class="profile-form-name-esc">
                 <div>ES</div>
                 <div>C</div>
@@ -160,16 +160,16 @@
     </ul>
     <div class="profile-form-write-a-feedback">Write a feedback</div>
     <div class="profile-form-feedback-textarea-container">
-        <label for="whatIsWrongText-{{$user->id}}" name="wrong" class="profile-form-feedback-textarea-label js-feedback-textarea-label-{{$user->id}}">
-            What iswrong
+        <label for="whatIsWrongText-{{$user->id}}" name="wrong-{{$user->id}}" class="profile-form-feedback-textarea-label js-feedback-textarea-label">
+            What is wrong
         </label>
-        <textarea cols="30" rows="1" id="whatIsWrongText-{{$user->id}}" name="wrong" placeholder="What is wrong" class="feedback-textarea js-feedback-textarea-{{$user->id}}"></textarea>
+        <textarea cols="30" rows="1" id="whatIsWrongText-{{$user->id}}" name="wrong-{{$user->id}}" placeholder="What is wrong" class="feedback-textarea js-feedback-textarea"></textarea>
     </div>
     <div class="profile-form-feedback-textarea-container">
-        <label for="whatToImproveText-{{$user->id}}" name="improved" class="profile-form-feedback-textarea-label js-feedback-textarea-label-{{$user->id}}">
+        <label for="whatToImproveText-{{$user->id}}" name="improved-{{$user->id}}" class="profile-form-feedback-textarea-label js-feedback-textarea-label">
             What could be improved
         </label>
-        <textarea cols="30" rows="1" id="whatToImproveText-{{$user->id}}" name="improved" placeholder="What could be improved" class="feedback-textarea js-feedback-textarea-{{$user->id}}"></textarea>
+        <textarea cols="30" rows="1" id="whatToImproveText-{{$user->id}}" name="improved-{{$user->id}}" placeholder="What could be improved" class="feedback-textarea js-feedback-textarea"></textarea>
     </div>
     <input type="submit" class="profile-form-submit-button" value="SUBMIT">
 </form>
@@ -275,8 +275,49 @@
                 });
                 document.querySelector(`.js-profile-form-continer-${this.id}`).style.display = "flex";
             })
-        })
-    })
+        });
+
+        document.querySelectorAll('.js-profile-form-close').forEach(closeButton => {
+            closeButton.addEventListener('click', function() {
+                this.parentElement.parentElement.parentElement.style.display = 'none';
+                document.querySelector('.js-no-selected').style.display = 'block'
+            })
+        });
+
+        document.querySelector('.js-feedback-app-search').addEventListener('input', function() {
+            document.querySelectorAll('.js-feedback-app-teammate').forEach(teammate => {
+                if (this.value !== '' && !teammate.innerText.toLowerCase().includes(this.value.toLowerCase())) {
+                    teammate.style.display = 'none';
+                } else if (this.value !== '' && teammate.innerText.toLowerCase().includes(this.value.toLowerCase())) {
+                    teammate.style.display = 'flex'
+                } else if (this.value === '') {
+                    teammate.style.display = 'flex'
+                }
+            });
+        });
+
+        document.querySelectorAll('.js-feedback-textarea').forEach(textarea => {
+            textarea.addEventListener('input', function() {
+                if (this.value !== '') {
+                    document.querySelectorAll('.js-feedback-textarea-label').forEach(label => {
+                        if (this.name == label.attributes.name.value) {
+                            label.style.opacity = 1;
+                            label.style.visibility = 'visible';
+                        }
+                    })
+                    this.style.borderColor = '#ec1940';
+                } else {
+                    document.querySelectorAll('.js-feedback-textarea-label').forEach(label => {
+                        if (this.name == label.attributes.name.value) {
+                            label.style.opacity = 0;
+                            label.style.visibility = 'hidden';
+                        }
+                    })
+                    this.style.borderColor = '#d3d4d5';
+                }
+            });
+        });
+    });
 </script>
 
 <!-- <script>

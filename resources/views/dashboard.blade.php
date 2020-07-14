@@ -21,7 +21,7 @@
             <ul class="list">
 
                 @forelse(auth()->user()->teammates() as $user)
-
+                
                     <li data-userId="{{$user->id}}" class="teammate js"><img class="teammate-image" src="{{$user->profile->picture}}"><a class="teammate-name js">{{$user->first_name}} {{$user->last_name}}</a>@if($user->hasFeedback())<i class="fas fa-check reviewed"></i>@endif<span class="hidden js{{$user->id}}"><i class="fas fa-check reviewed"></i></span></li>
 
                 @empty

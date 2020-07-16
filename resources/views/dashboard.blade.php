@@ -26,11 +26,19 @@
         </div>
         <ul class="feedback-app-navbar-users-list js-teammates-list">
             @forelse(auth()->user()->teammates() as $user)
-
-            <li id="{{$user->id}}" class="feedback-app-navabar-users-list-item js-feedback-app-teammate js-teammate-{{$user->id}}"><img src="{{$user->profile->picture}}" class="feedback-app-navbar-users-list-image" />
+            @if($user->hasFeedback())
+            <li id="{{$user->id}}" class="feedback-app-navabar-users-list-item js-feedback-app-teammate js-teammate-{{$user->id}} already-reviewed">
+                <img src="{{$user->profile->picture}}" class="feedback-app-navbar-users-list-image" />
                 {{$user->first_name}} {{$user->last_name}}
+                <img src="images/user-reviewed.png" alt="check mark" style="display:block" class="feedback-app-navbar-users-list-reviewed js-reviewed-checkmark-{{$user->id}}">
             </li>
-
+            @else
+            <li id="{{$user->id}}" class="feedback-app-navabar-users-list-item js-feedback-app-teammate js-teammate-{{$user->id}}">
+                <img src="{{$user->profile->picture}}" class="feedback-app-navbar-users-list-image" />
+                {{$user->first_name}} {{$user->last_name}}
+                <img src="images/user-reviewed.png" alt="check mark" class="feedback-app-navbar-users-list-reviewed js-reviewed-checkmark-{{$user->id}}">
+            </li>
+            @endif
             @empty
 
             <p>There are no teammates here</p>
@@ -82,39 +90,35 @@
 @elseif (!auth()->user()->company->active)
 <h2>Your company is temporarily deactivated</h2>
 @else
-<div class="js-check-done">
     @if(auth()->user()->doneFeedback())
-    <div class="container js-no-selected">
-        <i class='far'>&#xf11a;</i>
-        <div class="messages">
-            You reviewed <br> all your team
-        </div>
-        <p class="info">
-            Great job! You can only wait for the <br>
+    <div class="feedback-status">
+    <img src="images/feedback-accepted-smiley.png" alt="happy smiley" class="feedback-status-image">
+        <h1 class="feedback-status-title">
+            You reviewed all your team
+        </h1>
+        <p class="feedback-status-text">
+            Great job! You must wait for the next
             feedback session at
             {{auth()->user()->company->nextFeedbackSessionDate()}}
         </p>
     </div>
     @else
-    <div class='container js-accepted'>
-        <i class='far'>&#xf118;</i>
-        <div class='messages'> Your feedback <br>accepted</div>
-        <p class='info'>You can review other your teammate</p>
-    </div>
-    @endif
+<div class="feedback-status js-teammate-not-selected">
+    <img src="images/teammate-not-selected-smiley.png" alt="serious smiley" class="feedback-status-image">
+    <h1 class="feedback-status-title">No teammate selected</h1>
+    <p class="feedback-status-text">To provide a feedback you should select an employee from the teammates list or to search by a name using the search field</p>
 </div>
-@if (!auth()->user()->doneFeedback())
-<div class="container js-no-selected">
-    <i class='far'>&#xf11a;</i>
-    <div class="messages">
-        No teammate <br>selected
-    </div>
-    <p class="info">
-        To provide a feedback you should select <br>
-        an employee from teammmates list or<br>
-        to search by a name using the search field
-    </p>
+<div class="feedback-status feedback-status-accepted js-feedback-accepted">
+    <img src="images/feedback-accepted-smiley.png" alt="happy smiley" class="feedback-status-image">
+    <h1 class="feedback-status-title">Your feedback accepted</h1>
+    <p class="feedback-status-text">You can review your other teammates</p>
 </div>
+<div class="feedback-status feedback-status-accepted js-teammate-already-reviewed">
+    <img src="images/teammate-already-reviewed.png" alt="suprised smiley" class="feedback-status-image">
+    <h1 class="feedback-status-title">You have already reviewed this teammate</h1>
+    <p class="feedback-status-text">Please selecet someone else</p>
+</div>
+
 @endif
 
 
@@ -139,14 +143,14 @@
     <div class="profile-form-personal-skills">Personal skills and competences</div>
     <ul class="feedback-list-container">
         @forelse($skills as $skill)
-        <li class="feedback-list-item">
+        <li class="feedback-list-item js-feedback-list-item js-skill-{{$user->id}}">
             {{$skill->name}}
             <div class="feedback-list-stars-container">
-                <input type="radio" name="{{$skill->name}}-{{$user->id}}" value="5" class="stars-radio-5" id="{{$skill->name}}-{{$user->id}}-5">
-                <input type="radio" name="{{$skill->name}}-{{$user->id}}" value="4" class="stars-radio-4" id="{{$skill->name}}-{{$user->id}}-4">
-                <input type="radio" name="{{$skill->name}}-{{$user->id}}" value="3" class="stars-radio-3" id="{{$skill->name}}-{{$user->id}}-3">
-                <input type="radio" name="{{$skill->name}}-{{$user->id}}" value="2" class="stars-radio-2" id="{{$skill->name}}-{{$user->id}}-2">
-                <input type="radio" name="{{$skill->name}}-{{$user->id}}" value="1" class="stars-radio-1" id="{{$skill->name}}-{{$user->id}}-1">
+                <input type="radio" name="{{$skill->id}}-{{$user->id}}" value="5" class="stars-radio-5" id="{{$skill->name}}-{{$user->id}}-5">
+                <input type="radio" name="{{$skill->id}}-{{$user->id}}" value="4" class="stars-radio-4" id="{{$skill->name}}-{{$user->id}}-4">
+                <input type="radio" name="{{$skill->id}}-{{$user->id}}" value="3" class="stars-radio-3" id="{{$skill->name}}-{{$user->id}}-3">
+                <input type="radio" name="{{$skill->id}}-{{$user->id}}" value="2" class="stars-radio-2" id="{{$skill->name}}-{{$user->id}}-2">
+                <input type="radio" name="{{$skill->id}}-{{$user->id}}" value="1" class="stars-radio-1" id="{{$skill->name}}-{{$user->id}}-1">
                 <label for="{{$skill->name}}-{{$user->id}}-5" class="star-5 stars-label">&#9734;</label>
                 <label for="{{$skill->name}}-{{$user->id}}-4" class="star-4 stars-label">&#9734;</label>
                 <label for="{{$skill->name}}-{{$user->id}}-3" class="star-3 stars-label">&#9734;</label>
@@ -163,15 +167,15 @@
         <label for="whatIsWrongText-{{$user->id}}" name="wrong-{{$user->id}}" class="profile-form-feedback-textarea-label js-feedback-textarea-label">
             What is wrong
         </label>
-        <textarea cols="30" rows="1" id="whatIsWrongText-{{$user->id}}" name="wrong-{{$user->id}}" placeholder="What is wrong" class="feedback-textarea js-feedback-textarea"></textarea>
+        <textarea cols="30" rows="1" id="whatIsWrongText-{{$user->id}}" name="wrong-{{$user->id}}" placeholder="What is wrong" class="feedback-textarea js-feedback-textarea js-wrong-{{$user->id}}"></textarea>
     </div>
     <div class="profile-form-feedback-textarea-container">
         <label for="whatToImproveText-{{$user->id}}" name="improved-{{$user->id}}" class="profile-form-feedback-textarea-label js-feedback-textarea-label">
             What could be improved
         </label>
-        <textarea cols="30" rows="1" id="whatToImproveText-{{$user->id}}" name="improved-{{$user->id}}" placeholder="What could be improved" class="feedback-textarea js-feedback-textarea"></textarea>
+        <textarea cols="30" rows="1" id="whatToImproveText-{{$user->id}}" name="improved-{{$user->id}}" placeholder="What could be improved" class="feedback-textarea js-feedback-textarea js-improve-{{$user->id}}"></textarea>
     </div>
-    <input type="submit" class="profile-form-submit-button" value="SUBMIT">
+    <input type="submit" class="profile-form-submit-button js-submit " value="SUBMIT">
 </form>
 @empty
 <div>NOo teams</div>
@@ -266,21 +270,39 @@
 @section('script')
 
 <script>
+    let userId = null;
+    let userNotSelected = null;
+    const allSkills = {!! $skills !!}
     window.addEventListener('load', function() {
         document.querySelectorAll('.js-feedback-app-teammate').forEach(teammate => {
             teammate.addEventListener('click', function() {
-                document.querySelector('.js-no-selected').style.display = 'none'
+                userId = this.id;
+                userNotSelected !== null && clearTimeout(userNotSelected) 
+                document.querySelector('.js-teammate-not-selected').style.display = "none"
+                document.querySelector('.js-feedback-accepted').style.display = "none"
+                document.querySelector('.js-teammate-already-reviewed').style.display = "none"
                 document.querySelectorAll(".profile-form-container").forEach(form => {
                     form.style.display = "none"
                 });
-                document.querySelector(`.js-profile-form-continer-${this.id}`).style.display = "flex";
+                document.querySelectorAll(".js-feedback-app-teammate").forEach(teammate => {
+                    teammate.style.backgroundColor = "transparent"
+                });
+                this.style.backgroundColor = "#383d42"
+                if (this.classList.contains('already-reviewed')) {
+                    document.querySelector('.js-teammate-already-reviewed').style.display = "block"
+                } else {
+                    document.querySelector(`.js-profile-form-continer-${userId}`).style.display = "flex";
+                }
             })
         });
 
         document.querySelectorAll('.js-profile-form-close').forEach(closeButton => {
             closeButton.addEventListener('click', function() {
                 this.parentElement.parentElement.parentElement.style.display = 'none';
-                document.querySelector('.js-no-selected').style.display = 'block'
+                document.querySelector('.js-teammate-not-selected').style.display = 'block';
+                document.querySelectorAll(".js-feedback-app-teammate").forEach(teammate => {
+                    teammate.style.backgroundColor = "transparent"
+                });
             })
         });
 
@@ -298,6 +320,8 @@
 
         document.querySelectorAll('.js-feedback-textarea').forEach(textarea => {
             textarea.addEventListener('input', function() {
+                this.style.height = `auto`;
+                this.style.height = `${this.scrollHeight + (this.offsetHeight - this.clientHeight)}px`;
                 if (this.value !== '') {
                     document.querySelectorAll('.js-feedback-textarea-label').forEach(label => {
                         if (this.name == label.attributes.name.value) {
@@ -317,6 +341,43 @@
                 }
             });
         });
+
+        document.querySelectorAll('.js-submit').forEach(submitButton => {
+            submitButton.addEventListener("click", function(event) {
+                event.preventDefault();
+                let feedbacks = {
+                    feedback_1: document.querySelector(`.js-wrong-${userId}`).value,
+                    feedback_2: document.querySelector(`.js-improve-${userId}`).value,
+                    user_id: userId
+                }
+
+                let skillRatings = {}
+
+                allSkills.forEach(function(skill) {
+                    const slectedUserReview = `${skill.id}-${userId}`
+                    skillRatings[slectedUserReview] = $(`input[name="${slectedUserReview}"]:checked`).val();
+                });
+
+                $.post('feedback/store', {
+                    data: feedbacks,
+                    ratings: skillRatings,
+                    skills: allSkills,
+                    success: function() {
+                    }
+                }).done(function() {
+                    $(`.js-profile-form-continer-${userId}`).hide();
+                    $(".js-feedback-app-teammate").css("background-color", "transparent")
+                    $(`.js-teammate-${userId}`).addClass('already-reviewed');
+                    $(`.js-reviewed-checkmark-${userId}`).show();
+                    $(".js-feedback-accepted").show();
+                    userNotSelected = setTimeout(function() {
+                        $(".js-feedback-accepted").hide();
+                        $(".js-teammate-not-selected").show();
+
+                    },5000)
+                })
+            })
+        })
     });
 </script>
 

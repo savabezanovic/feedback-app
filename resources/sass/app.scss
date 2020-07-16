@@ -288,6 +288,10 @@ html {
     }
 }
 
+.reviewed {
+    display: none;
+}
+
 .feedback-app-navbar-users-list-image {
     margin-right: 20px;
     width: 35px;
@@ -300,6 +304,13 @@ html {
         margin-bottom: 5px;
 
     }
+}
+
+.feedback-app-navbar-users-list-reviewed {
+    width: 25px;
+    height: 25px;
+    margin-left: auto;
+    display: none;
 }
 
 .feedback-app-main {
@@ -342,6 +353,8 @@ html {
 
 .profile-all-forms-container {
     width: 60%;
+    display: flex;
+    justify-content: center;
     @media (max-width: 900px) {
         width: 90%;
     }
@@ -974,7 +987,7 @@ html {
     max-width: 90%;
 }
 
-.teammate-not-selected {
+.feedback-status {
     display: flex;
     flex-direction: column;
     max-width: 350px;
@@ -983,17 +996,21 @@ html {
     }
 }
 
-.teammate-not-selected-image {
+.feedback-status-accepted {
+    display: none;
+}
+
+.feedback-status-image {
     width: 75px;
     margin-bottom: 30px;
 }
 
-.teammate-not-selected-title {
+.feedback-status-title {
     color: #4e5357;
     font-size: 50px;
     margin-bottom: 30px;
 }
 
-.teammate-not-selected-text {
+.feedback-status-text {
     color: #7a7e81;
 }

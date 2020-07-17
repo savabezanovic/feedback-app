@@ -915,14 +915,15 @@ html {
 }
 
 .logged-user-container {
-  width: 60%;
-  margin-bottom: auto;
+  width: 100%;
+  margin-bottom: 250px;
   display: none;
 }
 
 @media (max-width: 900px) {
   .logged-user-container {
     width: 90%;
+    margin-bottom: auto;
   }
 }
 
@@ -1060,7 +1061,8 @@ html {
 }
 
 .feedbacks-checkbox:checked ~ .logged-user-all-feedbacks {
-  max-height: 100vh;
+  max-height: 1000vh;
+  transition: all ease-in-out 1.5s;
 }
 
 .feedbacks-checkbox-label {
@@ -1095,7 +1097,7 @@ html {
   flex-direction: column;
   max-height: 0;
   overflow: hidden;
-  transition: all ease-in-out 1s;
+  transition: all ease-in-out 0.8s;
 }
 
 .logged-user-feedback {
@@ -1148,6 +1150,7 @@ html {
   font-size: 16px;
   margin-top: 10px;
   max-width: 90%;
+  word-wrap: break-word;
 }
 
 .feedback-status {

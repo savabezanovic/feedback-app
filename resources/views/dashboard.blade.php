@@ -90,19 +90,19 @@
 @elseif (!auth()->user()->company->active)
 <h2>Your company is temporarily deactivated</h2>
 @else
-    @if(auth()->user()->doneFeedback())
-    <div class="feedback-status">
+@if(auth()->user()->doneFeedback())
+<div class="feedback-status">
     <img src="images/feedback-accepted-smiley.png" alt="happy smiley" class="feedback-status-image">
-        <h1 class="feedback-status-title">
-            You reviewed all your team
-        </h1>
-        <p class="feedback-status-text">
-            Great job! You must wait for the next
-            feedback session at
-            {{auth()->user()->company->nextFeedbackSessionDate()}}
-        </p>
-    </div>
-    @else
+    <h1 class="feedback-status-title">
+        You reviewed all your team
+    </h1>
+    <p class="feedback-status-text">
+        Great job! You must wait for the next
+        feedback session at
+        {{auth()->user()->company->nextFeedbackSessionDate()}}
+    </p>
+</div>
+@else
 <div class="feedback-status js-teammate-not-selected">
     <img src="images/teammate-not-selected-smiley.png" alt="serious smiley" class="feedback-status-image">
     <h1 class="feedback-status-title">No teammate selected</h1>
@@ -164,16 +164,16 @@
     </ul>
     <div class="profile-form-write-a-feedback">Write a feedback</div>
     <div class="profile-form-feedback-textarea-container">
-        <label for="whatIsWrongText-{{$user->id}}" name="wrong-{{$user->id}}" class="profile-form-feedback-textarea-label js-feedback-textarea-label">
+        <label for="whatIsWrongText-{{$user->id}}" name="wrong-{{$user->id}}" class="profile-form-feedback-textarea-label js-input-textarea-label">
             What is wrong
         </label>
-        <textarea cols="30" rows="1" id="whatIsWrongText-{{$user->id}}" name="wrong-{{$user->id}}" placeholder="What is wrong" class="feedback-textarea js-feedback-textarea js-wrong-{{$user->id}}"></textarea>
+        <textarea cols="30" rows="1" id="whatIsWrongText-{{$user->id}}" name="wrong-{{$user->id}}" placeholder="What is wrong" class="feedback-textarea js-input-textarea js-wrong-{{$user->id}}"></textarea>
     </div>
     <div class="profile-form-feedback-textarea-container">
-        <label for="whatToImproveText-{{$user->id}}" name="improved-{{$user->id}}" class="profile-form-feedback-textarea-label js-feedback-textarea-label">
+        <label for="whatToImproveText-{{$user->id}}" name="improved-{{$user->id}}" class="profile-form-feedback-textarea-label js-input-textarea-label">
             What could be improved
         </label>
-        <textarea cols="30" rows="1" id="whatToImproveText-{{$user->id}}" name="improved-{{$user->id}}" placeholder="What could be improved" class="feedback-textarea js-feedback-textarea js-improve-{{$user->id}}"></textarea>
+        <textarea cols="30" rows="1" id="whatToImproveText-{{$user->id}}" name="improved-{{$user->id}}" placeholder="What could be improved" class="feedback-textarea js-input-textarea js-improve-{{$user->id}}"></textarea>
     </div>
     <input type="submit" class="profile-form-submit-button js-submit " value="SUBMIT">
 </form>
@@ -277,7 +277,7 @@
         document.querySelectorAll('.js-feedback-app-teammate').forEach(teammate => {
             teammate.addEventListener('click', function() {
                 userId = this.id;
-                userNotSelected !== null && clearTimeout(userNotSelected) 
+                userNotSelected !== null && clearTimeout(userNotSelected)
                 document.querySelector('.js-teammate-not-selected').style.display = "none"
                 document.querySelector('.js-feedback-accepted').style.display = "none"
                 document.querySelector('.js-teammate-already-reviewed').style.display = "none"
@@ -318,12 +318,14 @@
             });
         });
 
-        document.querySelectorAll('.js-feedback-textarea').forEach(textarea => {
+        document.querySelectorAll('.js-input-textarea').forEach(textarea => {
             textarea.addEventListener('input', function() {
-                this.style.height = `auto`;
-                this.style.height = `${this.scrollHeight + (this.offsetHeight - this.clientHeight)}px`;
+                if (this.name !== "email" && this.name !== "password") {
+                    this.style.height = `auto`;
+                    this.style.height = `${this.scrollHeight + (this.offsetHeight - this.clientHeight)}px`;
+                }
                 if (this.value !== '') {
-                    document.querySelectorAll('.js-feedback-textarea-label').forEach(label => {
+                    document.querySelectorAll('.js-input-textarea-label').forEach(label => {
                         if (this.name == label.attributes.name.value) {
                             label.style.opacity = 1;
                             label.style.visibility = 'visible';
@@ -331,7 +333,7 @@
                     })
                     this.style.borderColor = '#ec1940';
                 } else {
-                    document.querySelectorAll('.js-feedback-textarea-label').forEach(label => {
+                    document.querySelectorAll('.js-input-textarea-label').forEach(label => {
                         if (this.name == label.attributes.name.value) {
                             label.style.opacity = 0;
                             label.style.visibility = 'hidden';
@@ -362,8 +364,7 @@
                     data: feedbacks,
                     ratings: skillRatings,
                     skills: allSkills,
-                    success: function() {
-                    }
+                    success: function() {}
                 }).done(function() {
                     $(`.js-profile-form-continer-${userId}`).hide();
                     $(".js-feedback-app-teammate").css("background-color", "transparent")
@@ -374,8 +375,9 @@
                         $(".js-feedback-accepted").hide();
                         $(".js-teammate-not-selected").show();
 
-                    },5000)
+                    }, 5000)
                 })
+                .fail(function(jqxhr, settings, ex) { alert('Fill out all fields'); })
             })
         })
     });

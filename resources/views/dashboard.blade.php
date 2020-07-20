@@ -8,7 +8,7 @@
 <div class="feedback-app-navbar-profile-container">
     <img src="{{auth()->user()->profile->picture}}" alt="profile avatar" class="feedback-app-profile-avatar">
     <div>
-        <div class="feedback-app-navbar-profile-name">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</div>
+        <div class="feedback-app-navbar-profile-name js-feedback-app-logged-user">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</div>
         <form action="{{route('logout')}}" method="POST">
             @csrf
             <button type="submit" class="feedback-app-navbar-profile-logout">Log out</button>
@@ -90,6 +90,8 @@
 @elseif (!auth()->user()->company->active)
 <h2>Your company is temporarily deactivated</h2>
 @else
+
+
 @if(auth()->user()->doneFeedback())
 <div class="feedback-status">
     <img src="images/feedback-accepted-smiley.png" alt="happy smiley" class="feedback-status-image">
@@ -121,6 +123,116 @@
 
 @endif
 
+
+@if(count(auth()->user()->activeFeedbacks()))
+
+<div class="logged-user-container js-logged-user-container">
+    <div class="profile-form-name-image-container">
+        <img src="{{auth()->user()->profile->picture}}" alt="profile picture" class="profile-form-image">
+        <div class="profile-form-name-container">
+            <div class="profile-form-name js-logged-user-name">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</div>
+            <div class="profile-form-name-profession">{{$user->profile->jobTitle->name}}</div>
+        </div>
+        <div class="logged-user-average-score-container">
+            <div class="logged-user-average-score">AVERAGE SCORE</div>
+            <div class="logged-user-stars-contianer logged-user-stars-container-overall">
+                <div class="logged-user-stars-rating logged-user-stars-rating-overall"><span class="js-logged-user-stars-rating">{{number_format(auth()->user()->averageFeedbackScore(), 1, '.', '')}}</span>
+                </div>
+                <div class="stars-layer-1 stars-layer-1-overall">
+                    <div class="stars-layer-2">
+                    </div>
+                    <div class="stars-layer-3">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="profile-form-esc-x-container">
+            <div class="profile-form-name-x-button js-profile-form-close">&#10006;</div>
+            <div class="profile-form-name-esc">
+                <div>ES</div>
+                <div>C</div>
+            </div>
+        </div>
+    </div>
+    <div class="logged-user-feddback-summary">
+                    Feedback summary
+    </div>
+    <div class="profile-form-personal-skills">Personal skills and competences</div>
+    <ul class="feedback-list-container">
+
+        @foreach($skills as $skill)
+
+        <li class="feedback-list-item">
+            {{$skill->name}}
+            <div class="logged-user-stars-contianer">
+                <div class="logged-user-stars-rating">
+                    (<span class="js-logged-user-stars-rating">
+                        @if($skill->averageForUser(auth()->user())){{$skill->averageForUser(auth()->user())}}@else 0 @endif
+                    </span>)
+                </div>
+                <div class="stars-layer-1">
+                    <div class="stars-layer-2">
+                    </div>
+                    <div class="stars-layer-3">
+                    </div>
+                </div>
+            </div>
+        </li>
+
+        @endforeach
+    </ul>
+    @endif
+    <div class="logged-user-feedbacks-container">
+        <input type="checkbox" id="feedbacksCheckbox" class="feedbacks-checkbox">
+        <label for="feedbacksCheckbox" class="feedbacks-checkbox-label">Feedbacks @if(auth()->user()->activeFeedbacks())({{count(auth()->user()->activeFeedbacks())}}) @else (0) @endif
+            <img src="images/down-arrow.png" alt="down arrow" class="feedbacks-checkbox-label-down-arrow">
+        </label>
+        <div class="logged-user-all-feedbacks">
+            @forelse(auth()->user()->activeFeedbacks() as $feedback)
+            <div class="logged-user-feedback">
+                <div class="feedbacks-user-container">
+                    <img class="profile-form-image" src="https://cdn3.vectorstock.com/i/thumb-large/17/72/halloween-red-smiling-monster-avatar-vector-26041772.jpg" alt="user icon">
+                    <div>{{$feedback->creator->first_name}} {{$feedback->creator->last_name}}
+                        <div class="feedbacks-user-profession"></div>
+                    </div>
+                    <div class="logged-user-stars-contianer">
+                        <div class="logged-user-stars-rating feedbacks-user-rating">
+                            <span class="js-logged-user-stars-rating">
+                                @if($feedback->creator->averageFeedbackScore()){{round($feedback->creator->averageFeedbackScore(), 1)}} @else (0) @endif
+                            </span>
+                        </div>
+                        <div class="stars-layer-1">
+                            <div class="stars-layer-2">
+                            </div>
+                            <div class="stars-layer-3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feedbacks-comment-container">
+                    <div class="feedbacks-comment-type"><img class="feedback-comment-list-bullet" src="images/feedbacks-type-symbold.png" alt="list bullets">
+                        WHAT IS WRONG:
+                    </div>
+                    <div class="feedbacks-comment-text">
+                        {{$feedback->comment_wrong}}
+                    </div>
+                </div>
+                <div class="feedbacks-comment-container">
+                    <div class="feedbacks-comment-type"><img class="feedback-comment-list-bullet" src="images/feedbacks-type-symbold.png" alt="list bullets">
+                        WHAT COULD BE IMPROVED:
+                    </div>
+                    <div class="feedbacks-comment-text">
+                        {{$feedback->comment_improve}}
+                    </div>
+                </div>
+            </div>
+            @empty
+            <div>No feedbacks</div>
+            @endforelse
+
+        </div>
+    </div>
+</div>
 
 @forelse(auth()->user()->teammates() as $user)
 
@@ -281,6 +393,7 @@
                 document.querySelector('.js-teammate-not-selected').style.display = "none"
                 document.querySelector('.js-feedback-accepted').style.display = "none"
                 document.querySelector('.js-teammate-already-reviewed').style.display = "none"
+                document.querySelector('.js-logged-user-container').style.display = "none"
                 document.querySelectorAll(".profile-form-container").forEach(form => {
                     form.style.display = "none"
                 });
@@ -344,6 +457,28 @@
             });
         });
 
+        document.querySelectorAll(".js-logged-user-stars-rating").forEach(rating => {
+            const layer2AcceptablePercent = ["20", "40", "60", "80", "100"];
+            const starsPercent = (rating.innerText / 5) * 100;
+            const starsRounded = `${(Math.round(starsPercent /10) *10)}`;
+            rating.parentElement.nextElementSibling.firstElementChild.style.width = `${layer2AcceptablePercent.includes(starsRounded) ? starsRounded : parseInt(starsRounded,10) + 10}%`;
+            rating.parentElement.nextElementSibling.firstElementChild.nextElementSibling.style.width = `${starsRounded}%`
+        })
+
+        document.querySelector('.js-feedback-app-logged-user').addEventListener("click", function() {
+            userNotSelected !== null && clearTimeout(userNotSelected)
+            document.querySelector('.js-teammate-not-selected').style.display = "none"
+            document.querySelector('.js-feedback-accepted').style.display = "none"
+            document.querySelector('.js-teammate-already-reviewed').style.display = "none"
+            document.querySelectorAll(".profile-form-container").forEach(form => {
+                form.style.display = "none"
+            });
+            document.querySelectorAll(".js-feedback-app-teammate").forEach(teammate => {
+                teammate.style.backgroundColor = "transparent"
+            });
+            document.querySelector('.js-logged-user-container').style.display = "block"
+        })
+
         document.querySelectorAll('.js-submit').forEach(submitButton => {
             submitButton.addEventListener("click", function(event) {
                 event.preventDefault();
@@ -361,23 +496,25 @@
                 });
 
                 $.post('feedback/store', {
-                    data: feedbacks,
-                    ratings: skillRatings,
-                    skills: allSkills,
-                    success: function() {}
-                }).done(function() {
-                    $(`.js-profile-form-continer-${userId}`).hide();
-                    $(".js-feedback-app-teammate").css("background-color", "transparent")
-                    $(`.js-teammate-${userId}`).addClass('already-reviewed');
-                    $(`.js-reviewed-checkmark-${userId}`).show();
-                    $(".js-feedback-accepted").show();
-                    userNotSelected = setTimeout(function() {
-                        $(".js-feedback-accepted").hide();
-                        $(".js-teammate-not-selected").show();
+                        data: feedbacks,
+                        ratings: skillRatings,
+                        skills: allSkills,
+                        success: function() {}
+                    }).done(function() {
+                        $(`.js-profile-form-continer-${userId}`).hide();
+                        $(".js-feedback-app-teammate").css("background-color", "transparent")
+                        $(`.js-teammate-${userId}`).addClass('already-reviewed');
+                        $(`.js-reviewed-checkmark-${userId}`).show();
+                        $(".js-feedback-accepted").show();
+                        userNotSelected = setTimeout(function() {
+                            $(".js-feedback-accepted").hide();
+                            $(".js-teammate-not-selected").show();
 
-                    }, 5000)
-                })
-                .fail(function(jqxhr, settings, ex) { alert('Fill out all fields'); })
+                        }, 5000)
+                    })
+                    .fail(function(jqxhr, settings, ex) {
+                        alert('Fill out all fields');
+                    })
             })
         })
     });

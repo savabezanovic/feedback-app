@@ -27,6 +27,7 @@
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     </head>
     <body class="app-body">
+    <input type="checkbox" id="navbarCheckbox" class="navbar-mobile-checkbox js-nav-mobile-checkbox">
     <nav class="feedback-app-navbar">
         <div class="feedback-app-navbar-title"><img src="images/feedback-app-logo.png" class="feedback-app-logo"
                 alt="logo"> FEEDBACK <br /> APP
@@ -39,6 +40,9 @@
     <div class="menu-media js-menu-media"><i class="fas fa-bars"></i></div>
     @endauth
     <div class="profile-all-forms-container">
+        <label for="navbarCheckbox" class="feedback-app-navbar-dropdown-label">
+            <img class="feedback-app-navbar-dropdown-icon" src="images/list-icon.png" alt="list icon">
+        </label>
         @yield('content')
     </div>
 </div>

@@ -101,8 +101,6 @@
     @endif
 </div>
 
-@if(count(auth()->user()->activeFeedbacks()))
-
 <div class="logged-user-container js-logged-user-container">
     <div class="profile-form-name-image-container">
         <img src="{{auth()->user()->profile->picture}}" alt="profile picture" class="profile-form-image">
@@ -270,7 +268,6 @@
 <div>No teammates for feedback</div>
 @endforelse
 
-@endif
 
 @endsection
 
@@ -320,6 +317,7 @@
                     document.querySelector('.js-feedback-accepted').style.display = "none"
                     document.querySelector('.js-teammate-already-reviewed').style.display = "none"
                 } else {
+                    document.querySelector('.js-feedback-accepted') !== null && (document.querySelector('.js-feedback-accepted').style.display = "none")
                     document.querySelector('.js-all-reviewed').style.display = "block";
                 }
                 document.querySelectorAll(".js-feedback-app-teammate").forEach(teammate => {
@@ -367,7 +365,7 @@
         });
 
         document.querySelectorAll(".js-logged-user-stars-rating").forEach(rating => {
-            const layer2AcceptablePercent = ["20", "40", "60", "80", "100"];
+            const layer2AcceptablePercent = ["0","20", "40", "60", "80", "100"];
             const starsPercent = (rating.innerText / 5) * 100;
             const starsRounded = `${(Math.round(starsPercent /10) *10)}`;
             rating.parentElement.nextElementSibling.firstElementChild.style.width = `${layer2AcceptablePercent.includes(starsRounded) ? starsRounded : parseInt(starsRounded,10) + 10}%`;

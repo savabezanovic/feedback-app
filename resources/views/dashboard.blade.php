@@ -48,39 +48,6 @@
     </div>
 </div>
 
-<!-- <div>
-        <div>
-            <img src="{{auth()->user()->profile->picture}}" class="user-image">
-            <div>
-                <form action="{{route('logout')}}" method="POST">
-                    @csrf
-                    <a href="{{route('user.profile', auth()->user()->id)}}">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</a>
-                    <span><button type="submit" class="logout-btn">Log out</button></span>
-                </form>
-            </div>
-        </div>
-
-        @if(auth()->user()->active)
-
-        <div class="search-area">
-            <h4>YOUR TEAMMATES</h4>
-            <input class="search-teammate js-search js-live-search" type="search" placeholder="Search a teammate">
-            <ul class="list">
-
-                @forelse(auth()->user()->teammates() as $user)
-
-                    <li data-userId="{{$user->id}}" class="teammate js"><img class="teammate-image" src="{{$user->profile->picture}}"><a class="teammate-name js">{{$user->first_name}} {{$user->last_name}}</a>@if($user->hasFeedback())<i class="fas fa-check reviewed"></i>@endif<span class="hidden js{{$user->id}}"><i class="fas fa-check reviewed"></i></span></li>
-
-                @empty
-
-                    <p>No users in this team.</p>
-
-                @endforelse
-            </ul>
-        </div>
-        @endif
-    </div> -->
-
 @endsection
 
 @section('content')
@@ -91,38 +58,48 @@
 <h2>Your company is temporarily deactivated</h2>
 @else
 
-
-@if(auth()->user()->doneFeedback())
-<div class="feedback-status">
-    <img src="images/feedback-accepted-smiley.png" alt="happy smiley" class="feedback-status-image">
-    <h1 class="feedback-status-title">
-        You reviewed all your team
-    </h1>
-    <p class="feedback-status-text">
-        Great job! You must wait for the next
-        feedback session at
-        {{auth()->user()->company->nextFeedbackSessionDate()}}
-    </p>
+<div class="js-feedback-status-container">
+    @if(auth()->user()->doneFeedback())
+    <div class="feedback-status">
+        <img src="images/feedback-accepted-smiley.png" alt="happy smiley" class="feedback-status-image">
+        <h1 class="feedback-status-title">
+            You reviewed all your team
+        </h1>
+        <p class="feedback-status-text">
+            Great job! You must wait for the next
+            feedback session at
+            {{auth()->user()->company->nextFeedbackSessionDate()}}
+        </p>
+    </div>
+    @else
+    <div class="feedback-status js-teammate-not-selected">
+        <img src="images/teammate-not-selected-smiley.png" alt="serious smiley" class="feedback-status-image">
+        <h1 class="feedback-status-title">No teammate selected</h1>
+        <p class="feedback-status-text">To provide a feedback you should select an employee from the teammates list or to search by a name using the search field</p>
+    </div>
+    <div class="feedback-status feedback-status-accepted js-feedback-accepted">
+        <img src="images/feedback-accepted-smiley.png" alt="happy smiley" class="feedback-status-image">
+        <h1 class="feedback-status-title">Your feedback accepted</h1>
+        <p class="feedback-status-text">You can review your other teammates</p>
+    </div>
+    <div class="feedback-status feedback-status-accepted js-teammate-already-reviewed">
+        <img src="images/teammate-already-reviewed.png" alt="suprised smiley" class="feedback-status-image">
+        <h1 class="feedback-status-title">You have already reviewed this teammate</h1>
+        <p class="feedback-status-text">Please selecet someone else</p>
+    </div>
+    <div class="feedback-status feedback-status-accepted js-all-reviewed">
+        <img src="images/feedback-accepted-smiley.png" alt="happy smiley" class="feedback-status-image">
+        <h1 class="feedback-status-title">
+            You reviewed all your team
+        </h1>
+        <p class="feedback-status-text">
+            Great job! You must wait for the next
+            feedback session at
+            {{auth()->user()->company->nextFeedbackSessionDate()}}
+        </p>
+    </div>
+    @endif
 </div>
-@else
-<div class="feedback-status js-teammate-not-selected">
-    <img src="images/teammate-not-selected-smiley.png" alt="serious smiley" class="feedback-status-image">
-    <h1 class="feedback-status-title">No teammate selected</h1>
-    <p class="feedback-status-text">To provide a feedback you should select an employee from the teammates list or to search by a name using the search field</p>
-</div>
-<div class="feedback-status feedback-status-accepted js-feedback-accepted">
-    <img src="images/feedback-accepted-smiley.png" alt="happy smiley" class="feedback-status-image">
-    <h1 class="feedback-status-title">Your feedback accepted</h1>
-    <p class="feedback-status-text">You can review your other teammates</p>
-</div>
-<div class="feedback-status feedback-status-accepted js-teammate-already-reviewed">
-    <img src="images/teammate-already-reviewed.png" alt="suprised smiley" class="feedback-status-image">
-    <h1 class="feedback-status-title">You have already reviewed this teammate</h1>
-    <p class="feedback-status-text">Please selecet someone else</p>
-</div>
-
-@endif
-
 
 @if(count(auth()->user()->activeFeedbacks()))
 
@@ -155,7 +132,7 @@
         </div>
     </div>
     <div class="logged-user-feddback-summary">
-                    Feedback summary
+        Feedback summary
     </div>
     <div class="profile-form-personal-skills">Personal skills and competences</div>
     <ul class="feedback-list-container">
@@ -290,92 +267,10 @@
     <input type="submit" class="profile-form-submit-button js-submit " value="SUBMIT">
 </form>
 @empty
-<div>NOo teams</div>
-@endforelse
-
-
-@forelse(auth()->user()->teammates() as $user)
-
-<div data-userId="{{$user->id}}" class="modal modal{{$user->id}}">
-    <div class="single-feedback">
-        <div class="feedback-person">
-            <img class="feedback-image" src="{{$user->profile->picture}}">
-            <div class="feedback-person-info">
-                <span class="js-user">{{$user->first_name}} {{$user->last_name}}</span>
-                <span class="js-position">{{$user->profile->jobTitle->name}}</span>
-            </div>
-            <button class="close-btn js-close{{$user->id}}"><i class="fas fa-times"> <br> ESC</i></button>
-        </div>
-        <div class="feedback-title">Provide feedback</div>
-        <span>Personal skills and competences</span>
-
-
-        @if($user->hasFeedback())
-        @foreach($user->hasFeedback()->skills as $skill)
-
-        <span class="single-skill">
-            <p class="skill-name">{{$skill->name}}</p>
-            <fieldset class="rating">
-                @for($i = 5; $i > 0; $i--)
-                <input disabled type="radio" id="star{{$i}}_{{$skill->id}}{{$user->id}}" name="rating_{{$skill->id}}{{$user->id}}" value="5" @if($skill->pivot->score == $i) checked @endif/><label class="full" for="star{{$i}}_{{$skill->id}}{{$user->id}}" title="{{$titles[$i-1]}}"></label>
-                @endfor
-            </fieldset>
-        </span>
-        @endforeach
-        @else
-
-        @forelse($skills as $skill)
-
-        <span class="single-skill">
-            <p class="skill-name">{{$skill->name}}</p>
-            <fieldset class="rating js-rating{{$user->id}}">
-                <input type="radio" id="star5_{{$skill->id}}{{$user->id}}" name="rating_{{$skill->id}}{{$user->id}}" value="5" required /><label class="full" for="star5_{{$skill->id}}{{$user->id}}" title="Awesome"></label>
-                <input type="radio" id="star4_{{$skill->id}}{{$user->id}}" name="rating_{{$skill->id}}{{$user->id}}" value="4" required /><label class="full" for="star4_{{$skill->id}}{{$user->id}}" title="Pretty good"></label>
-                <input type="radio" id="star3_{{$skill->id}}{{$user->id}}" name="rating_{{$skill->id}}{{$user->id}}" value="3" required /><label class="full" for="star3_{{$skill->id}}{{$user->id}}" title="Meh"></label>
-                <input type="radio" id="star2_{{$skill->id}}{{$user->id}}" name="rating_{{$skill->id}}{{$user->id}}" value="2" required /><label class="full" for="star2_{{$skill->id}}{{$user->id}}" title="Kinda bad"></label>
-                <input type="radio" id="star1_{{$skill->id}}{{$user->id}}" name="rating_{{$skill->id}}{{$user->id}}" value="1" required /><label class="full" for="star1_{{$skill->id}}{{$user->id}}" title="Really bad"></label>
-            </fieldset>
-        </span>
-        @empty
-
-        <p>Currently no skills.</p>
-
-        @endforelse
-
-        @endif
-
-        <div class="alert alert-success">
-
-        </div>
-
-        <span style="margin:20px 0px;">Write a feedback</span>
-
-        <label class="show js-hide{{$user->id}}" for="feedback_1">What is wrong</label>
-        <textarea id="comment_wrong{{$user->id}}" class="written write-feedback js-write{{$user->id}} js-wrong{{$user->id}}" placeholder="What is wrong" name="feedback_1" @if($user->hasFeedback()) disabled @else required @endif>@if($user->hasFeedback()) {{$user->hasFeedback()->comment_wrong}} @endif</textarea>
-        <label class="show js-hide-2{{$user->id}}" for="feedback_2">What could be improved</label>
-        <textarea id="comment_improve{{$user->id}}" class="written write-feedback js-write-two{{$user->id}} js-improve{{$user->id}}" placeholder="What could be improved" name="feedback_2" @if($user->hasFeedback()) disabled @else required @endif>@if($user->hasFeedback()) {{$user->hasFeedback()->comment_improve}} @endif</textarea>
-
-        {{-- <label for="skill_name">Skill name test</label>--}}
-        {{-- <input type="text" id="skill_name" name="skill_name">--}}
-
-        @if(!$user->hasFeedback())
-
-        <div class="submit-feedback">
-            <input class="submit-feedback-btn js-submit js-submit{{$user->id}}" type="submit" id="submit" value="SUBMIT">
-        </div>
-
-        @endif
-    </div>
-</div>
-
-@empty
-
-<p>No users in this team.</p>
-
+<div>No teammates for feedback</div>
 @endforelse
 
 @endif
-
 
 @endsection
 
@@ -383,36 +278,50 @@
 
 <script>
     let userId = null;
-    let userNotSelected = null;
+    let userNotSelectedTimeout = null;
     const allSkills = {!! $skills !!}
     window.addEventListener('load', function() {
+        let noTeammateSelected = document.querySelector('.js-teammate-not-selected')
+         console.log([...document.querySelectorAll('.js-feedback-app-teammate')])
+        console.log([...$('.js-feedback-app-teammate')])
         document.querySelectorAll('.js-feedback-app-teammate').forEach(teammate => {
             teammate.addEventListener('click', function() {
-                userId = this.id;
-                userNotSelected !== null && clearTimeout(userNotSelected)
-                document.querySelector('.js-teammate-not-selected').style.display = "none"
-                document.querySelector('.js-feedback-accepted').style.display = "none"
-                document.querySelector('.js-teammate-already-reviewed').style.display = "none"
-                document.querySelector('.js-logged-user-container').style.display = "none"
-                document.querySelectorAll(".profile-form-container").forEach(form => {
-                    form.style.display = "none"
-                });
-                document.querySelectorAll(".js-feedback-app-teammate").forEach(teammate => {
-                    teammate.style.backgroundColor = "transparent"
-                });
-                this.style.backgroundColor = "#383d42"
-                if (this.classList.contains('already-reviewed')) {
-                    document.querySelector('.js-teammate-already-reviewed').style.display = "block"
-                } else {
-                    document.querySelector(`.js-profile-form-continer-${userId}`).style.display = "flex";
+                if (noTeammateSelected !== null) {
+                    userId = this.id;
+                    userNotSelectedTimeout !== null && clearTimeout(userNotSelectedTimeout)
+                    noTeammateSelected.style.display = "none"
+                    document.querySelector('.js-feedback-status-container').style.display = "block"
+                    document.querySelector('.js-feedback-accepted').style.display = "none"
+                    document.querySelector('.js-teammate-already-reviewed').style.display = "none"
+                    document.querySelector('.js-logged-user-container').style.display = "none"
+                    document.querySelectorAll(".profile-form-container").forEach(form => {
+                        form.style.display = "none"
+                    });
+                    document.querySelectorAll(".js-feedback-app-teammate").forEach(teammate => {
+                        teammate.style.backgroundColor = "transparent"
+                    });
+                    this.style.backgroundColor = "#383d42"
+                    if (this.classList.contains('already-reviewed')) {
+                        document.querySelector('.js-teammate-already-reviewed').style.display = "block"
+                    } else {
+                        document.querySelector(`.js-profile-form-continer-${userId}`).style.display = "flex";
+                    }
                 }
             })
+
         });
 
         document.querySelectorAll('.js-profile-form-close').forEach(closeButton => {
             closeButton.addEventListener('click', function() {
                 this.parentElement.parentElement.parentElement.style.display = 'none';
-                document.querySelector('.js-teammate-not-selected').style.display = 'block';
+                document.querySelector('.js-feedback-status-container').style.display = "block"
+                if (noTeammateSelected !== null) {
+                    noTeammateSelected.style.display = 'block'
+                    document.querySelector('.js-feedback-accepted').style.display = "none"
+                    document.querySelector('.js-teammate-already-reviewed').style.display = "none"
+                } else {
+                    document.querySelector('.js-all-reviewed').style.display = "block";
+                }
                 document.querySelectorAll(".js-feedback-app-teammate").forEach(teammate => {
                     teammate.style.backgroundColor = "transparent"
                 });
@@ -466,10 +375,8 @@
         })
 
         document.querySelector('.js-feedback-app-logged-user').addEventListener("click", function() {
-            userNotSelected !== null && clearTimeout(userNotSelected)
-            document.querySelector('.js-teammate-not-selected').style.display = "none"
-            document.querySelector('.js-feedback-accepted').style.display = "none"
-            document.querySelector('.js-teammate-already-reviewed').style.display = "none"
+            userNotSelectedTimeout !== null && clearTimeout(userNotSelectedTimeout)
+            document.querySelector('.js-feedback-status-container').style.display = "none"
             document.querySelectorAll(".profile-form-container").forEach(form => {
                 form.style.display = "none"
             });
@@ -487,7 +394,6 @@
                     feedback_2: document.querySelector(`.js-improve-${userId}`).value,
                     user_id: userId
                 }
-
                 let skillRatings = {}
 
                 allSkills.forEach(function(skill) {
@@ -505,12 +411,21 @@
                         $(".js-feedback-app-teammate").css("background-color", "transparent")
                         $(`.js-teammate-${userId}`).addClass('already-reviewed');
                         $(`.js-reviewed-checkmark-${userId}`).show();
-                        $(".js-feedback-accepted").show();
-                        userNotSelected = setTimeout(function() {
-                            $(".js-feedback-accepted").hide();
-                            $(".js-teammate-not-selected").show();
-
-                        }, 5000)
+                        const usersArray = [...$('.js-feedback-app-teammate')]
+                        if (usersArray.every(function(user) {return user.classList.contains('already-reviewed')})) {
+                            noTeammateSelected = null;
+                            $('.js-feedback-accepted').show();
+                            userNotSelectedTimeout = setTimeout(function() {
+                                $(".js-feedback-accepted").hide();
+                                $('.js-all-reviewed').show();
+                            }, 2500)
+                        } else {
+                            $('.js-feedback-accepted').show();
+                            userNotSelectedTimeout = setTimeout(function() {
+                                $(".js-feedback-accepted").hide();
+                                $(".js-teammate-not-selected").show();
+                            }, 2500)
+                        }
                     })
                     .fail(function(jqxhr, settings, ex) {
                         alert('Fill out all fields');
@@ -519,62 +434,4 @@
         })
     });
 </script>
-
-<!-- <script>
-        var skills = {!! $skills !!}
-
-        $(document).ready(function () {
-
-            var id1 = '';
-
-            $(document).on('click', '.list li', function () {
-                id1 = $(this).attr('data-userId');
-                console.log('id1 = ' + id1)
-                $(".list li").removeClass("active-teammate");
-                $(this).addClass("active-teammate");
-            });
-
-            $('.js-submit').click(function(e) {
-                e.preventDefault();
-                var data = {
-                    feedback_1: $('#comment_wrong'+id1).val(),
-                    feedback_2: $('#comment_improve'+id1).val(),
-                    user_id: id1
-                };
-                var ratings = {};
-
-                skills.forEach(function (entry) {
-                    var current = 'rating_' + entry.id + id1;
-                    ratings[current] = $(`input[name="${current}"]:checked`).val();
-                });
-
-                $.post('feedback/store',
-                    {
-                        data: data,
-                        ratings: ratings,
-                        skills: skills,
-                        success: function(){
-
-                    }
-                    },
-                    
-
-                ).done(function(){
-                    $('.js-accepted').show();
-                            $(".js-check-done").load(location.href+" .js-check-done>*","");
-                            $(".js-accepted").hide();
-                    $('.modal').hide();
-                    $('.js-submit'+id1).hide();
-                    $('.js'+id1).removeClass('hidden');
-                    $('.js-wrong'+id1).attr('disabled', true)
-                    $('.js-improve'+id1).attr('disabled', true)
-                    $('.js-rating'+id1).attr('disabled', true)
-                })
-                    .fail(function(jqxhr, settings, ex) { alert('Enter all data'); })
-            });
-
-        });
-
-    </script> -->
-
 @endsection

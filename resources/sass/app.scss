@@ -117,6 +117,7 @@ html {
 
 .feedback-app-navbar-profile-name {
     cursor: pointer;
+    user-select: none;
     z-index: 1;
     &:hover {
         text-decoration: underline;

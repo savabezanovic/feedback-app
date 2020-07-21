@@ -14,7 +14,7 @@ class CreateSkillRequest extends FormRequest
      */
     public function authorize()
     {
-        if (Auth::check() && auth()->user()->role == 'superadmin') {
+        if (Auth::check() && auth()->user()->role[0]->name == 'superadmin') {
 
             return true;
         }

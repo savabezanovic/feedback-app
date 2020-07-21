@@ -16,7 +16,7 @@ class ShowCompanyRequest extends FormRequest
     {
         if (Auth::check()) {
 
-            if(auth()->user()->role == 'superadmin' || auth()->user()->role == 'admin') {
+            if(auth()->user()->role[0]->name == 'superadmin' || auth()->user()->role[0]->name == 'admin') {
                 return true;
                 }
         }

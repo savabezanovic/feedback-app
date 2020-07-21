@@ -7,7 +7,7 @@
             <div class="user-status">
                 <form action="{{route('logout')}}" method="POST">
                     @csrf
-                    @if(auth()->user()->hasAnyRole('superadmin', 'admin'))
+                    @if(auth()->user()->role[0]->name == "admin" || auth()->user()->role[0]->name == "superadmin")
                         test
                     @else
                         <a class="user-name" href="{{route('user.profile', auth()->user()->id)}}">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</a>

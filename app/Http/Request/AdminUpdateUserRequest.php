@@ -16,7 +16,7 @@ class AdminUpdateUserRequest extends FormRequest
     public function authorize()
     {
 
-        if (Auth::check() && auth()->user()->role == 'admin') {
+        if (Auth::check() && auth()->user()->role[0]->name == 'admin') {
 
             return true;
         }

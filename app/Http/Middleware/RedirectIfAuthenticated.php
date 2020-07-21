@@ -20,12 +20,12 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
 
-            if (\auth()->user()->role == "superadmin") {
+            if (\auth()->user()->role[0]->name == "superadmin") {
 
                 return redirect('/superadmin');
             }
 
-            else if (\auth()->user()->role == 'admin') {
+            else if (\auth()->user()->role[0]->name == 'admin') {
 
                 return redirect('/admin');
             }

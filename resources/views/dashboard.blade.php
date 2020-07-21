@@ -4,7 +4,6 @@
 
 
 
-
 <div class="feedback-app-navbar-profile-container">
     <img src="{{auth()->user()->profile->picture}}" alt="profile avatar" class="feedback-app-profile-avatar">
     <div>

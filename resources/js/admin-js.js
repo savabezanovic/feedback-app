@@ -5,9 +5,21 @@ $(document).ready(function () {
                 let output = [];
 
                 $.each(data.users, function (i, e) {
-                    output += '<tr class="media-user js-user-del'+e.id+'"><td>' + e.first_name + '</td><td>' + e.last_name + '</td><td>'+
-                        e.email+'</td><td>'+e.profile.job_title.name+'</td><td class="user-status-dot"><label class="switch"><input class="check-slider "data-id='+ e.id +' name="chk-box" id="chk-box" value="1" type="checkbox" '+ (e.active === 1 ? "checked" : "" )+' ><span class="slider round"></span></label>'+
-                        '</td><td><button id="'+e.id+'" class="admin-btn js-edit-user" data-id='+e.id+'>Edit</button>'+' '+'<button class="admin-btn" id="delete-user" data-id='+e.id+'>Delete</button></td></tr>'
+                    output += `<tr class="company-users-table-body-row js-user-del${e.id}">
+                                    <td class="company-users-table-body-data"> ${e.first_name}  </td><td class="company-users-table-body-data">  ${e.last_name}  </td>
+                                    <td class="company-users-table-body-data">${e.email}</td>
+                                    <td class="company-users-table-body-data">${e.profile.job_title.name}</td>
+                                    <td class="user-status-dot company-users-table-body-data">
+                                    <input class="user-status-checkbox" data-id="${e.id}" name="chk-box" id="chk-box-${e.id}" value="1" type="checkbox" ${e.active === 1 ? "checked" : ""} >
+                                        <label for="chk-box-${e.id}" class="user-status-toggle-outer">
+                                            <span class="user-status-toggle-inner"></span>
+                                        </label>
+                                    </td>
+                                    <td class="company-users-table-body-data users-table-center">
+                                        <button id="${e.id}" class="users-table-button js-edit-user" data-id=${e.id}>Edit</button>
+                                        <button class="users-table-button" id="delete-user" data-id=${e.id}>Delete</button>
+                                    </td>
+                                </tr>`
                 });
                 $('.js-admins-list').append(output);
                 $(".js-edit-user").click(editUser);

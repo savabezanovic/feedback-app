@@ -47,42 +47,6 @@
     </div>
 </div>
 
-<<<<<<< HEAD
-<!-- <div>
-        <div>
-            <img src="{{auth()->user()->profile->picture}}" class="user-image">
-            <div>
-                <form action="{{route('logout')}}" method="POST">
-                    @csrf
-                    <a href="{{route('user.profile', auth()->user()->id)}}">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</a>
-                    <span><button type="submit" class="logout-btn">Log out</button></span>
-                </form>
-            </div>
-        </div>
-
-        @if(auth()->user()->active)
-
-        <div class="search-area">
-            <h4>YOUR TEAMMATES</h4>
-            <input class="search-teammate js-search js-live-search" type="search" placeholder="Search a teammate">
-            <ul class="list">
-
-                @forelse(auth()->user()->teammates() as $user)
-                
-                    <li data-userId="{{$user->id}}" class="teammate js"><img class="teammate-image" src="{{$user->profile->picture}}"><a class="teammate-name js">{{$user->first_name}} {{$user->last_name}}</a>@if($user->hasFeedback())<i class="fas fa-check reviewed"></i>@endif<span class="hidden js{{$user->id}}"><i class="fas fa-check reviewed"></i></span></li>
-
-                @empty
-
-                    <p>No users in this team.</p>
-
-                @endforelse
-            </ul>
-        </div>
-        @endif
-    </div> -->
-
-=======
->>>>>>> 8f4a63ee0e0f1b7284fd2e701909d7abe87e736d
 @endsection
 
 @section('content')

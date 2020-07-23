@@ -2,39 +2,111 @@
 
 @section('users')
 
-    <div class="user-box">
-        <div class="user">
-            <img src="https://source.unsplash.com/random" class="user-image">
-            <div class="user-status">
-                <form action="{{route('logout')}}" method="POST">
-                    @csrf
-                    <p class="user-name">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</p>
-                    <span><button type="submit" class="logout-btn">Log out</button></span>
-                </form>
-            </div>
+<div class="user-box">
+    <div class="user">
+        <img src="https://source.unsplash.com/random" class="user-image">
+        <div class="user-status">
+            <form action="{{route('logout')}}" method="POST">
+                @csrf
+                <p class="user-name">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</p>
+                <span><button type="submit" class="logout-btn">Log out</button></span>
+            </form>
         </div>
     </div>
+</div>
 
 @endsection
 
 @section('content')
-    @component('components.alert')
-        @slot('class')
-            warning
-        @endslot
-        @slot('title')
-            Warning Message
-        @endslot
-        Please input correct data!
-    @endcomponent
+@component('components.alert')
+@slot('class')
+warning
+@endslot
+@slot('title')
+Warning Message
+@endslot
+Please input correct data!
+@endcomponent
 
 
-    @if(!auth()->user()->active)
-        <h2 class="admin-title">Your account is temporarily deactivated</h2>
-    @elseif (!auth()->user()->company->active)
-        <h2 class="admin-title">Your company is temporarily deactivated</h2>
-    @else
+@if(!auth()->user()->active)
+<h2 class="admin-title">Your account is temporarily deactivated</h2>
+@elseif (!auth()->user()->company->active)
+<h2 class="admin-title">Your company is temporarily deactivated</h2>
+@else
 
+<div class="admin-profile-form-container">
+    <h1 class="admin-profile-form-title">Welcome to your admin dashboard,{{auth()->user()->first_name}}:</h1>
+    <div class="company-users-table-container">
+        <div class="company-users-table-scroll">
+            <table class="company-users-table">
+                <thead class="company-users-table-head">
+                    <th class="company-users-table-head-content"><span>First Name</span></th>
+                    <th class="company-users-table-head-content"><span>Last Name</span></th>
+                    <th class="company-users-table-head-content"><span>Email</span></th>
+                    <th class="company-users-table-head-content"><span>Position</span></th>
+                    <th class="company-users-table-head-content"><span>Status</span></th>
+                    <th class="company-users-table-head-content"><span>Options</span></th>
+                </thead>
+                <tbody class="company-users-table-body js-admins-list">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="admin-options-container">
+        <form id="form" action="" method="post" enctype="multipart/form-data" class="admin-add-new-user-form">
+            <div class="admin-add-new-user-form-title">Add a new user to the team</div>
+            <label for="first-name" class="admin-add-new-user-label js-input-textarea-label" name="first_name">First Name</label>
+            <input type="text" class="admin-add-new-user-input js-input-textarea" id="first-name" name="first_name" placeholder="First Name" />
+            <span class="hidden js-error-first-name"><br><br></span>
+            <label for="last-name" class="admin-add-new-user-label js-input-textarea-label" name="last_name">Last Name</label>
+            <input type="text" class="admin-add-new-user-input js-input-textarea" id="last-name" name="last_name" placeholder="Last Name" />
+            <span class="hidden js-error-last-name"><br><br></span>
+            <label for="email" class="admin-add-new-user-label js-input-textarea-label" name="email">Email</label>
+            <input type="email" class="admin-add-new-user-input js-input-textarea" id="email" name="email" placeholder="E-Mail" />
+            <span class="hidden js-error-email"><br><br></span>
+            <input type="hidden" name="company_id" id="company-id" value="{{auth()->user()->company_id}}">
+            <label for="password" class="admin-add-new-user-label js-input-textarea-label" name="password">Pasword</label>
+            <input class="input-clear admin-add-new-user-input js-input-textarea" type="password" name="password" id="password" placeholder="User password">
+            <span class="hidden js-error-password"><br><br></span>
+            <label for="password_confirmation" class="admin-add-new-user-label js-input-textarea-label" name="password_confirmation">Confirm Password</label>
+            <input class="input-clear admin-add-new-user-input js-input-textarea" type="password" name="password_confirmation" id="password-confirm" placeholder="Confirm password">
+            <label for="job-title" class="admin-add-new-user-select-label">Select position for the new user:</label>
+                <select name="job_title_id" id="job-title" class="admin-add-new-user-select">
+                    @forelse($positions as $position)
+                    <option class="admin-add-new-user-select-option" value="{{$position->id}}">
+                        {{$position->name}}
+                    </option>
+                    @empty
+                    <option disabled>No positions</option>
+                    @endforelse
+                </select>
+            <label for="image" class="admin-add-new-user-select-label">Upload an image for the new user:</label>
+            <label for="image" class="admin-add-new-user-image-upload-custom">Upload an image <img class="admin-add-new-user-image-upload-icon" src="images/upload-icon.png" alt="upload"></label>
+            <input type="file" name="image" id="image" class="admin-add-new-user-image-upload"/>
+            <span class="hidden js-error-picture"><br><br></span>
+            <button type="submit" class="admin-add-new-user-button js-add-user">Add user</button>
+        </form>
+        <form class="admin-options-form">
+            <select name="feedback_time" id="feedback-time" class="admin-options-form-select">
+                @foreach($durations as $duration)
+                <option value="{{$duration->id}}">
+                    @if(auth()->user()->company->feedback_duration_id === $duration->id) selected @endif {{$duration->name}}
+                </option>
+                @endforeach
+            </select>
+            <button data-id="{{auth()->user()->company->id}}" class="admin-options-form-button admin-btn-feedback-duration">Submit</button>
+        </form>
+        <div class="admin-user-stats">
+            <div>Active users:{{count(auth()->user()->company->users())}}</div>
+            <div>Inactive users:{{count(auth()->user()->company->inactiveUsers())}}</div>
+            <div>Highest rated<br> {{$highest['user']}} : {{$highest['score']}}</div>
+            <div>Lowest rated<br>{{$lowest['user']}} : {{$lowest['score']}}</div>
+        </div>
+    </div>
+</div>
+<!-- 
         <div class="admin">
 
             <div class="edit-user-modal js-user-modal">
@@ -167,120 +239,147 @@
 
                                         <option value="{{$duration->id}}" @if(auth()->user()->company->feedback_duration_id === $duration->id) selected @endif >{{$duration->name}} </option>
 
-                                        <!-- <label for="add-img">Add profile picture</label>
+                                         <label for="add-img">Add profile picture</label>
                                         <br>
                                         <input name="add-img" id="add-img" type='file' />
 
-                                        <button class="admin-btn js-add-user">Add user</button> -->
-                                    @endforeach
+                                        <button class="admin-btn js-add-user">Add user</button> 
+@endforeach
 
-                                </select>
-                                <button data-id="{{auth()->user()->company->id}}" class="admin-btn admin-btn-feedback-duration">Submit</button>
-                            </div>
-                        </div>
-                        <div style="flex-grow: 1;">
-                        <div class="js-stats-info admin-style js-media-stats" style=" font-size: 2rem;">
-                                Company <br> <hr>
-                                Stats
-                            </div>
-                            <div class="js-statistics hidden-stats admin-style js-media-stats">
-                                <span>Active users:{{count(auth()->user()->company->users())}}</span>
-                                <br>
-                                <span>Inactive users:{{count(auth()->user()->company->inactiveUsers())}}</span>
-                                <br>
-                                <span>Highest rated<br> {{$highest['user']}} : {{$highest['score']}}</span>
-                                <br>
-                                <span>Lowest rated<br>{{$lowest['user']}} : {{$lowest['score']}}</span>
+</select>
+<button data-id="{{auth()->user()->company->id}}" class="admin-btn admin-btn-feedback-duration">Submit</button>
+</div>
+</div>
+<div style="flex-grow: 1;">
+    <div class="js-stats-info admin-style js-media-stats" style=" font-size: 2rem;">
+        Company <br>
+        <hr>
+        Stats
+    </div>
+    <div class="js-statistics hidden-stats admin-style js-media-stats">
+        <span>Active users:{{count(auth()->user()->company->users())}}</span>
+        <br>
+        <span>Inactive users:{{count(auth()->user()->company->inactiveUsers())}}</span>
+        <br>
+        <span>Highest rated<br> {{$highest['user']}} : {{$highest['score']}}</span>
+        <br>
+        <span>Lowest rated<br>{{$lowest['user']}} : {{$lowest['score']}}</span>
 
-                            </div>
-                        </div>
-                    </div>
-                    <table class="admin-table media-table">
-                        <thead class="media-thead">
-                        <tr>
-                            <th style="border: 1px solid #ec1940;position: sticky;top: 0;background-color: #22282d;">First Name</th>
-                            <th style="border: 1px solid #ec1940;position: sticky;top: 0;background-color: #22282d;">Last Name</th>
-                            <th style="border: 1px solid #ec1940;position: sticky;top: 0;background-color: #22282d;">Email</th>
-                            <th style="border: 1px solid #ec1940;position: sticky;top: 0;background-color: #22282d;">Position</th>
-                            <th style="border: 1px solid #ec1940;position: sticky;top: 0;background-color: #22282d; z-index:1;">Status</th>
-                            <th style="border: 1px solid #ec1940;position: sticky;top: 0;background-color: #22282d;">Options</th>
-                        </tr>
-                        </thead>
-                        <tbody class="js-admins-list">
+    </div>
+</div>
+</div>
+<table class="admin-table media-table">
+    <thead class="media-thead">
+        <tr>
+            <th style="border: 1px solid #ec1940;position: sticky;top: 0;background-color: #22282d;">First Name</th>
+            <th style="border: 1px solid #ec1940;position: sticky;top: 0;background-color: #22282d;">Last Name</th>
+            <th style="border: 1px solid #ec1940;position: sticky;top: 0;background-color: #22282d;">Email</th>
+            <th style="border: 1px solid #ec1940;position: sticky;top: 0;background-color: #22282d;">Position</th>
+            <th style="border: 1px solid #ec1940;position: sticky;top: 0;background-color: #22282d; z-index:1;">Status</th>
+            <th style="border: 1px solid #ec1940;position: sticky;top: 0;background-color: #22282d;">Options</th>
+        </tr>
+    </thead>
+    <tbody class="js-admins-list">
 
-                        </tbody>
-                    </table>
-                </div>
-                <div id="tabs-mail" class="js-edit-form tab-view admin-width">
-                    <h2>Type a message to all your users</h2>
-                    <textarea name="message" id="message"style="resize: none; height:30vh;"
-                    placeholder="Remember to be nice to your employees"></textarea>
-                    <div>
-                        <button type="submit" id="send" class="admin-btn">Send</button>
-                    </div>
-                </div>
-            </div>
+    </tbody>
+</table>
+</div>
+<div id="tabs-mail" class="js-edit-form tab-view admin-width">
+    <h2>Type a message to all your users</h2>
+    <textarea name="message" id="message" style="resize: none; height:30vh;" placeholder="Remember to be nice to your employees"></textarea>
+    <div>
+        <button type="submit" id="send" class="admin-btn">Send</button>
+    </div>
+</div>
+</div>
 
 
-            </div>
+</div>
 
-        </div>
+</div> -->
 
-    @endif
+@endif
 
 @endsection
 
 
 @section('script')
-    <script>
-
-        $(document).ready(function () {
-            $( function() {
-                $( "#tabs" ).tabs();
-            } );
-
-            getUsers();
-
-            $('.js-update-user').click(updateUser);
-
-            $('.js-user-update-password').click(updateUserPassword);
-
-
-            $(document).on('click', "#delete-user", deleteUser);
-
-            $(document).on('submit', "#form", submitTest);
-
-            $('.js-stats').click(showStats);
-
-            $('.admin-btn-feedback-duration').click(updateFeedbackDurationTime);
-
-            $('.js-edit-user-close').click(closeEdit);
-
-            $(document).on('change', "input[name='chk-box']", changeUserStatus);
-
-            testScreen();
-
-            $('.js-show-time-update').click(showTime);
-
-            $('.js-show-new-user').click(showNew);
-
-            $("#uploadimage").submit(editImage);
-
-            $('#send').click(notifyUsers);
-
-
-            $("#chk-box").click(getCheck);
-            function getCheck(){
-                chk = $("#chk-box").checked ? 1 : 0;
-                $.ajax({
-                    type: 'GET',
-                    url: '',
-                    data: {}
-                });
+<script>
+    document.querySelectorAll('.js-input-textarea').forEach(textarea => {
+        textarea.addEventListener('input', function() {
+            if (this.tagName === "TEXTAREA") {
+                this.style.height = `auto`;
+                this.style.height = `${this.scrollHeight + (this.offsetHeight - this.clientHeight)}px`;
+            }
+            if (this.value !== '') {
+                document.querySelectorAll('.js-input-textarea-label').forEach(label => {
+                    if (this.name == label.attributes.name.value) {
+                        label.style.opacity = 1;
+                        label.style.visibility = 'visible';
+                    }
+                })
+                this.style.borderColor = '#ec1940';
+            } else {
+                document.querySelectorAll('.js-input-textarea-label').forEach(label => {
+                    if (this.name == label.attributes.name.value) {
+                        label.style.opacity = 0;
+                        label.style.visibility = 'hidden';
+                    }
+                })
+                this.style.borderColor = '#d3d4d5';
             }
         });
+    });
 
 
 
-    </script>
+
+
+    $(document).ready(function() {
+        $(function() {
+            $("#tabs").tabs();
+        });
+
+        getUsers();
+
+        $('.js-update-user').click(updateUser);
+
+        $('.js-user-update-password').click(updateUserPassword);
+
+
+        $(document).on('click', "#delete-user", deleteUser);
+
+        $(document).on('submit', "#form", submitTest);
+
+        $('.js-stats').click(showStats);
+
+        $('.admin-btn-feedback-duration').click(updateFeedbackDurationTime);
+
+        $('.js-edit-user-close').click(closeEdit);
+
+        $(document).on('change', "input[name='chk-box']", changeUserStatus);
+
+        testScreen();
+
+        $('.js-show-time-update').click(showTime);
+
+        $('.js-show-new-user').click(showNew);
+
+        $("#uploadimage").submit(editImage);
+
+        $('#send').click(notifyUsers);
+
+
+        $("#chk-box").click(getCheck);
+
+        function getCheck() {
+            chk = $("#chk-box").checked ? 1 : 0;
+            $.ajax({
+                type: 'GET',
+                url: '',
+                data: {}
+            });
+        }
+    });
+</script>
 @endsection

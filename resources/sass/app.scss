@@ -694,6 +694,7 @@ html {
 
 .profile-form-submit-button {
     cursor: pointer;
+    user-select: none;
     display: block;
     margin-left: auto;
     border: none;
@@ -761,6 +762,7 @@ html {
 
 .login-form-submit {
     background-color: #ec1940;
+    user-select: none;
     color: white;
     width: 200px;
     padding: 10px;
@@ -1018,3 +1020,258 @@ html {
 .feedback-status-text {
     color: #7a7e81;
 }
+
+
+
+
+//// ADMIN /////
+
+.admin-profile-form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-profile-form-title {
+    color: #ec1940;
+    user-select: none;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.company-users-table-container {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.company-users-table {
+    border-collapse: collapse; 
+    border-spacing: 0;
+
+}
+
+.company-users-table-container {
+    max-height: 250px;
+    overflow: hidden;
+    padding-top: 16px;
+    border: 1px solid #cccccc;
+}
+
+.company-users-table-scroll {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.company-users-table-head {
+    // border: 1px solid #cccccc;
+    text-align: left;
+}
+
+.company-users-table-head-content {
+    text-align: left;
+    span {
+        position: absolute;
+        top: 0;
+        background-color: white;
+        width: 100%;
+        display: block;
+        border-left: solid 1px #cccccc;
+        border-bottom: solid 1px #cccccc;
+        padding-left: 5px;
+        letter-spacing: 1px;
+        text-align: left;   
+        color: #7a7e81;
+        font-weight: bold;
+        z-index: 3;
+    }
+}
+
+.company-users-table-body {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.company-users-table-body-row {
+    border-bottom: 1px solid #cccccc;
+}
+.company-users-table-body-data {
+    border-left: 1px solid #cccccc;
+    text-align: center;
+    color: #7a7e81;
+    font-weight: 400;
+    font-size: 14px;
+    text-align: left;
+    padding-left: 5px;
+}
+
+.user-status-checkbox {
+    display: none;
+    &:checked + .user-status-toggle-outer {
+        background-color: #ec1940;
+
+        .user-status-toggle-inner {
+            transform: translate(20px);
+        }
+    }
+}
+
+.user-status-toggle-outer {
+    cursor: pointer;
+    display: block;
+    background-color: gray;
+    width: 45px;
+    height: 25px;
+    border-radius: 25px;
+    position: relative;
+    margin: auto;
+    transition: background-color ease-in-out .3s;
+}
+
+.user-status-toggle-inner {
+    display: block;
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    top: 2px;
+    left: 2px;
+    transition: transform ease-in-out .3s;
+}
+
+.users-table-button {
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    font-size: 14px;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    background-color: #ec1940;
+    color: white;
+    &:hover {
+        background-color: #ff7d95;
+    }
+}
+
+.users-table-center {
+    text-align: center;
+}
+
+
+.admin-options-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.admin-add-new-user-form {
+    width: 50%;
+    margin-right: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-add-new-user-form-title {
+    font-size: 20px;
+    color: #ec1940;
+    user-select: none;
+    margin-bottom: 20px;
+}
+
+.admin-add-new-user-input {
+    padding: 5px;
+    padding-bottom: 10px;
+    outline: none;
+    border: none;
+    border-bottom: 3px solid #d3d4d5;
+    font-size: 16px;
+    font-family: sans-serif;
+    overflow: hidden;
+    margin-bottom: 20px;
+    transition: border ease-in-out .3s;
+}
+
+.admin-add-new-user-label {
+    color: #ec1940;
+    user-select: none;
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 5px;
+    transition: all ease-in-out .3s;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.admin-add-new-user-select {
+    cursor: pointer;
+    outline: none;
+    font-size: 16px;
+    background-color: #ec1940;
+    color: white;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    max-width: 300px;
+    margin-bottom: 20px;
+}
+
+.admin-add-new-user-select-option {
+    background-color: #ec1940;
+}
+
+.admin-add-new-user-select-label {
+    user-select: none;
+    color: #ec1940;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.admin-add-new-user-image-upload {
+    display: none;
+}
+
+.admin-add-new-user-image-upload-custom {
+    font-size: 16px;
+    color: white;
+    background-color: #ec1940;
+    border-radius: 7px;
+    cursor: pointer;
+    user-select: none;
+    padding: 10px;
+    max-width: 150px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    &:hover {
+        background-color: #ff7d95;
+    }
+}
+
+.admin-add-new-user-image-upload-icon {
+    width: 20px;
+    margin-left: auto;
+}
+
+.admin-add-new-user-button {
+    cursor: pointer;
+    user-select: none;
+    display: block;
+    margin-left: auto;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    font-size: 16px;
+    padding: 10px;
+    padding-left: 35px;
+    padding-right: 35px;
+    margin-bottom: 25px;
+    margin-left: auto;
+    background-color: #ec1940;
+    color: white;
+    &:hover {
+        background-color: #ff7d95;
+    }
+}
+//// ADMIN /////

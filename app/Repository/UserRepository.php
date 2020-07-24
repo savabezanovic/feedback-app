@@ -39,7 +39,7 @@ class UserRepository
     public function admins()
     {
         $admins = User::whereHas('role', function($q){
-            $q->whereIn('name', ['admin']);
+            $q->where('name', ['admin']);
         })
         ->get();
         return $admins;
@@ -71,10 +71,10 @@ class UserRepository
             'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => $password,
-            'company_id' => $request->company_id,
-//            'email_verified_at' => now(),
-//            'remember_token' => Str::random(10)
+            'company_id' => $request->company_id
         ]);
+
+        $user->role()->attach(2);
 
         return $user;
     }

@@ -121,7 +121,7 @@ class UserService
 
     public function createAdmin($request)
     {
-        return $this->storeAdmin($request)->assignRole('admin');
+        return $this->storeAdmin($request);
     }
 
     public function uploadPicture($request, $user)

@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
@@ -51,7 +52,7 @@ class UserService
 
     public function hashPassword($value)
     {
-        return \Hash::make($value);
+        return Hash::make($value);
     }
 
     public function store($request)

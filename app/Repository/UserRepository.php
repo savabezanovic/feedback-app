@@ -6,6 +6,7 @@ namespace App\Repositories;
 
 use App\User;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserRepository
 {
@@ -37,8 +38,11 @@ class UserRepository
 
     public function admins()
     {
-        return $this->user->role('admin')
-            ->get();
+        $admins = User::whereHas('role', function($q){
+            $q->whereIn('name', ['admin']);
+        })
+        ->get();
+        return $admins;
     }
 
     public function store($request, $password)

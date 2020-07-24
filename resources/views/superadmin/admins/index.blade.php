@@ -20,8 +20,8 @@
 @section('content')
 
     <br>
-
-    @forelse($admins as $admin)
+    <p>NE RADI SMECE</p>
+    @forelse]($admins as $admin)
 
         <a href="{{route('superadmin.admin', $admin->id)}}">{{$admin->first_name}} {{$admin->last_name}}</a> -  add, delete, update<br>
 

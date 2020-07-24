@@ -1347,7 +1347,7 @@ html {
   flex-direction: column;
 }
 
-.admin-add-new-user-form-title {
+.admin-forms-title {
   font-size: 20px;
   color: #ec1940;
   -webkit-user-select: none;
@@ -1395,10 +1395,6 @@ html {
   border-radius: 5px;
   max-width: 300px;
   margin-bottom: 20px;
-}
-
-.admin-add-new-user-select-option {
-  background-color: #ec1940;
 }
 
 .admin-add-new-user-select-label {
@@ -1463,6 +1459,75 @@ html {
 }
 
 .admin-add-new-user-button:hover {
+  background-color: #ff7d95;
+}
+
+.admin-stats-time-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.admin-user-stats-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-user-stats {
+  display: flex;
+  font-size: 20px;
+  color: #7a7e81;
+  margin-top: 30px;
+}
+
+.admin-user-stats-info {
+  margin-left: auto;
+  color: #ec1940;
+}
+
+.admin-feedback-time-form {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-feedback-time-form-select-container {
+  display: flex;
+  align-items: center;
+}
+
+.admin-feedback-time-form-select {
+  cursor: pointer;
+  outline: none;
+  font-size: 18px;
+  background-color: #ec1940;
+  color: white;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  max-width: 300px;
+}
+
+.admin-feedback-time-form-button {
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  display: block;
+  margin-left: auto;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 20px;
+  background-color: #ec1940;
+  color: white;
+}
+
+.admin-feedback-time-form-button:hover {
   background-color: #ff7d95;
 }
 

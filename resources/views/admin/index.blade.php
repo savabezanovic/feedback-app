@@ -56,7 +56,7 @@ Please input correct data!
     </div>
     <div class="admin-options-container">
         <form id="form" action="" method="post" enctype="multipart/form-data" class="admin-add-new-user-form">
-            <div class="admin-add-new-user-form-title">Add a new user to the team</div>
+            <div class="admin-forms-title">Add a new user to the team</div>
             <label for="first-name" class="admin-add-new-user-label js-input-textarea-label" name="first_name">First Name</label>
             <input type="text" class="admin-add-new-user-input js-input-textarea" id="first-name" name="first_name" placeholder="First Name" />
             <span class="hidden js-error-first-name"><br><br></span>
@@ -73,36 +73,46 @@ Please input correct data!
             <label for="password_confirmation" class="admin-add-new-user-label js-input-textarea-label" name="password_confirmation">Confirm Password</label>
             <input class="input-clear admin-add-new-user-input js-input-textarea" type="password" name="password_confirmation" id="password-confirm" placeholder="Confirm password">
             <label for="job-title" class="admin-add-new-user-select-label">Select position for the new user:</label>
-                <select name="job_title_id" id="job-title" class="admin-add-new-user-select">
-                    @forelse($positions as $position)
-                    <option class="admin-add-new-user-select-option" value="{{$position->id}}">
-                        {{$position->name}}
-                    </option>
-                    @empty
-                    <option disabled>No positions</option>
-                    @endforelse
-                </select>
+            <select name="job_title_id" id="job-title" class="admin-add-new-user-select">
+                @forelse($positions as $position)
+                <option class="admin-add-new-user-select-option" value="{{$position->id}}">
+                    {{$position->name}}
+                </option>
+                @empty
+                <option disabled>No positions</option>
+                @endforelse
+            </select>
             <label for="image" class="admin-add-new-user-select-label">Upload an image for the new user:</label>
-            <label for="image" class="admin-add-new-user-image-upload-custom">Upload an image <img class="admin-add-new-user-image-upload-icon" src="images/upload-icon.png" alt="upload"></label>
-            <input type="file" name="image" id="image" class="admin-add-new-user-image-upload"/>
+            <label for="image" class="admin-add-new-user-image-upload-custom js-image-upload-custom">Upload an image <img class="admin-add-new-user-image-upload-icon" src="images/upload-icon.png" alt="upload"></label>
+            <input type="file" name="image" id="image" class="admin-add-new-user-image-upload js-image-upload" accept="image/x-png,image/gif,image/jpeg" />
             <span class="hidden js-error-picture"><br><br></span>
             <button type="submit" class="admin-add-new-user-button js-add-user">Add user</button>
         </form>
-        <form class="admin-options-form">
-            <select name="feedback_time" id="feedback-time" class="admin-options-form-select">
-                @foreach($durations as $duration)
-                <option value="{{$duration->id}}">
-                    @if(auth()->user()->company->feedback_duration_id === $duration->id) selected @endif {{$duration->name}}
-                </option>
-                @endforeach
-            </select>
-            <button data-id="{{auth()->user()->company->id}}" class="admin-options-form-button admin-btn-feedback-duration">Submit</button>
-        </form>
-        <div class="admin-user-stats">
-            <div>Active users:{{count(auth()->user()->company->users())}}</div>
-            <div>Inactive users:{{count(auth()->user()->company->inactiveUsers())}}</div>
-            <div>Highest rated<br> {{$highest['user']}} : {{$highest['score']}}</div>
-            <div>Lowest rated<br>{{$lowest['user']}} : {{$lowest['score']}}</div>
+        <div class="admin-stats-time-container">
+            <div class="admin-user-stats-container">
+                <div class="admin-forms-title">Users statistics</div>
+                <div class="admin-user-stats">Active users:<div class="admin-user-stats-info">{{count(auth()->user()->company->users())}}</div>
+                </div>
+                <div class="admin-user-stats">Inactive users:<div class="admin-user-stats-info">{{count(auth()->user()->company->inactiveUsers())}}</div>
+                </div>
+                <div class="admin-user-stats">Highest rating:<div class="admin-user-stats-info">{{$highest['user']}} ({{$highest['score']}})</div>
+                </div>
+                <div class="admin-user-stats">Lowest rating:<div class="admin-user-stats-info">{{$lowest['user']}} ({{$lowest['score']}})</div>
+                </div>
+            </div>
+            <form class="admin-feedback-time-form">
+                <div class="admin-forms-title">Change duration of feedbacks</div>
+                <div class="admin-feedback-time-form-select-container">
+                    <select name="feedback_time" id="feedback-time" class="admin-feedback-time-form-select">
+                        @foreach($durations as $duration)
+                        <option value="{{$duration->id}}">
+                            {{$duration->name}} @if(auth()->user()->company->feedback_duration_id === $duration->id) -active @endif 
+                        </option>
+                        @endforeach
+                    </select>
+                    <button data-id="{{auth()->user()->company->id}}" class="admin-feedback-time-form-button admin-btn-feedback-duration">Submit</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -331,7 +341,11 @@ Please input correct data!
         });
     });
 
-
+    document.querySelector('.js-image-upload').addEventListener("change", function() {
+        if (this.value !== "") {
+            document.querySelector('.js-image-upload-custom').innerHTML = `Image uploaded<img class="admin-add-new-user-image-upload-icon" src="images/upload-icon.png" alt="upload">`
+        }
+    })
 
 
 

@@ -40,15 +40,18 @@ class LoginController extends Controller
 
     public function redirectTo()
     {
-        if (auth()->user()->role[0]->name == 'superadmin') {
+        if( isset(auth()->user()->role[0]->name) == true) {
+            if (auth()->user()->role[0]->name == 'superadmin') {
 
-            return '/superadmin';
+                return '/superadmin';
+            }
+    
+            else if (auth()->user()->role[0]->name == 'admin') {
+    
+                return '/admin';
+            }
         }
-
-        else if (auth()->user()->role[0]->name == 'admin') {
-
-            return '/admin';
-        }
+        
 
         return '/dashboard';
     }

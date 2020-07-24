@@ -30,6 +30,6 @@ class SuperAdminController extends Controller
 
         $positions = $this->jobTitleService->all();
 
-        return view('superadmin.control-panel', compact(['companies', 'positions']));
+        return view('super-admin.control-panel', compact(['companies', 'positions']));
     }
 }

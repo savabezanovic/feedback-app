@@ -1081,7 +1081,7 @@ html {
         text-align: left;   
         color: #7a7e81;
         font-weight: bold;
-        z-index: 3;
+        z-index: 1;
     }
 }
 
@@ -1160,6 +1160,63 @@ html {
 }
 
 
+.admin-edit-user-form-container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all ease-in-out .5s;
+}
+
+
+.admin-edit-user-form {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    width: 500px;
+    padding: 25px;
+    border-radius: 5px;
+    box-shadow: 4px 4px 8px #363636;
+}
+
+.admin-edit-user-form-close {
+    display: block;
+    margin-left: auto;
+    cursor: pointer;
+    user-select: none;
+    font-size: 18px;
+}
+
+.admin-edit-user-form-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #ec1940;
+}
+
+.admin-edit-user-form-button {
+    background-color: #ec1940;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 24px;
+    padding: 10px;
+    margin-top: 15px;
+    &:hover {
+        background-color: #ff7d95;
+    }
+    
+}
+
 .admin-options-container {
     display: flex;
     flex-direction: row;
@@ -1179,7 +1236,7 @@ html {
     margin-bottom: 20px;
 }
 
-.admin-add-new-user-input {
+.admin-user-input {
     padding: 5px;
     padding-bottom: 10px;
     outline: none;
@@ -1188,19 +1245,33 @@ html {
     font-size: 16px;
     font-family: sans-serif;
     overflow: hidden;
-    margin-bottom: 20px;
     transition: border ease-in-out .3s;
 }
 
-.admin-add-new-user-label {
+.admin-user-edit-error {
+    color: #5569d8;
+    font-size: 14px;
+    font-weight: bold;
+    max-height: 0;
+    margin-top: 5px;
+    overflow: hidden;
+    transition: max-height ease-in-out .5s;
+}
+
+.admin-user-input-label {
     color: #ec1940;
     user-select: none;
     cursor: pointer;
-    font-size: 12px;
-    margin-top: 5px;
+    font-size: 16px;
+    margin-top: 25px;
     transition: all ease-in-out .3s;
     opacity: 0;
     visibility: hidden;
+}
+
+.admin-user-input-label-visible {
+    opacity: 1;
+    visibility: visible;
 }
 
 .admin-add-new-user-select {
@@ -1220,6 +1291,7 @@ html {
     user-select: none;
     color: #ec1940;
     margin-bottom: 5px;
+    margin-top: 20px;
     font-size: 16px;
 }
 
@@ -1335,4 +1407,5 @@ html {
         background-color: #ff7d95;
     }
 }
+
 //// ADMIN /////

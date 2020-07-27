@@ -30,11 +30,35 @@ $(document).ready(function () {
                             $('.js-edit-fname').val(data.user.first_name);
                             $('.js-edit-lname').val(data.user.last_name);
                             $('.js-edit-mail').val(data.user.email);
-                            $('#update-job-title').val(data.user.profile.job_title_id)
+                            $('#update-job-title').val(data.user.profile.job_title_id);
+                            document.querySelectorAll('.js-edit-user-input').forEach(input => {
+                                if (input.value === "") {
+                                    input.style.borderColor = "#d3d4d5"
+                                    document.querySelectorAll(".js-input-textarea-label").forEach(label => {
+                                        if(input.name === label.attributes.name.value) {
+                                            label.style.opacity = 0;
+                                            label.style.visibility = 'hidden';
+                                            }
+                                    })
+                                } else {
+                                    input.style.borderColor = "#ec1940"
+                                    document.querySelectorAll(".js-input-textarea-label").forEach(label => {
+                                        if(input.name === label.attributes.name.value) {
+                                            label.style.opacity = 1;
+                                            label.style.visibility = 'visible';
+                                        }
+                                    })
+                                }
+                            })                        
                         }
-                    );
+                    )
                     $('#hidden_user_id').val(id);
-                    $(".js-user-modal").show()
+                    $(".js-edit-error").css("max-height", "0");
+                    $(".js-edit-error-password").css("max-height", "0");
+                    $(".js-edit-user-form").css({"visibility":"visible","opacity":"1"});
+                    $('#password1').val("");
+                    $('#password-confirm1').val("");
+     
                 }
 
             }
@@ -94,12 +118,44 @@ $(document).ready(function () {
 
 // UPDATE USER
 
-    window.updateUser = function(){
+    window.updateUser = function(event){
+        event.preventDefault()
         id = $('#hidden_user_id').val();
         first_name = $('.js-edit-fname').val();
         last_name = $('.js-edit-lname').val();
         email = $('.js-edit-mail').val();
         job_title_id = $('#update-job-title').val();
+        if ($('.js-edit-fname').val() === "" || $('.js-edit-lname').val() === "" || 
+            $('.js-edit-mail').val() === "" || ($('#password1').val() !== "" && $('#password-confirm1').val() !== $('#password1').val())) {
+            document.querySelectorAll('.js-edit-user-input').forEach(input => {
+                if(input.value === "" && input.name !== "user-password") {
+                    document.querySelectorAll('.js-edit-error').forEach(error => {
+                        if (input.name === error.attributes.name.value) {
+                            error.style.maxHeight = "100vh"
+                        } 
+                    })
+                } else if(input.value !== "" && input.name !== "user-password") {
+                    document.querySelectorAll('.js-edit-error').forEach(error => {
+                        if (input.name === error.attributes.name.value) {
+                            error.style.maxHeight = "0"
+                        } 
+                    })                }
+                
+                if (input.value !=="" && input.name === "user-password" && input.value !== $('#password-confirm1').val()) {
+                    document.querySelectorAll(".js-edit-error-password").forEach(passwordError => {
+                        passwordError.style.maxHeight = "100vh"
+                    })
+                } else if (input.value !=="" && input.name === "user-password" && input.value === $('#password-confirm1').val()) {
+                    document.querySelectorAll(".js-edit-error-password").forEach(passwordError => {
+                        passwordError.style.maxHeight = "0"
+                    })
+                }
+                
+            })
+             
+                return
+        }  
+       
         $.ajax (
             {
                 url: "/admin/users/" + id,
@@ -110,6 +166,7 @@ $(document).ready(function () {
                     email: email,
                     job_title_id: job_title_id,
                 },
+                success: updateUserPassword(),
                 error: (function(data){
                     if (data.responseJSON.errors.first_name) {
                         $('.js-error-edit-user-first-name').slideDown().text(data.responseJSON.errors.first_name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
@@ -120,11 +177,11 @@ $(document).ready(function () {
                     if (data.responseJSON.errors.email) {
                         $('.js-error-edit-user-email').slideDown().text(data.responseJSON.errors.email[0]).fadeIn(3000).delay(3000).fadeOut("slow");
                     }
-                })
-            }).done(alert("User is updated"),
-            $(".js-user-modal").hide(),
+                }),
+            }).done(alert("User upadted"),
+            $(".js-edit-user-form").css({"opacity":"0", "visibility":"hidden"}),
             $('.js-admins-list').empty().append(getUsers)
-        );
+        );      
 
 
 
@@ -148,7 +205,7 @@ $(document).ready(function () {
                     $('.js-error-edit-user-password').slideDown().text(data.responseJSON.errors.password[0]).fadeIn(3000).delay(3000).fadeOut("slow");
                 }
             })
-        }).done(alert("Password is updated"))
+        }).done()
     };
 //ADD USER MODAL BUTTON
 
@@ -247,9 +304,11 @@ $(document).ready(function () {
         });
     };
 
-    window.closeEdit = function(){
-        $(".js-user-modal").hide()
-    };
+    $('.js-admin-edit-user-close').click(function() {
+        $(".js-edit-user-form").css({"opacity":"0", "visibility":"hidden"})
+    });
+
+
 // change user status
 
     window.changeUserStatus = function() {

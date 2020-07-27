@@ -54,24 +54,67 @@ Please input correct data!
             </table>
         </div>
     </div>
+    <div class="admin-edit-user-form-container js-edit-user-form">
+        <form class="admin-edit-user-form">
+            <div class="admin-edit-user-form-close js-admin-edit-user-close">&#10006;</div>
+            <div class="admin-edit-user-form-title">EDIT USER FORM</div>
+            <label class="admin-user-input-label js-input-textarea-label" name="first-name-edit" for="edit-first-name">First Name</label>
+            <input type="text" placeholder="First Name" class="admin-user-input js-input-textarea js-edit-fname js-edit-user-input" id="edit-first-name" name="first-name-edit">
+            <div name="first-name-edit" class="admin-user-edit-error js-edit-error">First name is requiered</div>
+            <label class="admin-user-input-label js-input-textarea-label" name="last-name-edit" for="edit-last-name">Last name</label>
+            <input type="text" placeholder="Last Name" class="admin-user-input js-input-textarea js-edit-lname js-edit-user-input" id="edit-last-name" name="last-name-edit">
+            <div name="last-name-edit" class="admin-user-edit-error js-edit-error">Last name is requiered</div>
+            <label class="admin-user-input-label js-input-textarea-label" name="email-edit" for="edit-email">Email</label>
+            <input type="email" placeholder="Email" class="admin-user-input js-input-textarea js-edit-mail js-edit-user-input" name="email-edit" id="edit-email">
+            <div name="email-edit" class="admin-user-edit-error js-edit-error">Email is requiered</div>
+            <input type="hidden" name="hidden_user_id" id="hidden_user_id">
+            <label class="admin-user-input-label js-input-textarea-label " name="user-password" for="password1">Password</label>
+            <input type="password" name="user-password" id="password1" placeholder="New password" class="admin-user-input js-input-textarea js-edit-user-input">
+            <div name="email-edit" class="admin-user-edit-error js-edit-error-password">Passowrds must match</div>
+            <label  class="admin-user-input-label js-input-textarea-label" name="edit-password-confirmation" for="password-confirm1">Password Confirm</label>
+            <input type="password" name="edit-password-confirmation" id="password-confirm1" placeholder="Confirm new password" class="admin-user-input js-input-textarea js-edit-user-input">
+            <div name="email-edit" class="admin-user-edit-error js-edit-error-password">Passowrds must match</div>
+            <label class="admin-user-input-label admin-user-input-label-visible" for="job-title">Positions:</label>
+            <select name="job-title" id="update-job-title" class="admin-add-new-user-select" required>
+                @forelse($positions as $position)
+
+                <option value="{{$position->id}}">
+                    {{$position->name}}
+                </option>
+
+                @empty
+
+                <option disabled>No positions</option>
+
+                @endforelse
+
+            </select>
+          
+            <label for="image" class="admin-add-new-user-select-label">Change image for the user:</label>
+            <label for="image" class="admin-add-new-user-image-upload-custom js-image-upload-custom">Upload an image <img class="admin-add-new-user-image-upload-icon" src="images/upload-icon.png" alt="upload"></label>
+            <input type="file" name="image" id="image" class="admin-add-new-user-image-upload js-image-upload" accept="image/x-png,image/gif,image/jpeg" />
+            <button class="admin-edit-user-form-button js-update-user">Update</button>
+
+        </form>
+    </div>
     <div class="admin-options-container">
         <form id="form" action="" method="post" enctype="multipart/form-data" class="admin-add-new-user-form">
             <div class="admin-forms-title">Add a new user to the team</div>
-            <label for="first-name" class="admin-add-new-user-label js-input-textarea-label" name="first_name">First Name</label>
-            <input type="text" class="admin-add-new-user-input js-input-textarea" id="first-name" name="first_name" placeholder="First Name" />
+            <label for="first-name" class="admin-user-input-label js-input-textarea-label" name="first_name">First Name</label>
+            <input type="text" class="admin-user-input js-input-textarea" id="first-name" name="first_name" placeholder="First Name" />
             <span class="hidden js-error-first-name"><br><br></span>
-            <label for="last-name" class="admin-add-new-user-label js-input-textarea-label" name="last_name">Last Name</label>
-            <input type="text" class="admin-add-new-user-input js-input-textarea" id="last-name" name="last_name" placeholder="Last Name" />
+            <label for="last-name" class="admin-user-input-label js-input-textarea-label" name="last_name">Last Name</label>
+            <input type="text" class="admin-user-input js-input-textarea" id="last-name" name="last_name" placeholder="Last Name" />
             <span class="hidden js-error-last-name"><br><br></span>
-            <label for="email" class="admin-add-new-user-label js-input-textarea-label" name="email">Email</label>
-            <input type="email" class="admin-add-new-user-input js-input-textarea" id="email" name="email" placeholder="E-Mail" />
+            <label for="email" class="admin-user-input-label js-input-textarea-label" name="email">Email</label>
+            <input type="email" class="admin-user-input js-input-textarea" id="email" name="email" placeholder="E-Mail" />
             <span class="hidden js-error-email"><br><br></span>
             <input type="hidden" name="company_id" id="company-id" value="{{auth()->user()->company_id}}">
-            <label for="password" class="admin-add-new-user-label js-input-textarea-label" name="password">Pasword</label>
-            <input class="input-clear admin-add-new-user-input js-input-textarea" type="password" name="password" id="password" placeholder="User password">
+            <label for="password" class="admin-user-input-label js-input-textarea-label" name="password">Pasword</label>
+            <input class="input-clear admin-user-input js-input-textarea" type="password" name="password" id="password" placeholder="User password">
             <span class="hidden js-error-password"><br><br></span>
-            <label for="password_confirmation" class="admin-add-new-user-label js-input-textarea-label" name="password_confirmation">Confirm Password</label>
-            <input class="input-clear admin-add-new-user-input js-input-textarea" type="password" name="password_confirmation" id="password-confirm" placeholder="Confirm password">
+            <label for="password_confirmation" class="admin-user-input-label js-input-textarea-label" name="password_confirmation">Confirm Password</label>
+            <input class="input-clear admin-user-input js-input-textarea" type="password" name="password_confirmation" id="password-confirm" placeholder="Confirm password">
             <label for="job-title" class="admin-add-new-user-select-label">Select position for the new user:</label>
             <select name="job_title_id" id="job-title" class="admin-add-new-user-select">
                 @forelse($positions as $position)
@@ -106,7 +149,7 @@ Please input correct data!
                     <select name="feedback_time" id="feedback-time" class="admin-feedback-time-form-select">
                         @foreach($durations as $duration)
                         <option value="{{$duration->id}}">
-                            {{$duration->name}} @if(auth()->user()->company->feedback_duration_id === $duration->id) -active @endif 
+                            {{$duration->name}} @if(auth()->user()->company->feedback_duration_id === $duration->id) -active @endif
                         </option>
                         @endforeach
                     </select>
@@ -358,9 +401,6 @@ Please input correct data!
 
         $('.js-update-user').click(updateUser);
 
-        $('.js-user-update-password').click(updateUserPassword);
-
-
         $(document).on('click', "#delete-user", deleteUser);
 
         $(document).on('submit', "#form", submitTest);
@@ -369,7 +409,6 @@ Please input correct data!
 
         $('.admin-btn-feedback-duration').click(updateFeedbackDurationTime);
 
-        $('.js-edit-user-close').click(closeEdit);
 
         $(document).on('change', "input[name='chk-box']", changeUserStatus);
 

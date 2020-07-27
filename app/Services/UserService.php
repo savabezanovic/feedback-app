@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Repositories\UserRepository;
+use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 

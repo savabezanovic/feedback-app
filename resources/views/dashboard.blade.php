@@ -5,6 +5,7 @@
 
 
 <div class="feedback-app-navbar-profile-container">
+
     <img src="{{auth()->user()->profile->picture}}" alt="profile avatar" class="feedback-app-profile-avatar">
     <div>
         <div class="feedback-app-navbar-profile-name js-feedback-app-logged-user">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</div>

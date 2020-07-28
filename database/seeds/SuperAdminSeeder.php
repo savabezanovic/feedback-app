@@ -55,8 +55,8 @@ class SuperAdminSeeder extends Seeder
 
         $superadmin = new User();
 
-        $superadmin->first_name = 'my name is';
-        $superadmin->last_name = 'mister so mighty buahahaha';
+        $superadmin->first_name = 'Admin';
+        $superadmin->last_name = 'Super';
         $superadmin->email = 'superadmin@feedback-app.com';
         $superadmin->email_verified_at = now();
         $superadmin->password = Hash::make('superadmin');

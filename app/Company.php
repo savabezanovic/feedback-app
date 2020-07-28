@@ -30,9 +30,9 @@ class Company extends Model
             ->where('company_id', $this->id)
             ->where('active', true)
             ->get();
-
+        
         return $users->filter(function ($user) {
-            if($user->role[0]->name != 'admin') {
+            if($user->role != 'admin') {
                 return $user;
             }
         });
@@ -60,6 +60,7 @@ class Company extends Model
             ->get();
 
         return $users->filter(function ($user) {
+            
             if($user->role[0]->name != 'admin') {
                 return $user;
             }

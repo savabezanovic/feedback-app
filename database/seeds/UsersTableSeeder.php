@@ -37,7 +37,6 @@ class UsersTableSeeder extends Seeder
         for ($i = 0; $i < 5; $i++) {
 
             $user = new User();
-
             $user->first_name = $this->faker->firstName;
             $user->last_name = $this->faker->lastName;
             $user->email = $this->faker->unique()->safeEmail;

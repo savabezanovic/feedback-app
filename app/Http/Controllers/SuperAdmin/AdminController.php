@@ -8,6 +8,7 @@ use App\Http\Requests\SuperAdminRequest;
 use App\Http\Requests\UpdateAdminPasswordRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Services\UserService;
+use App\Services\ProfileService;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -17,9 +18,10 @@ class AdminController extends Controller
      */
     private $userService;
 
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, ProfileService $profileService)
     {
         $this->userService = $userService;
+        $this->profileService = $profileService;
     }
 
     public function index(SuperAdminRequest $request)
@@ -39,6 +41,7 @@ class AdminController extends Controller
     public function store(CreateAdminRequest $request)
     {
         $this->userService->createAdmin($request);
+        $this->profileService->createProfile($request);
 
         return response()->json(['success' => 'Admin is created']);
     }

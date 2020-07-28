@@ -27,4 +27,8 @@ class ProfileService
         $this->userService = $userService;
         $this->feedbackService = $feedbackService;
     }
+
+    public function createProfile($request) {
+        return $this->createProfile($request);
+    }
 }

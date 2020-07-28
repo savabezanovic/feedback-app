@@ -74,6 +74,11 @@ class UserRepository
             'company_id' => $request->company_id
         ]);
 
+        $user->profile()->create([
+            'job_title_id' => 13,
+            'picture' => "https://lorempixel.com/640/480/?36443"
+       ]);
+
         $user->role()->attach(2);
 
         return $user;

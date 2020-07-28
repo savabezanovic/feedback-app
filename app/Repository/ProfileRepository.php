@@ -17,8 +17,5 @@ class ProfileRepository
     {
         $this->profile = $profile;
     }
-    public function createProfile($request) {
-        $profile = new Profile;
-        $profile->picture = "https://lorempixel.com/640/480/?36443";
-    }
+
 }

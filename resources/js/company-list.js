@@ -84,9 +84,10 @@ $(document).ready(function(){
                     active: active
                 }
             }).fail(function (data) {
-            if (data.responseJSON.errors.name) {
-                $('.js-error-edit-company-name' + id).slideDown().text(data.responseJSON.errors.name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
-            }
+            // if (data.responseJSON.errors.name) {
+            //     $('.js-error-edit-company-name' + id).slideDown().text(data.responseJSON.errors.name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
+            // }
+            console.log(data.responseJSON)
         })
             .done(function (data) {
                 $('.js-companies').empty().append(getCompany);

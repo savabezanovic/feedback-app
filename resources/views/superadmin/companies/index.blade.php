@@ -22,8 +22,8 @@
     <br>
 
     @forelse($companies as $company)
-
-        <a href="{{route('company.index', $company->id)}}">{{$company->name}}</a> -  add member, delete member/company, update member/company<br>
+    
+        <a href="{{route('company.index', $company->id)}}">{{$company->name}}</a> - member, delete member/company, update member/company<br>
 
     @empty
 

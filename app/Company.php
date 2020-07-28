@@ -32,7 +32,7 @@ class Company extends Model
             ->get();
 
         return $users->filter(function ($user) {
-            if($user->role != 'admin') {
+            if($user->role[0]->name != 'admin') {
                 return $user;
             }
         });
@@ -46,7 +46,7 @@ class Company extends Model
             ->get();
 
         return $users->filter(function ($user) {
-            if($user->role != 'admin') {
+            if($user->role[0]->name != 'admin') {
                 return $user;
             }
         });
@@ -60,7 +60,7 @@ class Company extends Model
             ->get();
 
         return $users->filter(function ($user) {
-            if($user->role != 'admin') {
+            if($user->role[0]->name != 'admin') {
                 return $user;
             }
         });

@@ -41,8 +41,9 @@ class CompanyService
 
     public function update($request, $id)
     {
+        
         $company = $this->company->find($id);
-
+        
         if ($request->feedback_duration_id) {
 
             return $this->company->updateFeedbackDurationTime($company, $request);

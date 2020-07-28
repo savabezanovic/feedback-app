@@ -43,6 +43,7 @@ class CompanyController extends Controller
 
     public function update(EditCompanyRequest $request, $id)
     {
+        
         $this->companyService->update($request, $id);
 
         return response()->json(['success' => 'Company is updated']);

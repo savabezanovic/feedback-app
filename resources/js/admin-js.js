@@ -58,6 +58,8 @@ $(document).ready(function () {
                     $(".js-edit-user-form").css({"visibility":"visible","opacity":"1"});
                     $('#password1').val("");
                     $('#password-confirm1').val("");
+                    $('#file').val("");
+                    $('.js-image-upload-edit').html(`Upload an image<img class="admin-add-new-user-image-upload-icon" src="images/upload-icon.png" alt="upload">`)
      
                 }
 
@@ -167,6 +169,7 @@ $(document).ready(function () {
                     job_title_id: job_title_id,
                 },
                 success: updateUserPassword(),
+                success: editImage(),
                 error: (function(data){
                     if (data.responseJSON.errors.first_name) {
                         $('.js-error-edit-user-first-name').slideDown().text(data.responseJSON.errors.first_name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
@@ -180,7 +183,9 @@ $(document).ready(function () {
                 }),
             }).done(alert("User upadted"),
             $(".js-edit-user-form").css({"opacity":"0", "visibility":"hidden"}),
-            $('.js-admins-list').empty().append(getUsers)
+            $('.js-admins-list').empty().append(getUsers),
+            id === $('.js-logged-admin').attr('id') &&
+            window.location.reload()
         );      
 
 
@@ -329,9 +334,7 @@ $(document).ready(function () {
 
     // edit image
 
-    window.editImage = function(e) {
-
-        e.preventDefault();
+    window.editImage = function() {
         let form_data = new FormData();
         form_data.append('picture', $('#file')[0].files[0]);
         form_data.append('_method', 'PUT');
@@ -351,6 +354,6 @@ $(document).ready(function () {
                     $('.js-error-edit-user-picture').slideDown().text(data.responseJSON.errors.picture[0]).fadeIn(3000).delay(3000).fadeOut("slow");
                 }
             })
-        }).done(alert('Picture is updated'));
+        }).done();
     }
 });

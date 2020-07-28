@@ -4,8 +4,8 @@
 
 <div class="user-box">
     <div class="user">
-        <img src="https://source.unsplash.com/random" class="user-image">
-        <div class="user-status">
+        <img src="{{auth()->user()->profile->picture}}" class="user-image js-admin-profile-picture" >
+        <div class="user-status js-logged-admin" id="{{auth()->user()->id}}">
             <form action="{{route('logout')}}" method="POST">
                 @csrf
                 <p class="user-name">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</p>
@@ -90,10 +90,18 @@ Please input correct data!
 
             </select>
           
-            <label for="image" class="admin-add-new-user-select-label">Change image for the user:</label>
-            <label for="image" class="admin-add-new-user-image-upload-custom js-image-upload-custom">Upload an image <img class="admin-add-new-user-image-upload-icon" src="images/upload-icon.png" alt="upload"></label>
-            <input type="file" name="image" id="image" class="admin-add-new-user-image-upload js-image-upload" accept="image/x-png,image/gif,image/jpeg" />
+            <label for="file" class="admin-add-new-user-select-label">Change image for the user:</label>
+            <label for="file" class="admin-add-new-user-image-upload-custom js-image-upload-edit">Upload an image <img class="admin-add-new-user-image-upload-icon" src="images/upload-icon.png" alt="upload"></label>
+            <span class="hidden js-error-edit-user-picture"><br>add pic greska<br></span>
             <button class="admin-edit-user-form-button js-update-user">Update</button>
+
+            {{-- <form name="picture-form" id="picture-form" enctype="multipart/form-data">--}}
+                        <label for="add-img" style="display: none;">Add profile picture</label>
+                        <br>
+                        <form  action="" method="post" enctype="multipart/form-data">
+                            <input type="file" name="file" id="file" style="display: none;">
+                        </form>
+                        {{-- </form>--}}
 
         </form>
     </div>
@@ -390,6 +398,12 @@ Please input correct data!
         }
     })
 
+    document.getElementById("file").addEventListener("change", function() {
+        if (this.value !== "") {
+            document.querySelector('.js-image-upload-edit').innerHTML = `Image uploaded<img class="admin-add-new-user-image-upload-icon" src="images/upload-icon.png" alt="upload">`
+        }
+    })
+
 
 
     $(document).ready(function() {
@@ -418,7 +432,7 @@ Please input correct data!
 
         $('.js-show-new-user').click(showNew);
 
-        $("#uploadimage").submit(editImage);
+        $("#uploadimage").click(editImage);
 
         $('#send').click(notifyUsers);
 

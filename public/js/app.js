@@ -32642,6 +32642,8 @@ module.exports = g;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 $(document).ready(function () {
   window.getUsers = function () {
     $.get('/admin/users', function (data) {
@@ -32689,6 +32691,8 @@ $(document).ready(function () {
         });
         $('#password1').val("");
         $('#password-confirm1').val("");
+        $('#file').val("");
+        $('.js-image-upload-edit').html("Upload an image<img class=\"admin-add-new-user-image-upload-icon\" src=\"images/upload-icon.png\" alt=\"upload\">");
       }
     });
   };
@@ -32748,6 +32752,8 @@ $(document).ready(function () {
 
 
   window.updateUser = function (event) {
+    var _$$ajax;
+
     event.preventDefault();
     id = $('#hidden_user_id').val();
     first_name = $('.js-edit-fname').val();
@@ -32784,7 +32790,7 @@ $(document).ready(function () {
       return;
     }
 
-    $.ajax({
+    $.ajax((_$$ajax = {
       url: "/admin/users/" + id,
       type: 'PUT',
       data: {
@@ -32793,24 +32799,23 @@ $(document).ready(function () {
         email: email,
         job_title_id: job_title_id
       },
-      success: updateUserPassword(),
-      error: function error(data) {
-        if (data.responseJSON.errors.first_name) {
-          $('.js-error-edit-user-first-name').slideDown().text(data.responseJSON.errors.first_name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
-        }
-
-        if (data.responseJSON.errors.last_name) {
-          $('.js-error-edit-user-last-name').slideDown().text(data.responseJSON.errors.last_name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
-        }
-
-        if (data.responseJSON.errors.email) {
-          $('.js-error-edit-user-email').slideDown().text(data.responseJSON.errors.email[0]).fadeIn(3000).delay(3000).fadeOut("slow");
-        }
+      success: updateUserPassword()
+    }, _defineProperty(_$$ajax, "success", editImage()), _defineProperty(_$$ajax, "error", function error(data) {
+      if (data.responseJSON.errors.first_name) {
+        $('.js-error-edit-user-first-name').slideDown().text(data.responseJSON.errors.first_name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
       }
-    }).done(alert("User upadted"), $(".js-edit-user-form").css({
+
+      if (data.responseJSON.errors.last_name) {
+        $('.js-error-edit-user-last-name').slideDown().text(data.responseJSON.errors.last_name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
+      }
+
+      if (data.responseJSON.errors.email) {
+        $('.js-error-edit-user-email').slideDown().text(data.responseJSON.errors.email[0]).fadeIn(3000).delay(3000).fadeOut("slow");
+      }
+    }), _$$ajax)).done(alert("User upadted"), $(".js-edit-user-form").css({
       "opacity": "0",
       "visibility": "hidden"
-    }), $('.js-admins-list').empty().append(getUsers));
+    }), $('.js-admins-list').empty().append(getUsers), id === $('.js-logged-admin').attr('id') && window.location.reload());
   }; // UPDATE USER PASSWORD
 
 
@@ -32952,8 +32957,7 @@ $(document).ready(function () {
   }; // edit image
 
 
-  window.editImage = function (e) {
-    e.preventDefault();
+  window.editImage = function () {
     var form_data = new FormData();
     form_data.append('picture', $('#file')[0].files[0]);
     form_data.append('_method', 'PUT');
@@ -32978,7 +32982,7 @@ $(document).ready(function () {
           $('.js-error-edit-user-picture').slideDown().text(data.responseJSON.errors.picture[0]).fadeIn(3000).delay(3000).fadeOut("slow");
         }
       }
-    }).done(alert('Picture is updated'));
+    }).done();
   };
 });
 
@@ -33172,9 +33176,10 @@ $(document).ready(function () {
         active: active
       }
     }).fail(function (data) {
-      if (data.responseJSON.errors.name) {
-        $('.js-error-edit-company-name' + id).slideDown().text(data.responseJSON.errors.name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
-      }
+      // if (data.responseJSON.errors.name) {
+      //     $('.js-error-edit-company-name' + id).slideDown().text(data.responseJSON.errors.name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
+      // }
+      console.log(data.responseJSON);
     }).done(function (data) {
       $('.js-companies').empty().append(getCompany);
       $("#company-id option[value='" + id + "']").remove();

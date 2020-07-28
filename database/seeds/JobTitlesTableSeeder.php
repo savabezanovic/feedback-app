@@ -14,7 +14,7 @@ class JobTitlesTableSeeder extends Seeder
     {
         $positions = [
             'Senior Software Engineer', 'QA Automation Lead', 'Paid Intern', 'Poor non-paid Intern', 'Junior Web Developer',
-            'Medior Web Developer', 'HR Manager', 'Team Leader', 'Project Manager', 'Web Designer', 'Graphic Designer'
+            'Medior Web Developer', 'HR Manager', 'Team Leader', 'Project Manager', 'Web Designer', 'Graphic Designer', "Admin"
         ];
 
         foreach ($positions as $position) {

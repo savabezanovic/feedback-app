@@ -99,7 +99,7 @@ Please input correct data!
                         <label for="add-img" style="display: none;">Add profile picture</label>
                         <br>
                         <form  action="" method="post" enctype="multipart/form-data">
-                            <input type="file" name="file" id="file" style="display: none;">
+                            <input type="file" name="file" id="file" style="display: none;" accept="image/x-png,image/gif,image/jpeg">
                         </form>
                         {{-- </form>--}}
 

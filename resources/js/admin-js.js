@@ -10,17 +10,18 @@ $(document).ready(function () {
                                     <td class="company-users-table-body-data">${e.email}</td>
                                     <td class="company-users-table-body-data">${e.profile.job_title.name}</td>
                                     <td class="user-status-dot company-users-table-body-data">
-                                    <input class="user-status-checkbox" data-id="${e.id}" name="chk-box" id="chk-box-${e.id}" value="1" type="checkbox" ${e.active === 1 ? "checked" : ""} >
+                                    <input class="user-status-checkbox" data-id="${e.id}" name="chk-box" id="chk-box-${e.id}" value="1" type="checkbox" ${e.active === 1 ? "checked" : ""} 
+                                    ${e.id.toString() === $('.js-logged-admin').attr('id') ? "disabled" : ""}>
                                         <label for="chk-box-${e.id}" class="user-status-toggle-outer">
                                             <span class="user-status-toggle-inner"></span>
                                         </label>
                                     </td>
                                     <td class="company-users-table-body-data users-table-center">
                                         <button id="${e.id}" class="users-table-button js-edit-user" data-id=${e.id}>Edit</button>
-                                        <button class="users-table-button" id="delete-user" data-id=${e.id}>Delete</button>
+                                        ${e.id.toString() === $('.js-logged-admin').attr('id') ? '<span></span>' : `<button class="users-table-button" id="delete-user" data-id=${e.id}>Delete</button>`}
                                     </td>
                                 </tr>`
-                });
+                });            
                 $('.js-admins-list').append(output);
                 $(".js-edit-user").click(editUser);
                 function editUser(e){
@@ -60,7 +61,6 @@ $(document).ready(function () {
                     $('#password-confirm1').val("");
                     $('#file').val("");
                     $('.js-image-upload-edit').html(`Upload an image<img class="admin-add-new-user-image-upload-icon" src="images/upload-icon.png" alt="upload">`)
-     
                 }
 
             }

@@ -24,11 +24,12 @@ class UserService
      */
     private $storageService;
 
-    public function __construct(UserRepository $user, CompanyService $companyService, StorageService $storageService)
+    public function __construct(UserRepository $user, CompanyService $companyService, StorageService $storageService, JobTitleService $jobTitleService)
     {
         $this->user = $user;
         $this->companyService = $companyService;
         $this->storageService = $storageService;
+        $this->jobTitleService = $jobTitleService;
     }
 
     public function all()
@@ -72,8 +73,9 @@ class UserService
     public function storeAdmin($request)
     {
         $password = $this->hashPassword($request->password);
+        $jobTitle = $this->jobTitleService->findByName("Admin");
 
-        return $user = $this->user->storeAdmin($request, $password);
+        return $user = $this->user->storeAdmin($request, $password, $jobTitle);
     }
 
     public function delete($id)
@@ -122,6 +124,7 @@ class UserService
 
     public function createAdmin($request)
     {
+        
         return $this->storeAdmin($request);
     }
 

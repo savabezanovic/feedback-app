@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 
 use App\User;
+use App\JobTitle;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -15,9 +16,10 @@ class UserRepository
      */
     private $user;
 
-    public function __construct(User $user)
+    public function __construct(User $user, JobTitle $jobTitle)
     {
         $this->user = $user;
+        $this->jobTitle = $jobTitle;
     }
 
     public function all()
@@ -64,8 +66,9 @@ class UserRepository
             return $user;
     }
 
-    public function storeAdmin($request, $password)
+    public function storeAdmin($request, $password, $jobTitle)
     {
+        
         $user = $this->user->create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -75,7 +78,7 @@ class UserRepository
         ]);
 
         $user->profile()->create([
-            'job_title_id' => 13,
+            'job_title_id' => $jobTitle[0]->id,
             'picture' => "https://lorempixel.com/640/480/?36443"
        ]);
 

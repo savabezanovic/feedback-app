@@ -23,6 +23,10 @@ class JobTitleRepository
         return $this->jobTitle->all();
     }
 
+    public function findByName($name) {
+        return $this->jobTitle->where("name", $name)->get();
+    }
+
     public function paginated($perPage)
     {
         return $this->jobTitle->paginate($perPage);

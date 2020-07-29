@@ -23,6 +23,10 @@ class JobTitleService
         return $this->jobTitle->all();
     }
 
+    public function findByName($name) {
+        return $this->jobTitle->findByName($name);
+    }
+
     public function paginated($perPage)
     {
         return $this->jobTitle->paginated($perPage);

@@ -78,3 +78,5 @@ Route::post('/admin/notification/send', 'Admin\UserNotificationController@messag
 Route::put('/admin/companies/{id}', 'Admin\CompanyController@update')->name('admin.company.update');
 
 Route::get('/company/{id}', 'CompanyController@show')->name('company.show');
+
+Route::get('/test', 'TestController@test')->name('test');

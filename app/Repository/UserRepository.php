@@ -6,6 +6,7 @@ namespace App\Repositories;
 
 use App\User;
 use App\JobTitle;
+use App\Role;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -81,8 +82,8 @@ class UserRepository
             'job_title_id' => $jobTitle[0]->id,
             'picture' => "https://lorempixel.com/640/480/?36443"
        ]);
-
-        $user->role()->attach(2);
+        $role = Role::where("name", "admin")->get();
+        $user->role()->attach($role[0]->id);
 
         return $user;
     }

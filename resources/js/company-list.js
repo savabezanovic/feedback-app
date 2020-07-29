@@ -4,17 +4,18 @@ $(document).ready(function(){
         $.get(
             '/superadmin/companies', function (data) {
                 let output = [];
-                data.companies.forEach(function (e) {
-                    output += '<p><span style="margin:auto 0; margin-right:10px">'+ e.name + '</span>' +
-                        (e.active === 1 ? '<span title="active company"class="dot"></span>' : '<span title="Inactive company" class="dot-red"></span>') + '<button data-id="'+ e.id +
-                        '" class="delete-company super-admin-btn" name="delete-company">DEL</button>'+
-                        '<i style="margin:auto 0" class="add fas fa-plus-circle js-super-show" data-id="'+ e.id +'"></i>'+
-                        '<span class="hide js-super-hide'+ e.id +'"><button data-id="'+ e.id +
-                        '"class="edit-company super-admin-btn" name="edit-company">Update</button><input data-id="'+ e.id +
-                        '"class="js-edit-input-company-name'+ e.id +'" value="'+ e.name +'">'+
-                        '<input class="js-edit-company-name'+ e.id +'name="active" id="active-'+ e.id +'" type="checkbox"' +
-                        (e.active === 1 ? "checked" : "")
-                        + ">"+'</span><br><span class="hidden js-error-edit-company-name'+ e.id +'"><br><br></span></p>';
+                data.companies.forEach(company => {
+                    output += `<div class="super-admin-company-container js-super-company-container">
+                                    <div class="super-admin-company-name js-current-company-name-${company.id}">${company.name}</div>
+                                    <div class="super-admin-company-activity">${company.active === 1 ? "&#10004;" : "&#10006;"}</div>
+                                    <input type="checkbox" id="active-${company.id}" ${company.active === 1 ? "checked" : ""} class="super-admin-company-checkbox"/>
+                                    <label for="active-${company.id}" class="super-admin-toggle-outer">
+                                            <span class="super-admin-toggle-inner"></span>
+                                    </label>
+                                    <input type="text" placeholder="Change company name" class="js-change-company-name-input-${company.id} super-admin-input " />
+                                    <button data-id=${company.id} class="super-admin-button super-admin-company-button js-change-company-name">CHANGE</button>
+                                    <button data-id="${company.id}" class="super-admin-button super-admin-company-button js-delete-company">DELETE</button>
+                               </div>`;
                 });
                 $('.js-companies').append(output);
 
@@ -59,22 +60,12 @@ $(document).ready(function(){
         })
     };
 
-    $(document).on ('click', '.delete-company', function () {
-
-    });
-
     //UPDATE COMPANY
 
     window.editCompany = function(e) {
         let  id =  e.target.getAttribute("data-id");
-        let active = '';
-        let name = $('.js-edit-input-company-name'+id).val();
-        if (document.getElementById('active-' + id).checked) {
-            active = 1;
-        }
-        else {
-            active = 0;
-        }
+        let active = $(`#active-${id}`).is(":checked") ? 1 : 0;
+        let name =  !$(`.js-change-company-name-input-${id}`).val() ? $(`.js-current-company-name-${id}`).html() : $(`.js-change-company-name-input-${id}`).val();
         $.ajax (
             {
                 url: "/superadmin/companies/" + id + "/update",

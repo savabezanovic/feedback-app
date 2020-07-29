@@ -33117,8 +33117,8 @@ $(document).ready(function () {
   window.getCompany = function () {
     $.get('/superadmin/companies', function (data) {
       var output = [];
-      data.companies.forEach(function (e) {
-        output += '<p><span style="margin:auto 0; margin-right:10px">' + e.name + '</span>' + (e.active === 1 ? '<span title="active company"class="dot"></span>' : '<span title="Inactive company" class="dot-red"></span>') + '<button data-id="' + e.id + '" class="delete-company super-admin-btn" name="delete-company">DEL</button>' + '<i style="margin:auto 0" class="add fas fa-plus-circle js-super-show" data-id="' + e.id + '"></i>' + '<span class="hide js-super-hide' + e.id + '"><button data-id="' + e.id + '"class="edit-company super-admin-btn" name="edit-company">Update</button><input data-id="' + e.id + '"class="js-edit-input-company-name' + e.id + '" value="' + e.name + '">' + '<input class="js-edit-company-name' + e.id + 'name="active" id="active-' + e.id + '" type="checkbox"' + (e.active === 1 ? "checked" : "") + ">" + '</span><br><span class="hidden js-error-edit-company-name' + e.id + '"><br><br></span></p>';
+      data.companies.forEach(function (company) {
+        output += "<div class=\"super-admin-company-container js-super-company-container\">\n                                    <div class=\"super-admin-company-name js-current-company-name-".concat(company.id, "\">").concat(company.name, "</div>\n                                    <div class=\"super-admin-company-activity\">").concat(company.active === 1 ? "&#10004;" : "&#10006;", "</div>\n                                    <input type=\"checkbox\" id=\"active-").concat(company.id, "\" ").concat(company.active === 1 ? "checked" : "", " class=\"super-admin-company-checkbox\"/>\n                                    <label for=\"active-").concat(company.id, "\" class=\"super-admin-toggle-outer\">\n                                            <span class=\"super-admin-toggle-inner\"></span>\n                                    </label>\n                                    <input type=\"text\" placeholder=\"Change company name\" class=\"js-change-company-name-input-").concat(company.id, " super-admin-input \" />\n                                    <button data-id=").concat(company.id, " class=\"super-admin-button super-admin-company-button js-change-company-name\">CHANGE</button>\n                                    <button data-id=\"").concat(company.id, "\" class=\"super-admin-button super-admin-company-button js-delete-company\">DELETE</button>\n                               </div>");
       });
       $('.js-companies').append(output);
     });
@@ -33153,21 +33153,13 @@ $(document).ready(function () {
       $('.js-companies').empty().append(getCompany);
       $("#company-id option[value='" + id + "']").remove();
     });
-  };
+  }; //UPDATE COMPANY
 
-  $(document).on('click', '.delete-company', function () {}); //UPDATE COMPANY
 
   window.editCompany = function (e) {
     var id = e.target.getAttribute("data-id");
-    var active = '';
-    var name = $('.js-edit-input-company-name' + id).val();
-
-    if (document.getElementById('active-' + id).checked) {
-      active = 1;
-    } else {
-      active = 0;
-    }
-
+    var active = $("#active-".concat(id)).is(":checked") ? 1 : 0;
+    var name = !$(".js-change-company-name-input-".concat(id)).val() ? $(".js-current-company-name-".concat(id)).html() : $(".js-change-company-name-input-".concat(id)).val();
     $.ajax({
       url: "/superadmin/companies/" + id + "/update",
       type: 'PUT',

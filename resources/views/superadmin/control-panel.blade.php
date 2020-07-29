@@ -18,7 +18,8 @@
 @endsection
 
 @section('content')
-    <div class="admin">
+
+    <!-- <div class="admin">
         <h2 class="admin-title">Superadmin panel</h2>
 
         <div id="tabs">
@@ -91,7 +92,8 @@
             </div>
         </div>
     </div>
-    <!-- Modal -->
+
+
     <div class="edit-modal">
         <div class="edit-title">EDIT ADMIN<button class="close-btn edit-btn js-edit-close"><i class="fas fa-times"></i></button></div>
         <div class="edit-form">
@@ -135,13 +137,81 @@
         </div>
 
 
-    </div>
+    </div> -->
+<div class="super-admin-container">
+    <h1>Welcome to the superadmin dashboard, Chosen one</h1>
+    <div class="superadmin-forms-container">
+        <div class="super-admin-navigation-bar">
+            <label for="companies-panel" class="navigation-label js-navigation-label">Companies</label>
+            <label for="admins" class="navigation-label js-navigation-label">Admins</label>
+            <label for="job-titles" class="navigation-label js-navigation-label">Job Titles</label>
+            <label for="skills" class="navigation-label js-navigation-label">Skills</label>
+        </div>
+        <input type="radio" id="companies-panel" name="navigation-radio" class="navigation-radio js-navigation-radio" checked />
+        <div class="navigation-div">
+            <h3 class="super-admin-titles">Companies Panel</h3>
+            <div class="add-a-company-container">
+                <input class="super-admin-input add-a-company-input js-company-name" value="" placeholder="Add a company" class="">
+                <span class="hidden js-admin-company-name"><br><br></span>
+                <button class="super-admin-button js-add-company-btn">ADD</button>
+            </div>
+            <input class="super-admin-input super-admin-search-company js-super-search-comapny" type="text" placeholder="Search company">
+            <div class="all-companies-container js-companies">
+            </div>
+        </div>
+
+        <input type="radio" id="admins" name="navigation-radio" class="navigation-radio js-navigation-radio" />
+        <div class="navigation-div">
+            AAAA
+        </div>
+
+        <input type="radio" id="job-titles" name="navigation-radio" class="navigation-radio js-navigation-radio" />
+        <div class="navigation-div">
+            BBBB
+        </div>
+
+        <input type="radio" id="skills" name="navigation-radio" class="navigation-radio js-navigation-radio" />
+        <div class="navigation-div">
+            CCCC
+        </div>
+    </div>    
+</div>
 
 @endsection
 @section('script')
     <script>
 
         $(document).ready(function () {
+
+            document.querySelector('.js-super-search-comapny').addEventListener('input', function() {
+                document.querySelectorAll('.js-super-company-container').forEach(company => {
+                    if (this.value !== '' && !company.innerText.toLowerCase().includes(this.value.toLowerCase())) {
+                        company.style.display = 'none';
+                    } else if (this.value !== '' && company.innerText.toLowerCase().includes(this.value.toLowerCase())) {
+                        company.style.display = 'flex'
+                    } else if (this.value === '') {
+                        company.style.display = 'flex'
+                    }
+                });
+            });
+
+            $('.js-navigation-radio').each(function() {
+                if (this.checked === true) {
+                    const checkedId = this.id
+                    $('.js-navigation-label').each(function() {
+                        if (checkedId === $(this).attr('for')) {
+                            $(this).addClass('nav-label-selected');
+                        }
+                    })
+                }
+            })
+                
+            
+
+            $('.js-navigation-label').click(function() {
+                $('.js-navigation-label').removeClass('nav-label-selected');
+                $(this).addClass('nav-label-selected');
+            })
 
             $( function() {
                 $( "#tabs" ).tabs();
@@ -183,9 +253,9 @@
 
             $('.js-add-company-btn').click(addCompany);
 
-            $(document).on('click', ".delete-company", deleteCompany);
+            $(document).on('click', ".js-delete-company", deleteCompany);
 
-            $(document).on('click', ".edit-company", editCompany);
+            $(document).on('click', ".js-change-company-name", editCompany);
 
             //Job Titles Pagination
             $(document).on('click', '.pagination a', getPage);

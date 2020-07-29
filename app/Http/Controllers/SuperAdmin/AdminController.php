@@ -41,7 +41,6 @@ class AdminController extends Controller
     public function store(CreateAdminRequest $request)
     {
         $this->userService->createAdmin($request);
-        $this->profileService->createProfile($request);
 
         return response()->json(['success' => 'Admin is created']);
     }

@@ -18,9 +18,7 @@ class JobTitlesTableSeeder extends Seeder
         ];
 
         foreach ($positions as $position) {
-
             $jobTitle = new JobTitle();
-
             $jobTitle->name = $position;
             $jobTitle->save();
         }

@@ -33113,12 +33113,13 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /***/ (function(module, exports) {
 
 $(document).ready(function () {
-  //GET ALL COMPANY
+  var timeout5 = false; //GET ALL COMPANY
+
   window.getCompany = function () {
     $.get('/superadmin/companies', function (data) {
       var output = [];
       data.companies.forEach(function (company) {
-        output += "<div class=\"super-admin-company-container js-super-company-container\">\n                                    <div class=\"super-admin-company-name js-current-company-name-".concat(company.id, "\">").concat(company.name, "</div>\n                                    <div class=\"super-admin-company-activity\">").concat(company.active === 1 ? "&#10004;" : "&#10006;", "</div>\n                                    <input type=\"checkbox\" id=\"active-").concat(company.id, "\" ").concat(company.active === 1 ? "checked" : "", " class=\"super-admin-company-checkbox\"/>\n                                    <label for=\"active-").concat(company.id, "\" class=\"super-admin-toggle-outer\">\n                                            <span class=\"super-admin-toggle-inner\"></span>\n                                    </label>\n                                    <input type=\"text\" placeholder=\"Change company name\" class=\"js-change-company-name-input-").concat(company.id, " super-admin-input \" />\n                                    <button data-id=").concat(company.id, " class=\"super-admin-button super-admin-company-button js-change-company-name\">CHANGE</button>\n                                    <button data-id=\"").concat(company.id, "\" class=\"super-admin-button super-admin-company-button js-delete-company\">DELETE</button>\n                               </div>");
+        output += "<div class=\"super-admin-company-container js-super-company-container\" name=".concat(company.name, ">\n                                    <div class=\"super-admin-company-name js-current-company-name-").concat(company.id, "\">").concat(company.name, "</div>\n                                    <div class=\"super-admin-company-activity\">").concat(company.active === 1 ? "&#10004;" : "&#10006;", "</div>\n                                    <input type=\"checkbox\" id=\"active-").concat(company.id, "\" ").concat(company.active === 1 ? "checked" : "", " class=\"super-admin-company-checkbox\"/>\n                                    <label for=\"active-").concat(company.id, "\" class=\"super-admin-toggle-outer\">\n                                            <span class=\"super-admin-toggle-inner\"></span>\n                                    </label>\n                                    <input type=\"text\" placeholder=\"Change company name\" class=\"js-change-company-name-input-").concat(company.id, " super-admin-input \" />\n                                    <button data-id=").concat(company.id, " class=\"super-admin-button super-admin-company-button js-change-company-name\">CHANGE</button>\n                                    <button data-id=\"").concat(company.id, "\" class=\"super-admin-button super-admin-company-button js-delete-company\">DELETE</button>\n                               </div>");
       });
       $('.js-companies').append(output);
     });
@@ -33129,9 +33130,20 @@ $(document).ready(function () {
     var name = $('.js-company-name').val();
     $.post('/superadmin/companies', {
       name: name
-    }).fail(function (data) {
-      if (data.responseJSON.errors.name) {
-        $('.js-admin-company-name').slideDown().text(data.responseJSON.errors.name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
+    }).fail(function () {
+      if (!timeout5) {
+        timeout5 = true;
+        $('.js-add-company-error').text("You must input company name").css({
+          "visibility": "visible",
+          "opacity": 1
+        });
+        setTimeout(function () {
+          $('.js-add-company-error').css({
+            "opacity": 0,
+            "visibility": "hidden"
+          });
+          timeout5 = false;
+        }, 3000);
       }
     }).done(function (data) {
       $('.js-companies').empty().append(getCompany);
@@ -33297,35 +33309,37 @@ $(document).ready(function () {
   window.getJobTitles = function () {
     $.get('/superadmin/job-titles', function (data) {
       var output = [];
-      var outputs = [];
-      console.log(data.positions.data);
-      data.positions.data.forEach(function (e) {
-        output += '<p class="media-list">' + e.name + '<button data-id="' + e.id + '" class="delete-position super-admin-btn" name="delete-position">DEL</button>' + '<i style="margin:auto 0" class="add fas fa-plus-circle js-job-show" data-id="' + e.id + '"></i>' + '<span class="js-job-hide' + e.id + ' hide"><button data-id="' + e.id + '"class="edit-position super-admin-btn" id="edit-position">Update</button>' + '<input type="text" name="edit-position' + e.id + '" id="edit-position' + e.id + '" data-id="' + e.id + '"class="js-edit-input' + e.id + '" placeholder="Update job title">' + '</span><br><span class="hidden js-edit-job-title-name' + e.id + '"><br><br></span></p>';
+      data.positions.data.forEach(function (job) {
+        output += "<div class=\"job-title-container js-job-title-container\" name=\"".concat(job.name, "\">\n                                    <div class=\"job-name\">").concat(job.name, "</div>\n                                    <input type=\"text\" id=\"edit-job-").concat(job.id, "\" data-id=\"").concat(job.id, "\" name=\"job-edit-").concat(job.id, "\" class=\"super-admin-input edit-job-name js-input-textarea\" placeholder=\"Change job name\"/>\n                                    <button class=\"super-admin-button js-change-job-name\" data-id=\"").concat(job.id, "\">Change</button>\n                                    <button data-id=\"").concat(job.id, "\" class=\"super-admin-button job-delete-button js-delete-job\">Delete</button>\n                                </div>");
       });
-      outputs += data.links;
-      $('.js-positions').append(output);
-      $('.js-pagination').append(outputs);
+      $('.js-jobs-container').append(output);
     });
   }; // Add job
 
 
   window.addJobTitle = function () {
     $.post('/superadmin/job-titles', {
-      name: $('[name="position-name"]').val()
+      name: $('.js-add-job').val()
     }).fail(function (data) {
       if (data.responseJSON.errors.name) {
         $('.js-admin-job-title-name').slideDown().text(data.responseJSON.errors.name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
       }
-    }).done(function (data) {
-      $('.js-positions').empty().append(getJobTitles);
-      $('.js-position').val("");
+    }).done(function () {
+      $('.js-jobs-container').empty().append(getJobTitles);
+      $('.js-add-job').val("");
+      $('.js-add-job').css("border-color", "#d3d4d5");
+      $('.js-add-job-label').css({
+        "opacity": "0",
+        "visibility": "hidden"
+      });
     });
   }; // Update job title
 
 
-  window.editJobTitle = function (e) {
-    var id = e.target.getAttribute("data-id");
-    var name = $('#edit-position' + id).val();
+  window.editJobTitle = function () {
+    var id = $(this).attr("data-id");
+    var name = $("#edit-job-".concat(id)).val();
+    console.log(name);
     $.ajax({
       url: "/superadmin/job-titles/" + id,
       type: 'PUT',
@@ -33334,16 +33348,16 @@ $(document).ready(function () {
       }
     }).fail(function (data) {
       if (data.responseJSON.errors.name) {
-        $('.js-edit-job-title-name' + id).slideDown().text(data.responseJSON.errors.name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
+        console.log(data.responseJSON.errors.name); //$('.js-edit-job-title-name' + id).slideDown().text(data.responseJSON.errors.name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
       }
-    }).done(function (data) {
-      $('.js-positions').empty().append(getJobTitles);
+    }).done(function () {
+      $('.js-jobs-container').empty().append(getJobTitles);
     });
   }; // Delete job title
 
 
-  window.deleteJobTitle = function (e) {
-    var id = e.target.getAttribute("data-id");
+  window.deleteJobTitle = function () {
+    var id = $(this).attr("data-id");
     $.ajax({
       url: "/superadmin/job-titles/" + id,
       type: 'DELETE',
@@ -33351,24 +33365,9 @@ $(document).ready(function () {
         id: id
       }
     }).done(function (data) {
-      $('.js-positions').empty().append(getJobTitles);
+      $('.js-jobs-container').empty().append(getJobTitles);
     });
-  }; //Search positions
-
-
-  $(".search-position").on("keyup", function () {
-    var value = $(this).val().toLowerCase();
-    $(".js-positions p").filter(function () {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-    });
-  }); //Update job
-
-  $(document).on('click', '.js-job-show', function () {
-    var id = $(this).data('id');
-    var field = $('.js-job-hide' + id);
-    field.toggle();
-    $(this).toggleClass('fa-plus-circle fa-minus-circle');
-  });
+  };
 });
 
 /***/ }),
@@ -33540,14 +33539,17 @@ $(document).ready(function () {
 /***/ (function(module, exports) {
 
 $(document).ready(function () {
+  var timeout1 = false;
+  var timeout2 = false;
+  var timeout3 = false;
+  var timeout4 = false;
+
   window.getAdmins = function () {
     $.get('/superadmin/admins', function (data) {
       var output = [];
       data.admins.forEach(function (admin) {
         var companyName = $(".js-current-company-name-".concat(admin.company_id)).html();
-        output += "<div class=\"super-admin-admin-container\">\n                                    <div class=\"super-admin-admin-name\">".concat(admin.first_name, " ").concat(admin.last_name, "</div>\n                                    <div class=\"super-admin-admin-email\">").concat(admin.email, "</div>\n                                    <div class=\"super-admin-admin-company-name\">").concat(companyName, "</div>\n                                    <button class=\"super-admin-button super-admin-admins-button js-super-admin-edit-admin\" id=").concat(admin.id, ">EDIT ADMIN</button>\n                                    <button data-id=\"").concat(admin.id, "\" class=\"super-admin-button super-admin-admins-button js-super-admin-delete-admin\">DELETE ADMIN</button>\n                               </div>"); // '<p>' + e.first_name + ' ' + e.last_name + ' <button data-id="'+ e.id +
-        //     '" class="super-admin-btn js-super-admin-delete-admin" name="js-super-admin-delete-admin">DEL</button>'+
-        //     '<button name="edit-admin" id="'+ e.id +'" class="super-admin-btn js-edit-modal">EDIT</button></p>';
+        output += "<div class=\"super-admin-admin-container\">\n                                    <div class=\"super-admin-admin-name\">".concat(admin.first_name, " ").concat(admin.last_name, "</div>\n                                    <div class=\"super-admin-admin-email\">").concat(admin.email, "</div>\n                                    <div class=\"super-admin-admin-company-name\">").concat(companyName, "</div>\n                                    <button class=\"super-admin-button super-admin-admins-button js-super-admin-edit-admin\" id=").concat(admin.id, ">EDIT ADMIN</button>\n                                    <button data-id=\"").concat(admin.id, "\" class=\"super-admin-button super-admin-admins-button js-super-admin-delete-admin\">DELETE ADMIN</button>\n                               </div>");
       });
       $('.js-all-admins').append(output);
       $(".js-super-admin-edit-admin").click(editAdmin);
@@ -33607,10 +33609,8 @@ $(document).ready(function () {
       success: updatePassword()
     }).fail(function (data) {
       if (data.responseJSON.errors.first_name) {
-        var _timeout = false;
-
-        if (!_timeout) {
-          _timeout = true;
+        if (!timeout1) {
+          timeout1 = true;
           $('.js-error-admin-edit-first-name').text(data.responseJSON.errors.first_name[0]).css({
             "visibility": "visible",
             "opacity": 1
@@ -33620,14 +33620,12 @@ $(document).ready(function () {
               "opacity": 0,
               "visibility": "hidden"
             });
-            _timeout = false;
+            timeout1 = false;
           }, 3000);
         }
       }
 
       if (data.responseJSON.errors.last_name) {
-        var timeout2 = false;
-
         if (!timeout2) {
           timeout2 = true;
           $('.js-error-admin-edit-last-name').text(data.responseJSON.errors.last_name[0]).css({
@@ -33639,14 +33637,12 @@ $(document).ready(function () {
               "opacity": 0,
               "visibility": "hidden"
             });
-            timeout1 = false;
+            timeout2 = false;
           }, 3000);
         }
       }
 
       if (data.responseJSON.errors.email) {
-        var timeout3 = false;
-
         if (!timeout3) {
           timeout3 = true;
           $('.js-error-admin-edit-email').text(data.responseJSON.errors.email[0]).css({
@@ -33658,7 +33654,7 @@ $(document).ready(function () {
               "opacity": 0,
               "visibility": "hidden"
             });
-            timeout1 = false;
+            timeout3 = false;
           }, 3000);
         }
       }
@@ -33692,8 +33688,6 @@ $(document).ready(function () {
       }
     }).fail(function (data) {
       if (data.responseJSON.errors.password) {
-        var timeout4 = false;
-
         if (data.responseJSON.errors.password[0] !== "The password field is required.") {
           if (!timeout4) {
             timeout4 = true;
@@ -33707,7 +33701,7 @@ $(document).ready(function () {
                 "opacity": 0,
                 "visibility": "hidden"
               });
-              timeout1 = false;
+              timeout4 = false;
             }, 3000);
           }
         }
@@ -33742,10 +33736,8 @@ $(document).ready(function () {
       company_id: company_id
     }).fail(function (data) {
       if (data.responseJSON.errors.first_name) {
-        var _timeout2 = false;
-
-        if (!_timeout2) {
-          _timeout2 = true;
+        if (!timeout1) {
+          timeout1 = true;
           $('.js-error-add-admin-first-name').text(data.responseJSON.errors.first_name[0]).css({
             "visibility": "visible",
             "opacity": 1
@@ -33755,14 +33747,12 @@ $(document).ready(function () {
               "opacity": 0,
               "visibility": "hidden"
             });
-            _timeout2 = false;
+            timeout1 = false;
           }, 3000);
         }
       }
 
       if (data.responseJSON.errors.last_name) {
-        var timeout2 = false;
-
         if (!timeout2) {
           timeout2 = true;
           $('.js-error-add-admin-last-name').text(data.responseJSON.errors.last_name[0]).css({
@@ -33780,8 +33770,6 @@ $(document).ready(function () {
       }
 
       if (data.responseJSON.errors.email) {
-        var timeout3 = false;
-
         if (!timeout3) {
           timeout3 = true;
           $('.js-error-add-admin-email').text(data.responseJSON.errors.email[0]).css({
@@ -33799,8 +33787,6 @@ $(document).ready(function () {
       }
 
       if (data.responseJSON.errors.password) {
-        var timeout4 = false;
-
         if (!timeout4) {
           timeout4 = true;
           $('.js-error-add-admin-password').text(data.responseJSON.errors.password[0]).css({
@@ -33820,6 +33806,11 @@ $(document).ready(function () {
       $('.js-all-admins').empty();
       getAdmins();
       $('.js-add-admin-input').val("");
+      $('.js-input-textarea').css("border-color", "#d3d4d5");
+      $('.js-input-textarea-label').css({
+        "opacity": "0",
+        "visibility": "hidden"
+      });
     });
   };
 

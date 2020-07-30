@@ -1,11 +1,12 @@
 $(document).ready(function(){
+    var timeout5 = false
     //GET ALL COMPANY
     window.getCompany = function(){
         $.get(
             '/superadmin/companies', function (data) {
                 let output = [];
                 data.companies.forEach(company => {
-                    output += `<div class="super-admin-company-container js-super-company-container">
+                    output += `<div class="super-admin-company-container js-super-company-container" name=${company.name}>
                                     <div class="super-admin-company-name js-current-company-name-${company.id}">${company.name}</div>
                                     <div class="super-admin-company-activity">${company.active === 1 ? "&#10004;" : "&#10006;"}</div>
                                     <input type="checkbox" id="active-${company.id}" ${company.active === 1 ? "checked" : ""} class="super-admin-company-checkbox"/>
@@ -31,10 +32,16 @@ $(document).ready(function(){
             {
                 name: name
             },
-        ).fail(function (data) {
-            if (data.responseJSON.errors.name) {
-                $('.js-admin-company-name').slideDown().text(data.responseJSON.errors.name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
-            }
+        ).fail(function () {
+                if (!timeout5) {
+                    timeout5 = true
+                    $('.js-add-company-error').text("You must input company name").css({"visibility" : "visible","opacity" : 1});
+                    setTimeout(() => {
+                        $('.js-add-company-error').css({"opacity" : 0, "visibility" : "hidden"});
+                        timeout5= false
+                    },3000)
+                }
+            
         })
             .done(function(data){
                 $('.js-companies').empty().append(getCompany);

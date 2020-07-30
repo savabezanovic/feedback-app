@@ -147,20 +147,25 @@
             <label for="job-titles" class="navigation-label js-navigation-label">Job Titles</label>
             <label for="skills" class="navigation-label js-navigation-label">Skills</label>
         </div>
-        <input type="radio" id="companies-panel" name="navigation-radio" class="navigation-radio js-navigation-radio" />
+        <input type="radio" id="companies-panel" name="navigation-radio" class="navigation-radio js-navigation-radio" checked />
         <div class="navigation-div">
             <h3 class="super-admin-titles">Companies Panel</h3>
             <div class="add-a-company-container">
-                <input class="super-admin-input add-a-company-input js-company-name" value="" placeholder="Add a company" class="">
-                <span class="hidden js-admin-company-name"><br><br></span>
+                <label for="add-a-company" name="add-company" class="add-admin-label add-a-company-label js-input-textarea-label">Add a company</label>
+                <input id="add-a-company" name="add-company" class="super-admin-input add-a-company-input js-company-name js-input-textarea" value="" placeholder="Add a company" >
                 <button class="super-admin-button js-add-company-btn">ADD</button>
+                <div class="super-admin-add-company-error js-add-company-error "></div>
+
             </div>
-            <input class="super-admin-input super-admin-search-company js-super-search-comapny" type="text" placeholder="Search company">
+            <div class="add-a-company-container">
+            <label for="search-company" name="search-a-company" class="add-admin-label add-a-company-label js-input-textarea-label">Search company</label>
+            <input class="super-admin-input super-admin-search-company js-super-search-comapny js-input-textarea" id="search-company" name="search-a-company" type="text" placeholder="Search company">
+            </div>
             <div class="all-companies-container js-companies">
             </div>
         </div>
 
-        <input type="radio" id="admins" name="navigation-radio" class="navigation-radio js-navigation-radio" checked />
+        <input type="radio" id="admins" name="navigation-radio" class="navigation-radio js-navigation-radio" />
         <div class="navigation-div">
             <h3 class="super-admin-titles">Admins Panel</h3>
             <h4 class="super-admin-add-admin-title">All Admins</h4>
@@ -247,7 +252,17 @@
 
         <input type="radio" id="job-titles" name="navigation-radio" class="navigation-radio js-navigation-radio" />
         <div class="navigation-div">
-            BBBB
+            <h3 class="super-admin-titles">Job Titles Panel</h3>
+            <div class="add-job-title-input-container">
+                <label for="add-job-title" name="position-name" class="add-admin-label add-a-job-label js-add-job-label js-input-textarea-label">Add a job title</label>
+                <input name="position-name" class="super-admin-input super-job-input js-add-job js-input-textarea" placeholder="Add a job title">
+                <button class="super-admin-button add-job-button js-add-position-btn">ADD</button>
+            </div>
+            <label for="search-jobs" name="jobs-search" class="add-admin-label add-a-job-label js-add-job-label js-input-textarea-label">Search Jobs</label>
+            <input class="super-admin-input super-job-input search-job-input js-search-jobs js-input-textarea" type="text" id="search-jobs" name="jobs-search" placeholder="Search Jobs">
+            <h4 class="super-all-jobs-title">All-Jobs</h4>
+            <div class="all-jobs-container js-jobs-container">
+            </div>
         </div>
 
         <input type="radio" id="skills" name="navigation-radio" class="navigation-radio js-navigation-radio" />
@@ -266,18 +281,20 @@
         getSkills();
         getAdmins();
 
-        document.querySelector('.js-super-search-comapny').addEventListener('input', function() {
-            document.querySelectorAll('.js-super-company-container').forEach(company => {
-                if (this.value !== '' && !company.innerText.toLowerCase().includes(this.value.toLowerCase())) {
-                    company.style.display = 'none';
-                } else if (this.value !== '' && company.innerText.toLowerCase().includes(this.value.toLowerCase())) {
-                    company.style.display = 'flex'
-                } else if (this.value === '') {
-                    company.style.display = 'flex'
+        function SearchItems(searchField, ItemNameTag) {
+            document.querySelectorAll(ItemNameTag).forEach(item => {
+                if (searchField.value !== '' && !item.attributes.name.value.toLowerCase().includes(searchField.value.toLowerCase())) {
+                    item.style.display = 'none';
+                } else if (searchField.value !== '' && item.attributes.name.value.toLowerCase().includes(searchField.value.toLowerCase())) {
+                    item.style.display = 'flex'
+                } else if (searchField.value === '') {
+                    item.style.display = 'flex'
                 }
             });
-        });
+        }
+        document.querySelector('.js-super-search-comapny').addEventListener('input', function() {SearchItems(this, ".js-super-company-container")})
 
+        document.querySelector('.js-search-jobs').addEventListener('input', function() {SearchItems(this, ".js-job-title-container")})
 
         document.querySelectorAll('.js-input-textarea').forEach(textarea => {
             textarea.addEventListener('input', function() {
@@ -350,9 +367,9 @@
 
         $('.js-add-position-btn').click(addJobTitle);
 
-        $(document).on('click', ".edit-position", editJobTitle);
+        $(document).on('click', ".js-change-job-name", editJobTitle);
 
-        $(document).on('click', ".delete-position", deleteJobTitle);
+        $(document).on('click', ".js-delete-job", deleteJobTitle);
 
 
         $('.js-add-company-btn').click(addCompany);

@@ -1,4 +1,8 @@
 $(document).ready(function () {
+    var timeout1 = false;
+    var timeout2 = false;
+    var timeout3 = false
+    var timeout4 = false
     window.getAdmins = function(){
         $.get(
             '/superadmin/admins', function (data) {
@@ -12,12 +16,6 @@ $(document).ready(function () {
                                     <button class="super-admin-button super-admin-admins-button js-super-admin-edit-admin" id=${admin.id}>EDIT ADMIN</button>
                                     <button data-id="${admin.id}" class="super-admin-button super-admin-admins-button js-super-admin-delete-admin">DELETE ADMIN</button>
                                </div>`
-                    
-                    
-                    
-                    // '<p>' + e.first_name + ' ' + e.last_name + ' <button data-id="'+ e.id +
-                    //     '" class="super-admin-btn js-super-admin-delete-admin" name="js-super-admin-delete-admin">DEL</button>'+
-                    //     '<button name="edit-admin" id="'+ e.id +'" class="super-admin-btn js-edit-modal">EDIT</button></p>';
                 });
                 $('.js-all-admins').append(output);
                 $(".js-super-admin-edit-admin").click(editAdmin);
@@ -76,7 +74,6 @@ $(document).ready(function () {
                 }, success: updatePassword()
             }).fail(function (data) {
             if (data.responseJSON.errors.first_name) {
-                let timeout1 = false
                 if (!timeout1) {
                     timeout1 = true
                     $('.js-error-admin-edit-first-name').text(data.responseJSON.errors.first_name[0]).css({"visibility" : "visible","opacity" : 1});
@@ -87,24 +84,22 @@ $(document).ready(function () {
                 }
             }
             if (data.responseJSON.errors.last_name) {
-                let timeout2 = false
                 if (!timeout2) {
                     timeout2 = true
                     $('.js-error-admin-edit-last-name').text(data.responseJSON.errors.last_name[0]).css({"visibility" : "visible","opacity" : 1});
                     setTimeout(() => {
                         $('.js-error-admin-edit-last-name').css({"opacity" : 0, "visibility" : "hidden"});
-                        timeout1= false
+                        timeout2 = false
                     },3000)
                 }
             }
             if (data.responseJSON.errors.email) {
-                let timeout3 = false
                 if (!timeout3) {
                     timeout3 = true
                     $('.js-error-admin-edit-email').text(data.responseJSON.errors.email[0]).css({"visibility" : "visible","opacity" : 1});
                     setTimeout(() => {
                         $('.js-error-admin-edit-email').css({"opacity" : 0, "visibility" : "hidden"});
-                        timeout1= false
+                        timeout3 = false
                     },3000)
                 }
             }
@@ -135,7 +130,6 @@ $(document).ready(function () {
             },
         }).fail(function (data) {
             if (data.responseJSON.errors.password) {
-                let timeout4 = false
                 if (data.responseJSON.errors.password[0] !== "The password field is required.") {
                     if (!timeout4) {
                         timeout4 = true
@@ -143,7 +137,7 @@ $(document).ready(function () {
                         $('.js-error-admin-edit-password').text(data.responseJSON.errors.password[0]).css({"visibility" : "visible","opacity" : 1});
                         setTimeout(() => {
                             $('.js-error-admin-edit-password').css({"opacity" : 0, "visibility" : "hidden"});
-                            timeout1= false
+                            timeout4= false
                         },3000)
                     }
                 }   
@@ -194,7 +188,6 @@ $(document).ready(function () {
             }
         ).fail(function (data) {
             if (data.responseJSON.errors.first_name) {
-                let timeout1 = false
                 if (!timeout1) {
                     timeout1 = true
                     $('.js-error-add-admin-first-name').text(data.responseJSON.errors.first_name[0]).css({"visibility" : "visible","opacity" : 1});
@@ -206,7 +199,6 @@ $(document).ready(function () {
 
             }
             if (data.responseJSON.errors.last_name) {
-                let timeout2 = false
                 if (!timeout2) {
                     timeout2 =true
                     $('.js-error-add-admin-last-name').text(data.responseJSON.errors.last_name[0]).css({"visibility" : "visible","opacity" : 1});
@@ -217,7 +209,6 @@ $(document).ready(function () {
                 }
             }
             if (data.responseJSON.errors.email) {
-                let timeout3 = false
                 if (!timeout3) {
                     timeout3 = true
                     $('.js-error-add-admin-email').text(data.responseJSON.errors.email[0]).css({"visibility" : "visible","opacity" : 1});
@@ -229,7 +220,6 @@ $(document).ready(function () {
 
             }
             if (data.responseJSON.errors.password) {
-                let timeout4 = false
                 if (!timeout4) {
                     timeout4 =true
                     $('.js-error-add-admin-password').text(data.responseJSON.errors.password[0]).css({"visibility" : "visible","opacity" : 1});
@@ -244,6 +234,8 @@ $(document).ready(function () {
                 $('.js-all-admins').empty();
                 getAdmins();
                 $('.js-add-admin-input').val("");
+                $('.js-input-textarea').css("border-color","#d3d4d5")
+                $('.js-input-textarea-label').css({"opacity": "0", "visibility" : "hidden"})
                 
             })
     };

@@ -1612,6 +1612,11 @@ html {
   height: 100%;
 }
 
+.super-admin-welcome {
+  margin-bottom: 25px;
+  color: #ec1940;
+}
+
 .superadmin-forms-container {
   position: relative;
   border: 1px solid #cccccc;
@@ -1646,6 +1651,7 @@ html {
 
 .navigation-label {
   background-color: white;
+  color: #7a7e81;
   border: 1px solid #cccccc;
   margin-right: 0;
   padding: 5px;
@@ -1655,7 +1661,7 @@ html {
   max-height: 0;
   overflow: hidden;
   display: block;
-  transition: all ease-in-out 0.5s;
+  transition: max-height ease-in-out 0.5s;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -1679,6 +1685,7 @@ html {
 
 .super-admin-titles {
   margin-bottom: 35px;
+  color: #7a7e81;
 }
 
 .super-admin-input {
@@ -1804,5 +1811,170 @@ html {
 
 .super-admin-company-button {
   margin-left: auto;
+}
+
+.super-admin-add-admins {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.super-admin-add-admin-title {
+  margin-bottom: 10px;
+  color: #7a7e81;
+  width: 100%;
+}
+
+.add-admin-label {
+  font-size: 14px;
+  color: #ec1940;
+  visibility: hidden;
+  opacity: 0;
+  transition: all ease-in-out 0.5s;
+}
+
+.add-admin-label-visible {
+  font-size: 14px;
+  color: #ec1940;
+  margin-bottom: 5px;
+}
+
+.add-admin-input-container {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  margin-right: auto;
+}
+
+.add-admin-email-container {
+  width: 95%;
+}
+
+.add-admin-select-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.super-admin-add-admins-input {
+  width: 100%;
+  padding: 5px;
+  font-size: 16px;
+  margin-bottom: 15px;
+  border: none;
+  border-bottom: 2px solid #d3d4d5;
+  outline: none;
+  transition: all ease-in-out 0.5s;
+}
+
+.super-admin-add-admin-error {
+  display: block;
+  font-size: 12px;
+  color: #5569d8;
+  opacity: 0;
+  visibility: hidden;
+  margin-top: -10px;
+  max-height: 0;
+  margin-bottom: 20px;
+  transition: all ease-in-out 0.5s;
+}
+
+.super-admin-add-admins-select {
+  color: white;
+  font-size: 16px;
+  background-color: #ec1940;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+  padding: 5px;
+  max-width: 250px;
+  margin-bottom: 15px;
+}
+
+.super-admin-add-admin-button {
+  width: 350px;
+  margin-left: auto;
+}
+
+.super-admin-all-admins {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+  height: 250px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.super-admin-admin-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.super-admin-admin-name {
+  color: #ec1940;
+  width: 160px;
+  margin-right: 5px;
+}
+
+.super-admin-admin-email {
+  width: 250px;
+  margin: auto;
+  color: #ec1940;
+  font-weight: bold;
+  font-size: 14px;
+  overflow: hidden;
+}
+
+.super-admin-admin-company-name {
+  color: #5569d8;
+  width: 100px;
+  margin-right: auto;
+}
+
+.super-admin-admins-button {
+  margin-right: 15px;
+}
+
+.edit-admin-form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+  visibility: hidden;
+  opacity: 0;
+  transition: all ease-in-out 0.5s;
+}
+
+.edit-admin-form {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #cccccc;
+  box-shadow: 4px 4px 8px black;
+  border-radius: 5px;
+  min-width: 500px;
+}
+
+.edit-admin-input {
+  margin-bottom: 15px;
+}
+
+.edit-admin-form-close {
+  margin-left: auto;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  cursor: pointer;
 }
 

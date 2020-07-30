@@ -33543,11 +33543,14 @@ $(document).ready(function () {
   window.getAdmins = function () {
     $.get('/superadmin/admins', function (data) {
       var output = [];
-      data.admins.forEach(function (e) {
-        output += '<p>' + e.first_name + ' ' + e.last_name + ' <button data-id="' + e.id + '" class="delete-admin super-admin-btn" name="delete-admin">DEL</button>' + '<button name="edit-admin" id="' + e.id + '" class="super-admin-btn js-edit-modal">EDIT</button></p>';
+      data.admins.forEach(function (admin) {
+        var companyName = $(".js-current-company-name-".concat(admin.company_id)).html();
+        output += "<div class=\"super-admin-admin-container\">\n                                    <div class=\"super-admin-admin-name\">".concat(admin.first_name, " ").concat(admin.last_name, "</div>\n                                    <div class=\"super-admin-admin-email\">").concat(admin.email, "</div>\n                                    <div class=\"super-admin-admin-company-name\">").concat(companyName, "</div>\n                                    <button class=\"super-admin-button super-admin-admins-button js-super-admin-edit-admin\" id=").concat(admin.id, ">EDIT ADMIN</button>\n                                    <button data-id=\"").concat(admin.id, "\" class=\"super-admin-button super-admin-admins-button js-super-admin-delete-admin\">DELETE ADMIN</button>\n                               </div>"); // '<p>' + e.first_name + ' ' + e.last_name + ' <button data-id="'+ e.id +
+        //     '" class="super-admin-btn js-super-admin-delete-admin" name="js-super-admin-delete-admin">DEL</button>'+
+        //     '<button name="edit-admin" id="'+ e.id +'" class="super-admin-btn js-edit-modal">EDIT</button></p>';
       });
-      $('.js-admins').append(output);
-      $(".js-edit-modal").click(editAdmin);
+      $('.js-all-admins').append(output);
+      $(".js-super-admin-edit-admin").click(editAdmin);
 
       function editAdmin() {
         id = $(this).attr('id');
@@ -33555,9 +33558,33 @@ $(document).ready(function () {
           $('#first_name').val(data.admin.first_name);
           $('#last_name').val(data.admin.last_name);
           $('#admin-email').val(data.admin.email);
+          $('#password1').val("");
+          $('#password-confirm1').val("");
+          document.querySelectorAll('.js-input-textarea').forEach(function (input) {
+            if (input.value === "") {
+              input.style.borderColor = "#d3d4d5";
+              document.querySelectorAll(".js-input-textarea-label").forEach(function (label) {
+                if (input.name === label.attributes.name.value) {
+                  label.style.opacity = 0;
+                  label.style.visibility = 'hidden';
+                }
+              });
+            } else {
+              input.style.borderColor = "#ec1940";
+              document.querySelectorAll(".js-input-textarea-label").forEach(function (label) {
+                if (input.name === label.attributes.name.value) {
+                  label.style.opacity = 1;
+                  label.style.visibility = 'visible';
+                }
+              });
+            }
+          });
         });
         $('#hidden_id').val(id);
-        $(".edit-modal").show();
+        $('.js-edit-admin-form').css({
+          "visibility": "visible",
+          "opacity": "1"
+        });
       }
     });
   };
@@ -33567,6 +33594,8 @@ $(document).ready(function () {
     first_name = $('#first_name').val();
     last_name = $('#last_name').val();
     email = $('#admin-email').val();
+    password = $('#password1').val();
+    password_confirmation = $('#password-confirm1').val();
     $.ajax({
       url: "/superadmin/admins/" + id + "/update",
       type: 'PUT',
@@ -33574,23 +33603,116 @@ $(document).ready(function () {
         first_name: first_name,
         last_name: last_name,
         email: email
-      }
+      },
+      success: updatePassword()
     }).fail(function (data) {
       if (data.responseJSON.errors.first_name) {
-        $('.js-error-admin-edit-first-name').slideDown().text(data.responseJSON.errors.first_name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
+        var _timeout = false;
+
+        if (!_timeout) {
+          _timeout = true;
+          $('.js-error-admin-edit-first-name').text(data.responseJSON.errors.first_name[0]).css({
+            "visibility": "visible",
+            "opacity": 1
+          });
+          setTimeout(function () {
+            $('.js-error-admin-edit-first-name').css({
+              "opacity": 0,
+              "visibility": "hidden"
+            });
+            _timeout = false;
+          }, 3000);
+        }
       }
 
       if (data.responseJSON.errors.last_name) {
-        $('.js-error-admin-edit-last-name').slideDown().text(data.responseJSON.errors.last_name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
+        var timeout2 = false;
+
+        if (!timeout2) {
+          timeout2 = true;
+          $('.js-error-admin-edit-last-name').text(data.responseJSON.errors.last_name[0]).css({
+            "visibility": "visible",
+            "opacity": 1
+          });
+          setTimeout(function () {
+            $('.js-error-admin-edit-last-name').css({
+              "opacity": 0,
+              "visibility": "hidden"
+            });
+            timeout1 = false;
+          }, 3000);
+        }
       }
 
       if (data.responseJSON.errors.email) {
-        $('.js-error-admin-edit-email').slideDown().text(data.responseJSON.errors.email[0]).fadeIn(3000).delay(3000).fadeOut("slow");
+        var timeout3 = false;
+
+        if (!timeout3) {
+          timeout3 = true;
+          $('.js-error-admin-edit-email').text(data.responseJSON.errors.email[0]).css({
+            "visibility": "visible",
+            "opacity": 1
+          });
+          setTimeout(function () {
+            $('.js-error-admin-edit-email').css({
+              "opacity": 0,
+              "visibility": "hidden"
+            });
+            timeout1 = false;
+          }, 3000);
+        }
       }
     }).done(function (data) {
-      $(".js-admins").empty().append(getAdmins);
-      $(".edit-modal").hide();
+      $(".js-all-admins").empty();
+      getAdmins();
+
+      if (password !== password_confirmation) {
+        return;
+      } else if (password.lengt < 8 && password !== "") {
+        return;
+      }
+
+      $('.js-edit-admin-form').css({
+        "opacity": "0",
+        "visibility": "hidden"
+      });
     });
+  };
+
+  window.updatePassword = function () {
+    id = $('#hidden_id').val();
+    password = $('#password1').val();
+    password_confirmation = $('#password-confirm1').val();
+    $.ajax({
+      url: "superadmin/admins/" + id + "/update/password",
+      type: 'PUT',
+      data: {
+        password: password,
+        password_confirmation: password_confirmation
+      }
+    }).fail(function (data) {
+      if (data.responseJSON.errors.password) {
+        var timeout4 = false;
+
+        if (data.responseJSON.errors.password[0] !== "The password field is required.") {
+          if (!timeout4) {
+            timeout4 = true;
+            console.log(data.responseJSON.errors.password[0]);
+            $('.js-error-admin-edit-password').text(data.responseJSON.errors.password[0]).css({
+              "visibility": "visible",
+              "opacity": 1
+            });
+            setTimeout(function () {
+              $('.js-error-admin-edit-password').css({
+                "opacity": 0,
+                "visibility": "hidden"
+              });
+              timeout1 = false;
+            }, 3000);
+          }
+        }
+      }
+    }).done($('#password').val(''), $('#password-confirm').val(''));
   };
 
   window.getSkills = function () {
@@ -33620,27 +33742,84 @@ $(document).ready(function () {
       company_id: company_id
     }).fail(function (data) {
       if (data.responseJSON.errors.first_name) {
-        $('.js-error-admin-first-name').slideDown().text(data.responseJSON.errors.first_name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
+        var _timeout2 = false;
+
+        if (!_timeout2) {
+          _timeout2 = true;
+          $('.js-error-add-admin-first-name').text(data.responseJSON.errors.first_name[0]).css({
+            "visibility": "visible",
+            "opacity": 1
+          });
+          setTimeout(function () {
+            $('.js-error-add-admin-first-name').css({
+              "opacity": 0,
+              "visibility": "hidden"
+            });
+            _timeout2 = false;
+          }, 3000);
+        }
       }
 
       if (data.responseJSON.errors.last_name) {
-        $('.js-error-admin-last-name').slideDown().text(data.responseJSON.errors.last_name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
+        var timeout2 = false;
+
+        if (!timeout2) {
+          timeout2 = true;
+          $('.js-error-add-admin-last-name').text(data.responseJSON.errors.last_name[0]).css({
+            "visibility": "visible",
+            "opacity": 1
+          });
+          setTimeout(function () {
+            $('.js-error-add-admin-last-name').css({
+              "opacity": 0,
+              "visibility": "hidden"
+            });
+            timeout2 = false;
+          }, 3000);
+        }
       }
 
       if (data.responseJSON.errors.email) {
-        $('.js-error-admin-email').slideDown().text(data.responseJSON.errors.email[0]).fadeIn(3000).delay(3000).fadeOut("slow");
+        var timeout3 = false;
+
+        if (!timeout3) {
+          timeout3 = true;
+          $('.js-error-add-admin-email').text(data.responseJSON.errors.email[0]).css({
+            "visibility": "visible",
+            "opacity": 1
+          });
+          setTimeout(function () {
+            $('.js-error-add-admin-email').css({
+              "opacity": 0,
+              "visibility": "hidden"
+            });
+            timeout3 = false;
+          }, 3000);
+        }
       }
 
       if (data.responseJSON.errors.password) {
-        $('.js-error-admin-password').slideDown().text(data.responseJSON.errors.password[0]).fadeIn(3000).delay(3000).fadeOut("slow");
+        var timeout4 = false;
+
+        if (!timeout4) {
+          timeout4 = true;
+          $('.js-error-add-admin-password').text(data.responseJSON.errors.password[0]).css({
+            "visibility": "visible",
+            "opacity": 1
+          });
+          setTimeout(function () {
+            $('.js-error-add-admin-password').css({
+              "opacity": 0,
+              "visibility": "hidden"
+            });
+            timeout4 = false;
+          }, 3000);
+        }
       }
-    }).done(function (data) {
-      $('.js-admins').empty().append(getAdmins);
-      $(".superadmin-modal").toggleClass("modal");
-      $(".js-superadmin-modal-btn").text(function (i, text) {
-        return text === "Close" ? "Add new admin" : "Close";
-      });
-      $(".superadmin-modal > input").val("");
+    }).done(function () {
+      $('.js-all-admins').empty();
+      getAdmins();
+      $('.js-add-admin-input').val("");
     });
   };
 
@@ -33701,7 +33880,7 @@ $(document).ready(function () {
         id: id
       }
     }).done(function (data) {
-      $('.js-admins').empty().append(getAdmins);
+      $('.js-all-admins').empty().append(getAdmins);
     });
   };
 
@@ -33717,26 +33896,6 @@ $(document).ready(function () {
     field.toggle();
     $(this).toggleClass('fa-plus-circle fa-minus-circle');
   });
-  $('#tabs ul li a').click(function () {
-    $('#tabs ul li a').removeClass('current-tab');
-    $(this).addClass('current-tab');
-  }); //Search company
-
-  $(document).ready(function () {
-    $(".search-company").on("keyup", function () {
-      var value = $(this).val().toLowerCase();
-      $(".js-companies p").filter(function () {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-      });
-    });
-  });
-
-  window.getModal = function () {
-    $(".superadmin-modal").toggleClass("modal");
-    $(this).text(function (i, text) {
-      return text === "Close" ? "Add new admin" : "Close";
-    });
-  };
 
   window.editAdmin = function () {
     $(".edit-modal").show();
@@ -33744,24 +33903,6 @@ $(document).ready(function () {
 
   window.closeEdit = function () {
     $('.edit-modal').hide();
-  };
-
-  window.updatePassword = function () {
-    id = $('#hidden_id').val();
-    password = $('#password1').val();
-    password_confirmation = $('#password-confirm1').val();
-    $.ajax({
-      url: "superadmin/admins/" + id + "/update/password",
-      type: 'PUT',
-      data: {
-        password: password,
-        password_confirmation: password_confirmation
-      }
-    }).fail(function (data) {
-      if (data.responseJSON.errors.password) {
-        $('.js-error-admin-edit-password').slideDown().text(data.responseJSON.errors.password[0]).fadeIn(3000).delay(3000).fadeOut("slow");
-      }
-    }).done(alert('updated'), $('#password').val(''), $('#password-confirm').val(''));
   };
 });
 

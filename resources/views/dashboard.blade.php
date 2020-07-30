@@ -340,7 +340,7 @@
 
         document.querySelectorAll('.js-input-textarea').forEach(textarea => {
             textarea.addEventListener('input', function() {
-                if (this.name !== "email" && this.name !== "password") {
+                if (this.tagName === "TEXTAREA") {
                     this.style.height = `auto`;
                     this.style.height = `${this.scrollHeight + (this.offsetHeight - this.clientHeight)}px`;
                 }

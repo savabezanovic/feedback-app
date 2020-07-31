@@ -1,8 +1,9 @@
 $(document).ready(function () {
     var timeout1 = false;
     var timeout2 = false;
-    var timeout3 = false
-    var timeout4 = false
+    var timeout3 = false;
+    var timeout4 = false;
+    var timeout5 = false;
     window.getAdmins = function(){
         $.get(
             '/superadmin/admins', function (data) {
@@ -149,24 +150,6 @@ $(document).ready(function () {
             );
     }
 
-    window.getSkills = function(){
-        $.get(
-            '/superadmin/skills', function (data) {
-                let output = [];
-                data.skills.forEach(function (e) {
-                    output += '<p class="media-list"><span style="margin:auto 0; margin-right:10px">'+ e.name + '</span>' +
-                        '<button data-id="'+ e.id +
-                        '" class="delete-skill super-admin-btn" name="delete-skill">DEL</button>'+
-                        '<i style="margin:auto 0" class="add fas fa-plus-circle js-skill-show" data-id="'+ e.id +'"></i>'+
-                        '<span class="hide js-skill-hide'+ e.id +'"><button data-id="'+ e.id +
-                        '"class="edit-skill super-admin-btn" name="edit-skill">Update</button><input data-id="'+ e.id +
-                        '"class="js-edit-skill-name'+ e.id +'" placeholder="Update skill name"></span><br><span class="hidden js-edit-skill'+ e.id +'"><br><br></span></p>';
-                });
-                $('.js-skills').append(output);
-            }
-        )
-    };
-
 
     //ADD ADMIN
 
@@ -240,19 +223,56 @@ $(document).ready(function () {
             })
     };
 
+
+    window.getSkills = function(){
+        $.get(
+            '/superadmin/skills', function (data) {
+                let output = [];
+                data.skills.forEach(function (skill) {
+                    output += `<div class="skill-container js-job-title-container" name="${skill.name}">
+                    <div class="skill-name">${skill.name}</div>
+                    <input type="text" id="edit-skill-${skill.id}" data-id="${skill.id}" name="skill-edit-${skill.id}" class="super-admin-input change-skill-input js-change-skill-name-${skill.id} js-input-textarea" placeholder="Change skill name"/>
+                    <button class="super-admin-button js-change-skill-name" data-id="${skill.id}">Change</button>
+                    <button data-id="${skill.id}" class="super-admin-button skill-delete-button js-delete-skill">Delete</button>
+                </div>`
+                    
+                    
+                    // '<p class="media-list"><span style="margin:auto 0; margin-right:10px">'+ e.name + '</span>' +
+                    //     '<button data-id="'+ e.id +
+                    //     '" class="delete-skill super-admin-btn" name="delete-skill">DEL</button>'+
+                    //     '<i style="margin:auto 0" class="add fas fa-plus-circle js-skill-show" data-id="'+ e.id +'"></i>'+
+                    //     '<span class="hide js-skill-hide'+ e.id +'"><button data-id="'+ e.id +
+                    //     '"class="edit-skill super-admin-btn" name="edit-skill">Update</button><input data-id="'+ e.id +
+                    //     '"class="js-edit-skill-name'+ e.id +'" placeholder="Update skill name"></span><br><span class="hidden js-edit-skill'+ e.id +'"><br><br></span></p>';
+                });
+                $('.js-skills').append(output);
+            }
+        )
+    };
+
+
+
     window.addSkill = function(){
-        var name = $('.js-skill').val();
+        var name = $('.js-add-new-skill').val();
         $.post('/superadmin/skills',
             {
                 name: name
             },
         ).fail(function (data) {
-            if (data.responseJSON.errors.name) {
-                $('.js-add-skill').slideDown().text(data.responseJSON.errors.name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
+            if (!timeout5) {
+                timeout5 =true
+                $('.js-add-skill-error').text(data.responseJSON.errors.name).css({"visibility" : "visible","opacity" : 1});
+                setTimeout(() => {
+                    $('.js-add-skill-error').css({"opacity" : 0, "visibility" : "hidden"});
+                    timeout5 = false
+                },3000)
             }
         })
             .done(function(data){
                 $('.js-skill').val('');
+                $('.js-add-new-skill').val("");
+                $('.js-add-new-skill').css("border-color", "#d3d4d5");
+                $('.js-add-skill-label').css({"opacity" : "0", "visibility" : "hidden"})
                 $('.js-skills').empty().append(getSkills);
             })
     };
@@ -278,8 +298,8 @@ $(document).ready(function () {
 
     window.editSkill = function(e) {
 
-        let id =  e.target.getAttribute("data-id");
-        let name = $('.js-edit-skill-name'+id).val();
+        let id =  $(this).attr("data-id");
+        let name = $(`.js-change-skill-name-${id}`).val();
         $.ajax (
             {
                 url: "/superadmin/skills/" + id + "/update",
@@ -288,10 +308,8 @@ $(document).ready(function () {
                     name: name
                 },
             }).fail(function (data) {
-            if (data.responseJSON.errors.name) {
-                $('.js-edit-skill' + id).slideDown().text(data.responseJSON.errors.name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
-            }
-        })
+                console.log(data.responseJSON.errors.name)
+            })
             .done(function (data) {
                 $('.js-skills').empty().append(getSkills);
             })

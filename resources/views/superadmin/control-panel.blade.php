@@ -147,7 +147,7 @@
             <label for="job-titles" class="navigation-label js-navigation-label">Job Titles</label>
             <label for="skills" class="navigation-label js-navigation-label">Skills</label>
         </div>
-        <input type="radio" id="companies-panel" name="navigation-radio" class="navigation-radio js-navigation-radio" checked />
+        <input type="radio" id="companies-panel" name="navigation-radio" class="navigation-radio js-navigation-radio" />
         <div class="navigation-div">
             <h3 class="super-admin-titles">Companies Panel</h3>
             <div class="add-a-company-container">
@@ -257,17 +257,28 @@
                 <label for="add-job-title" name="position-name" class="add-admin-label add-a-job-label js-add-job-label js-input-textarea-label">Add a job title</label>
                 <input name="position-name" class="super-admin-input super-job-input js-add-job js-input-textarea" placeholder="Add a job title">
                 <button class="super-admin-button add-job-button js-add-position-btn">ADD</button>
+                <div class="super-admin-add-job-error js-add-job-error"></div>
             </div>
-            <label for="search-jobs" name="jobs-search" class="add-admin-label add-a-job-label js-add-job-label js-input-textarea-label">Search Jobs</label>
+            <label for="search-jobs" name="jobs-search" class="add-admin-label add-a-job-label js-input-textarea-label">Search Jobs</label>
             <input class="super-admin-input super-job-input search-job-input js-search-jobs js-input-textarea" type="text" id="search-jobs" name="jobs-search" placeholder="Search Jobs">
             <h4 class="super-all-jobs-title">All-Jobs</h4>
             <div class="all-jobs-container js-jobs-container">
             </div>
         </div>
 
-        <input type="radio" id="skills" name="navigation-radio" class="navigation-radio js-navigation-radio" />
+        <input type="radio" id="skills" name="navigation-radio" class="navigation-radio js-navigation-radio" checked />
         <div class="navigation-div">
-            CCCC
+        <h3 class="super-admin-titles">Skills Panel</h3>
+            <div class="add-new-skill-container">
+            <label for="add-new-skill" name="skill-name" class="add-admin-label add-a-skill-label js-add-skill-label js-input-textarea-label">Add new skill</label>
+            <input class="super-admin-input add-new-skill-input js-add-new-skill js-input-textarea" id="add-new-skill" name="skill-name" placeholder="Add new skill">
+            <button class="super-admin-button js-add-new-skill-button">ADD</button>
+            <div class="super-admin-add-skill-error js-add-skill-error"></div>
+            </div>
+            <label for="search-skills" name="skills-search" class="add-admin-label add-a-skill-label js-input-textarea-label">Search Skills</label>
+            <input class="super-admin-input super-job-input search-job-input js-search-skills js-input-textarea" type="text" id="search-skills" name="skills-search" placeholder="Search Skills">
+            <h4 class="super-all-skills-title">All-Skills</h4>
+            <div class="js-skills all-skills-container"></div>
         </div>
     </div>
 </div>
@@ -295,6 +306,8 @@
         document.querySelector('.js-super-search-comapny').addEventListener('input', function() {SearchItems(this, ".js-super-company-container")})
 
         document.querySelector('.js-search-jobs').addEventListener('input', function() {SearchItems(this, ".js-job-title-container")})
+
+        document.querySelector('.js-search-skills').addEventListener('input', function() {SearchItems(this, ".js-job-title-container")})
 
         document.querySelectorAll('.js-input-textarea').forEach(textarea => {
             textarea.addEventListener('input', function() {
@@ -348,13 +361,13 @@
         $('.js-edit-admin-btn').click(updateAdmin);
 
 
-        $(document).on('click', ".edit-skill", editSkill);
+        $(document).on('click', ".js-change-skill-name", editSkill);
 
-        $(document).on('click', ".delete-skill", deleteSkill);
+        $(document).on('click', ".js-delete-skill", deleteSkill);
 
         $('.js-add-admin-btn').click(addAdmin);
 
-        $('.js-add-skill-btn').click(addSkill);
+        $('.js-add-new-skill-button').click(addSkill);
 
         $(document).on('click', ".js-super-admin-delete-admin", deleteAdmin);
 

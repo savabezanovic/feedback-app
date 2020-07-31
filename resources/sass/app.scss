@@ -1695,7 +1695,6 @@ html {
     max-height: 0;
     margin-bottom: 20px;
     transition: all ease-in-out .5s;
-
 }
 
 .super-admin-add-admins-select {
@@ -1810,6 +1809,18 @@ html {
     margin-right: auto;
 }
 
+.super-admin-add-job-error {
+    display: block;
+    font-size: 12px;
+    width: 100%;
+    color: #5569d8;
+    opacity: 0;
+    visibility: hidden;
+    max-height: 0;
+    margin-bottom: 20px;
+    transition: all ease-in-out .5s;
+}
+
 .search-job-input {
     margin-bottom: 35px;
 }
@@ -1853,6 +1864,74 @@ html {
 
 .job-delete-button {
     margin-left: auto;
+    margin-right: 15px;
+}
+
+
+.add-new-skill-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 35px;
+}
+
+.add-a-skill-label {
+    width: 100%;
+}
+
+.add-new-skill-input{
+    width: 80%;
+    margin-right: auto;
+}
+
+.super-admin-add-skill-error {
+    display: block;
+    font-size: 12px;
+    width: 100%;
+    color: #5569d8;
+    opacity: 0;
+    visibility: hidden;
+    max-height: 0;
+    margin-bottom: 20px;
+    transition: all ease-in-out .5s;
+}
+
+.all-skills-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+    height: 450px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.skill-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.skill-name {
+    color: #ec1940;
+    margin-right: auto;
+    max-width: 250px;
+}
+
+.change-skill-input {
+    margin-right: auto;
+    padding: 2px;
+}
+
+.skill-delete-button {
+    margin-left: auto; 
+    margin-right: 15px;
+}
+
+.super-all-skills-title {
+    margin-bottom: 10px;
+    color: #7a7e81;
+    width: 100%;
 }
 
 //// SUPER ADMIN /////

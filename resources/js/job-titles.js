@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    var timeout = false;
     window.getJobTitles = function() {
         $.get(
             '/superadmin/job-titles', function (data) {
@@ -28,8 +29,14 @@ $(document).ready(function () {
                 name: $('.js-add-job').val()
             })
             .fail(function (data) {
-                if (data.responseJSON.errors.name) {
-                    $('.js-admin-job-title-name').slideDown().text(data.responseJSON.errors.name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
+                console.log("data")
+                if (!timeout) {
+                    timeout =true
+                    $('.js-add-job-error').text(data.responseJSON.errors.name).css({"visibility" : "visible","opacity" : 1});
+                    setTimeout(() => {
+                        $('.js-add-job-error').css({"opacity" : 0, "visibility" : "hidden"});
+                        timeout = false
+                    },3000)
                 }
             })
             .done(function(){

@@ -106,9 +106,13 @@
         <img src="{{auth()->user()->profile->picture}}" alt="profile picture" class="profile-form-image">
         <div class="profile-form-name-container">
             <div class="profile-form-name js-logged-user-name">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</div>
+<<<<<<< HEAD
             <div class="profile-form-name-profession">@if (auth()->user()->profile->jobTitle !== null) {{auth()->user()->profile->jobTitle->name}} @else No Job Title @endif
 
 </div>
+=======
+            <div class="profile-form-name-profession">{{auth()->user()->profile->jobTitle->name}}</div>
+>>>>>>> fca1b8f70aaf40765d6b97825143f0e3af66c8c0
         </div>
         <div class="logged-user-average-score-container">
             <div class="logged-user-average-score">AVERAGE SCORE</div>

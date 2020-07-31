@@ -77,11 +77,11 @@ Please input correct data!
             <label class="admin-user-input-label admin-user-input-label-visible" for="job-title">Positions:</label>
             <select name="job-title" id="update-job-title" class="admin-add-new-user-select" required>
                 @forelse($positions as $position)
-
+                @if ($position->name !== "Admin")
                 <option value="{{$position->id}}">
                     {{$position->name}}
                 </option>
-
+                @endif
                 @empty
 
                 <option disabled>No positions</option>
@@ -126,9 +126,11 @@ Please input correct data!
             <label for="job-title" class="admin-add-new-user-select-label">Select position for the new user:</label>
             <select name="job_title_id" id="job-title" class="admin-add-new-user-select">
                 @forelse($positions as $position)
+                @if ($position->name !== "Admin")
                 <option class="admin-add-new-user-select-option" value="{{$position->id}}">
                     {{$position->name}}
                 </option>
+                @endif
                 @empty
                 <option disabled>No positions</option>
                 @endforelse

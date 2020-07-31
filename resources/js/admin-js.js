@@ -8,7 +8,7 @@ $(document).ready(function () {
                     output += `<tr class="company-users-table-body-row js-user-del${e.id}">
                                     <td class="company-users-table-body-data"> ${e.first_name}  </td><td class="company-users-table-body-data">  ${e.last_name}  </td>
                                     <td class="company-users-table-body-data">${e.email}</td>
-                                    <td class="company-users-table-body-data">${e.profile.job_title.name}</td>
+                                    <td class="company-users-table-body-data">${e.profile.job_title !== null ? e.profile.job_title.name : "No job title"}</td>
                                     <td class="user-status-dot company-users-table-body-data">
                                     <input class="user-status-checkbox" data-id="${e.id}" name="chk-box" id="chk-box-${e.id}" value="1" type="checkbox" ${e.active === 1 ? "checked" : ""} 
                                     ${e.id.toString() === $('.js-logged-admin').attr('id') ? "disabled" : ""}>

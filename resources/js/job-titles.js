@@ -5,14 +5,15 @@ $(document).ready(function () {
             '/superadmin/job-titles', function (data) {
                 let output = [];
                 data.jobTitles.forEach(function (job) {
-                    output += `<div class="job-title-container js-job-title-container" name="${job.name}">
-                                    <div class="job-name">${job.name}</div>
-                                    <input type="text" id="edit-job-${job.id}" data-id="${job.id}" name="job-edit-${job.id}" class="super-admin-input edit-job-name js-input-textarea" placeholder="Change job name"/>
-                                    <button class="super-admin-button js-change-job-name" data-id="${job.id}">Change</button>
-                                    <button data-id="${job.id}" class="super-admin-button job-delete-button js-delete-job">Delete</button>
-                                </div>`
-                    
-                    
+                    if (job.name !== "Admin") {
+                        output += 
+                        `<div class="job-title-container js-job-title-container" name="${job.name}">
+                            <div class="job-name">${job.name}</div>
+                            <input type="text" id="edit-job-${job.id}" data-id="${job.id}" name="job-edit-${job.id}" class="super-admin-input edit-job-name js-input-textarea" placeholder="Change job name"/>
+                            <button class="super-admin-button js-change-job-name" data-id="${job.id}">Change</button>
+                            <button data-id="${job.id}" class="super-admin-button job-delete-button js-delete-job">Delete</button>
+                        </div>`
+                    }
                 });
 
                 $('.js-jobs-container').append(output);

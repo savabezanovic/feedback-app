@@ -146,9 +146,14 @@ Please input correct data!
                 </div>
                 <div class="admin-user-stats">Inactive users:<div class="admin-user-stats-info">{{count(auth()->user()->company->inactiveUsers())}}</div>
                 </div>
-                <div class="admin-user-stats">Highest rating:<div class="admin-user-stats-info">@if ($highest['user'] == null || $highest['score'] == null) No Highest Score @else{{$highest['user']}} ({{$highest['score']}})@endif</div>
+                <div class="admin-user-stats">Highest rating:<div class="admin-user-stats-info">{{$highest['user']}} ({{$highest['score']}})</div>
                 </div>
-                <div class="admin-user-stats">Lowest rating:<div class="admin-user-stats-info">@if ($lowest['user'] == null || $lowest['score'] == null) No Lowest Score @else {{$lowest['user']}} ({{$lowest['score']}})@endif</div>
+                <div class="admin-user-stats">Lowest rating:<div class="admin-user-stats-info">
+                    @isset($lowest['user']) {{$lowest['user']}} @endisset 
+                    @empty($lowest['user']) No User @endempty
+                    @isset($lowest['score']) ({{$lowest['score']}}) @endisset
+                    @empty($lowest['score']) No Score @endempty
+                </div>
                 </div>
             </div>
             <form class="admin-feedback-time-form">

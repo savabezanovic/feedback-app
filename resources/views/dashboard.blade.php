@@ -218,7 +218,7 @@
         <img src="{{$user->profile->picture}}" alt="profile picture" class="profile-form-image">
         <div class="profile-form-name-container">
             <div class="profile-form-name">{{$user->first_name}} {{$user->last_name}} </div>
-            <div class="profile-form-name-profession">{{$user->profile->jobTitle->name}}</div>
+            <div class="profile-form-name-profession">@if ($user->profile->jobTitle !== null) {{$user->profile->jobTitle->name}} @else No job title @endif</div>
         </div>
         <div class="profile-form-esc-x-container">
             <div class="profile-form-name-x-button js-profile-form-close">&#10006;</div>
@@ -278,9 +278,7 @@
 <script>
     let userId = null;
     let userNotSelectedTimeout = null;
-    const allSkills = {
-        !!$skills!!
-    }
+    const allSkills = { !!$skills!! }
     window.addEventListener('load', function() {
         let noTeammateSelected = document.querySelector('.js-teammate-not-selected')
         console.log([...document.querySelectorAll('.js-feedback-app-teammate')])

@@ -56,7 +56,7 @@
             <img class="feedback-image" src="{{auth()->user()->profile->picture}}">
             <div class="feedback-person-info media-profile-info">
                 <span class="js-user">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</span>
-                <span class="js-position">{{$user->profile->jobTitle->name}}</span>
+                <span class="js-position">{{auth()->user()->profile->jobTitle->name}}</span>
             </div>
             <div class="feedback-person-info"><span style="font-size: 0.8rem; color: #9c9c9c;">Average score: </span>
                 <span class="average-score-big">{{number_format(auth()->user()->averageFeedbackScore(), 1, '.', '')}}<span class="star-rating media-profile-info">{{round(auth()->user()->averageFeedbackScore(), 1)}}</span></span>

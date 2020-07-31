@@ -146,7 +146,12 @@ Please input correct data!
                 </div>
                 <div class="admin-user-stats">Inactive users:<div class="admin-user-stats-info">{{count(auth()->user()->company->inactiveUsers())}}</div>
                 </div>
-                <div class="admin-user-stats">Highest rating:<div class="admin-user-stats-info">{{$highest['user']}} ({{$highest['score']}})</div>
+                <div class="admin-user-stats">Highest rating:<div class="admin-user-stats-info">
+                    @isset($highest['user']) {{$highest['user']}} @endisset 
+                    @empty($highest['user']) No User @endempty
+                    @isset($highest['score']) ({{$highest['score']}}) @endisset
+                    @empty($highest['score']) No Score @endempty
+                </div>
                 </div>
                 <div class="admin-user-stats">Lowest rating:<div class="admin-user-stats-info">
                     @isset($lowest['user']) {{$lowest['user']}} @endisset 

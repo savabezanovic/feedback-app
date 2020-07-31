@@ -278,7 +278,7 @@
 <script>
     let userId = null;
     let userNotSelectedTimeout = null;
-    const allSkills = { !!$skills!! }
+    const allSkills = {!! $skills !!}
     window.addEventListener('load', function() {
         let noTeammateSelected = document.querySelector('.js-teammate-not-selected')
         console.log([...document.querySelectorAll('.js-feedback-app-teammate')])

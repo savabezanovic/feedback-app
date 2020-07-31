@@ -20,7 +20,7 @@
 @section('content')
 
     <br>
-    @dd($admins)
+    
     @forelse($admins as $admin)
 
         <a href="{{route('superadmin.admin', $admin->id)}}">{{$admin->first_name}} {{$admin->last_name}}</a> -  add, delete, update<br>

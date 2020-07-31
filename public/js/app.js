@@ -33311,7 +33311,7 @@ $(document).ready(function () {
   window.getJobTitles = function () {
     $.get('/superadmin/job-titles', function (data) {
       var output = [];
-      data.positions.data.forEach(function (job) {
+      data.jobTitles.forEach(function (job) {
         output += "<div class=\"job-title-container js-job-title-container\" name=\"".concat(job.name, "\">\n                                    <div class=\"job-name\">").concat(job.name, "</div>\n                                    <input type=\"text\" id=\"edit-job-").concat(job.id, "\" data-id=\"").concat(job.id, "\" name=\"job-edit-").concat(job.id, "\" class=\"super-admin-input edit-job-name js-input-textarea\" placeholder=\"Change job name\"/>\n                                    <button class=\"super-admin-button js-change-job-name\" data-id=\"").concat(job.id, "\">Change</button>\n                                    <button data-id=\"").concat(job.id, "\" class=\"super-admin-button job-delete-button js-delete-job\">Delete</button>\n                                </div>");
       });
       $('.js-jobs-container').append(output);
@@ -33954,8 +33954,8 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\feedback-app\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\feedback-app\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\laragon\www\feedback-app\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\laragon\www\feedback-app\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

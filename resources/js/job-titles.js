@@ -4,7 +4,7 @@ $(document).ready(function () {
         $.get(
             '/superadmin/job-titles', function (data) {
                 let output = [];
-                data.positions.data.forEach(function (job) {
+                data.jobTitles.forEach(function (job) {
                     output += `<div class="job-title-container js-job-title-container" name="${job.name}">
                                     <div class="job-name">${job.name}</div>
                                     <input type="text" id="edit-job-${job.id}" data-id="${job.id}" name="job-edit-${job.id}" class="super-admin-input edit-job-name js-input-textarea" placeholder="Change job name"/>

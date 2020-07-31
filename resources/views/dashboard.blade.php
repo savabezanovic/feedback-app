@@ -106,13 +106,9 @@
         <img src="{{auth()->user()->profile->picture}}" alt="profile picture" class="profile-form-image">
         <div class="profile-form-name-container">
             <div class="profile-form-name js-logged-user-name">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</div>
-<<<<<<< HEAD
             <div class="profile-form-name-profession">@if (auth()->user()->profile->jobTitle !== null) {{auth()->user()->profile->jobTitle->name}} @else No Job Title @endif
 
-</div>
-=======
-            <div class="profile-form-name-profession">{{auth()->user()->profile->jobTitle->name}}</div>
->>>>>>> fca1b8f70aaf40765d6b97825143f0e3af66c8c0
+            </div>
         </div>
         <div class="logged-user-average-score-container">
             <div class="logged-user-average-score">AVERAGE SCORE</div>
@@ -282,10 +278,12 @@
 <script>
     let userId = null;
     let userNotSelectedTimeout = null;
-    const allSkills = {!! $skills !!}
+    const allSkills = {
+        !!$skills!!
+    }
     window.addEventListener('load', function() {
         let noTeammateSelected = document.querySelector('.js-teammate-not-selected')
-         console.log([...document.querySelectorAll('.js-feedback-app-teammate')])
+        console.log([...document.querySelectorAll('.js-feedback-app-teammate')])
         console.log([...$('.js-feedback-app-teammate')])
         document.querySelectorAll('.js-feedback-app-teammate').forEach(teammate => {
             teammate.addEventListener('click', function() {
@@ -371,7 +369,7 @@
         });
 
         document.querySelectorAll(".js-logged-user-stars-rating").forEach(rating => {
-            const layer2AcceptablePercent = ["0","20", "40", "60", "80", "100"];
+            const layer2AcceptablePercent = ["0", "20", "40", "60", "80", "100"];
             const starsPercent = (rating.innerText / 5) * 100;
             const starsRounded = `${(Math.round(starsPercent /10) *10)}`;
             rating.parentElement.nextElementSibling.firstElementChild.style.width = `${layer2AcceptablePercent.includes(starsRounded) ? starsRounded : parseInt(starsRounded,10) + 10}%`;
@@ -416,7 +414,9 @@
                         $(`.js-teammate-${userId}`).addClass('already-reviewed');
                         $(`.js-reviewed-checkmark-${userId}`).show();
                         const usersArray = [...$('.js-feedback-app-teammate')]
-                        if (usersArray.every(function(user) {return user.classList.contains('already-reviewed')})) {
+                        if (usersArray.every(function(user) {
+                                return user.classList.contains('already-reviewed')
+                            })) {
                             noTeammateSelected = null;
                             $('.js-feedback-accepted').show();
                             userNotSelectedTimeout = setTimeout(function() {

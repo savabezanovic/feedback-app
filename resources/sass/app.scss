@@ -279,6 +279,7 @@ html {
         background-color: #383d42 !important;
     }
     @media (max-width: 900px) {
+        position: relative;
         flex-direction: column;
         font-size: 14px;
         width: 130px;
@@ -303,7 +304,6 @@ html {
         height: 25px;
         margin-right: 0;
         margin-bottom: 5px;
-
     }
 }
 
@@ -312,6 +312,11 @@ html {
     height: 25px;
     margin-left: auto;
     display: none;
+    @media (max-width: 900px) {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+    }
 }
 
 .feedback-app-main {
@@ -348,13 +353,21 @@ html {
     }
 }
 
-.feedback-app-navbar-dropdown-icon {
-    width:100%;
+.feedback-app-navbar-dropdown-icon {    
+    position: absolute;
+    display: none;
+    top: 5px;
+    right: 0;
+    width: 75px;
+    @media (max-width:900px) {
+        display: block;
+    }
 }
 
 .profile-all-forms-container {
     width: 60%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     @media (max-width: 900px) {
         width: 90%;
@@ -461,12 +474,18 @@ html {
 .profile-form-provide-feedback {
     font-size: 20px;
     color: #ec1940;
+    @media (max-width: 450px) {
+        text-align: center;
+    }
 }
 
 .profile-form-personal-skills {
     font-size: 18px;
     margin-top: 25px;
     margin-bottom: 15px;
+    @media (max-width: 450px) {
+        text-align: center;
+    }
 }
 
 .feedback-list-container {
@@ -476,9 +495,14 @@ html {
 .feedback-list-item {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     color: #7a7e81;
     font-size: 16px;
     margin-bottom: 10px;
+    @media (max-width: 450px) {
+        flex-direction: column;
+        justify-content: center;
+    }    
 }
 
 ///// FEEDBACK LIST STARS //////
@@ -511,6 +535,9 @@ html {
     flex-direction: row-reverse;
     margin-left: auto;
     letter-spacing: 10px;
+    @media (max-width: 450px) {
+        margin: auto;
+    }
 }
 
 .star-5 {
@@ -661,6 +688,9 @@ html {
     font-size: 16px;
     margin-bottom: 20px;
     margin-top: 20px;
+    @media (max-width: 450px) {
+        text-align: center;
+    }
 }
 
 .profile-form-feedback-textarea-container {
@@ -783,11 +813,11 @@ html {
 
 .logged-user-container {
     width: 100%;
-    margin-bottom: 250px;
     display: none;
+    margin: auto;
+    margin-bottom: 250px;
     @media (max-width: 900px){
         width: 90%;
-        margin-bottom: auto;
     }
 }
 
@@ -800,12 +830,14 @@ html {
     color: #7a7e81;
     font-size: 14px;
     margin-bottom: 10px;
+    width: 100%;
     @media (max-width:900px) {
         margin-bottom: 0;
         font-size: 12px;
     }
-    @media (max-width: 420px) {
+    @media (max-width: 450px) {
         font-size: 11px;
+        text-align: center;
     }
 }
 
@@ -819,14 +851,20 @@ html {
     @media (max-width: 900px) {
         font-size: 25px;
     }
-    @media (max-width: 420px) {
-        font-size: 20px;
+    @media (max-width: 450px) {
+        margin: auto;
     }
 }
 
 .logged-user-stars-container-overall {
-    @media (max-width: 420px){
-        flex-direction: column;       
+    flex-wrap: wrap;
+    width: 190px;
+    @media (max-width: 450px){
+        width: auto;
+        flex-direction: column;      
+        justify-content: center;
+        text-align: center;
+        margin-right: 15px;
     }
 }
 
@@ -837,18 +875,23 @@ html {
 }
 
 .logged-user-stars-rating-overall {
-    font-size: 40px;
+    font-size: 35px;
     margin-right: 10px;
     @media (max-width: 900px) {
         font-size: 30px;
         margin-bottom: 0;
     }
+    @media (max-width: 450px) {
+        font-size: 25px;
+        text-align: center;
+    }
 }
 
 .stars-layer-1-overall {
-    @media (max-width: 420px) {
+    @media (max-width: 450px) {
         margin-bottom: 25px;
         margin-top: -5px;
+        font-size: 18px;
     }
 }
 
@@ -888,6 +931,9 @@ html {
 .logged-user-feddback-summary {
     color: #ec1940;
     font-size: 20px;
+    @media (max-width: 450px) {
+        text-align: center;
+    }
 }
 
 .logged-user-feedbacks-container {
@@ -923,6 +969,9 @@ html {
     &:hover {
         background-color: #afafaf;
     }
+    @media (max-width: 450px) {
+        font-size: 16px;
+    }
 }
 
 .feedbacks-checkbox-label-down-arrow {
@@ -954,6 +1003,9 @@ html {
     display: flex;
     flex-direction: row;
     align-items: center;
+    @media (max-width: 450px) {
+        font-size: 14px;
+    }
 }
 
 .feedbacks-user-profession {
@@ -962,10 +1014,29 @@ html {
     color: #7a7e81;
 }
 
+.feedbacks-stars-container {
+    @media (max-width: 450px) {
+        flex-direction: column;
+        justify-content: center;
+        margin: 0;
+        margin-left: auto;
+    }
+}
+
+.feedbacks-rating-stars {
+    @media (max-width: 450px) {
+        font-size: 18px;
+    }
+}
+
 .feedbacks-user-rating {
     color: #7a7e81;
     font-size: 25px;
     margin-top: 5px;
+    @media (max-width: 450px) {
+        font-size: 18px;
+    }
+
 }
 
 .feedbacks-comment-container {
@@ -978,6 +1049,9 @@ html {
     display: flex;
     flex-direction: row;
     align-items: center;
+    @media (max-width: 450px) {
+        font-size: 14px;
+    }
 }
 
 .feedback-comment-list-bullet {
@@ -991,15 +1065,16 @@ html {
     margin-top: 10px;
     max-width: 90%;
     word-wrap: break-word;
+    @media (max-width: 450px) {
+        font-size: 14px;
+    }
 }
 
 .feedback-status {
     display: flex;
+    margin: auto;
     flex-direction: column;
     max-width: 350px;
-    @media (max-width: 900px) {
-        margin: auto;
-    }
 }
 
 .feedback-status-accepted {

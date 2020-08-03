@@ -111,8 +111,8 @@
             </div>
         </div>
         <div class="logged-user-average-score-container">
-            <div class="logged-user-average-score">AVERAGE SCORE</div>
             <div class="logged-user-stars-contianer logged-user-stars-container-overall">
+            <div class="logged-user-average-score">AVERAGE SCORE</div>
                 <div class="logged-user-stars-rating logged-user-stars-rating-overall"><span class="js-logged-user-stars-rating">{{number_format(auth()->user()->averageFeedbackScore(), 1, '.', '')}}</span>
                 </div>
                 <div class="stars-layer-1 stars-layer-1-overall">
@@ -172,13 +172,14 @@
                     <div>{{$feedback->creator->first_name}} {{$feedback->creator->last_name}}
                         <div class="feedbacks-user-profession"></div>
                     </div>
-                    <div class="logged-user-stars-contianer">
+                    <div class="logged-user-stars-contianer feedbacks-stars-container">
                         <div class="logged-user-stars-rating feedbacks-user-rating">
                             <span class="js-logged-user-stars-rating">
-                                @if($feedback->creator->averageFeedbackScore()){{round($feedback->creator->averageFeedbackScore(), 1)}} @else (0) @endif
+                                5
+                                <!-- @if($feedback->creator->averageFeedbackScore()){{round($feedback->creator->averageFeedbackScore(), 1)}} @else (0) @endif -->
                             </span>
                         </div>
-                        <div class="stars-layer-1">
+                        <div class="stars-layer-1 feedbacks-rating-stars">
                             <div class="stars-layer-2">
                             </div>
                             <div class="stars-layer-3">
@@ -281,14 +282,13 @@
     const allSkills = {!! $skills !!}
     window.addEventListener('load', function() {
         let noTeammateSelected = document.querySelector('.js-teammate-not-selected')
-        console.log([...document.querySelectorAll('.js-feedback-app-teammate')])
-        console.log([...$('.js-feedback-app-teammate')])
         document.querySelectorAll('.js-feedback-app-teammate').forEach(teammate => {
             teammate.addEventListener('click', function() {
                 if (noTeammateSelected !== null) {
                     userId = this.id;
                     userNotSelectedTimeout !== null && clearTimeout(userNotSelectedTimeout)
                     noTeammateSelected.style.display = "none"
+                    document.querySelector('#navbarCheckbox').checked = false;
                     document.querySelector('.js-feedback-status-container').style.display = "block"
                     document.querySelector('.js-feedback-accepted').style.display = "none"
                     document.querySelector('.js-teammate-already-reviewed').style.display = "none"
@@ -313,7 +313,7 @@
         document.querySelectorAll('.js-profile-form-close').forEach(closeButton => {
             closeButton.addEventListener('click', function() {
                 this.parentElement.parentElement.parentElement.style.display = 'none';
-                document.querySelector('.js-feedback-status-container').style.display = "block"
+                document.querySelector('.js-feedback-status-container').style.display = "block";
                 if (noTeammateSelected !== null) {
                     noTeammateSelected.style.display = 'block'
                     document.querySelector('.js-feedback-accepted').style.display = "none"
@@ -376,6 +376,7 @@
 
         document.querySelector('.js-feedback-app-logged-user').addEventListener("click", function() {
             userNotSelectedTimeout !== null && clearTimeout(userNotSelectedTimeout)
+            document.querySelector('#navbarCheckbox').checked = false;
             document.querySelector('.js-feedback-status-container').style.display = "none"
             document.querySelectorAll(".profile-form-container").forEach(form => {
                 form.style.display = "none"

@@ -37,7 +37,6 @@
     </nav>
 <div class="feedback-app-main">
     @auth
-    <div class="menu-media js-menu-media"><i class="fas fa-bars"></i></div>
     @endauth
     <div class="profile-all-forms-container">
         <label for="navbarCheckbox" class="feedback-app-navbar-dropdown-label">

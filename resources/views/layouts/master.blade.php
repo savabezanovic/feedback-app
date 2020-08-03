@@ -33,7 +33,7 @@
                 alt="logo"> FEEDBACK <br /> APP
         </div>
             @yield('users')
-        <label for="navbarCheckbox" class="feedback-app-navbar-dropdown-label-close">&#10006;</label>
+       <div class="feedback-app-navbar-dropdown-label-close-container"><label for="navbarCheckbox" class="feedback-app-navbar-dropdown-label-close">&#10006;</label></div>
     </nav>
 <div class="feedback-app-main">
     @auth

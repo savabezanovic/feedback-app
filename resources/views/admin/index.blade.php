@@ -2,16 +2,14 @@
 
 @section('users')
 
-<div class="user-box">
-    <div class="user">
-        <img src="{{auth()->user()->profile->picture}}" class="user-image js-admin-profile-picture" >
-        <div class="user-status js-logged-admin" id="{{auth()->user()->id}}">
-            <form action="{{route('logout')}}" method="POST">
-                @csrf
-                <p class="user-name">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</p>
-                <span><button type="submit" class="logout-btn">Log out</button></span>
-            </form>
-        </div>
+<div class="feedback-app-navbar-profile-container js-logged-admin" id="{{auth()->user()->id}}">
+    <img src="{{auth()->user()->profile->picture}}" alt="profile avatar" class="feedback-app-profile-avatar">
+    <div>
+        <div class="feedback-app-navbar-profile-name">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</div>
+        <form action="{{route('logout')}}" method="POST">
+            @csrf
+            <button type="submit" class="feedback-app-navbar-profile-logout">Log out</button>
+        </form>
     </div>
 </div>
 
@@ -41,12 +39,12 @@ Please input correct data!
         <div class="company-users-table-scroll">
             <table class="company-users-table">
                 <thead class="company-users-table-head">
-                    <th class="company-users-table-head-content"><span>First Name</span></th>
-                    <th class="company-users-table-head-content"><span>Last Name</span></th>
-                    <th class="company-users-table-head-content"><span>Email</span></th>
-                    <th class="company-users-table-head-content"><span>Position</span></th>
-                    <th class="company-users-table-head-content"><span>Status</span></th>
-                    <th class="company-users-table-head-content"><span>Options</span></th>
+                    <th class="company-users-table-head-content"><span class="long-th">First Name</span><span class="short-th">F.N.</span></th>
+                    <th class="company-users-table-head-content"><span class="long-th">Last Name</span><span class="short-th">L.N.</span></th>
+                    <th class="company-users-table-head-content"><span class="long-th">Email</span><span class="short-th">Mail</span></th>
+                    <th class="company-users-table-head-content"><span class="long-th">Position</span><span class="short-th">Pos.</span></th>
+                    <th class="company-users-table-head-content"><span class="long-th">Status</span><span class="short-th">Stat.</span></th>
+                    <th class="company-users-table-head-content"><span class="long-th">Options</span><span class="short-th">Opt.</span></th>
                 </thead>
                 <tbody class="company-users-table-body js-admins-list">
 
@@ -74,7 +72,7 @@ Please input correct data!
             <label  class="admin-user-input-label js-input-textarea-label" name="edit-password-confirmation" for="password-confirm1">Password Confirm</label>
             <input type="password" name="edit-password-confirmation" id="password-confirm1" placeholder="Confirm new password" class="admin-user-input js-input-textarea js-edit-user-input">
             <div name="email-edit" class="admin-user-edit-error js-edit-error-password">Passowrds must match</div>
-            <label class="admin-user-input-label admin-user-input-label-visible" for="job-title">Positions:</label>
+            <label class="admin-user-input-label-visible" for="job-title">Positions:</label>
             <select name="job-title" id="update-job-title" class="admin-add-new-user-select" required>
                 @forelse($positions as $position)
                 @if ($position->name !== "Admin")

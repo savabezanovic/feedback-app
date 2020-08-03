@@ -28,7 +28,7 @@ html {
   font-size: 16px;
   width: 250px;
   transition: opacity ease-in 0.1s 0.7s, max-height ease-in-out 0.8s;
-  z-index: 1;
+  z-index: 10;
 }
 
 @media (max-width: 900px) {
@@ -105,12 +105,6 @@ html {
   }
 }
 
-@media (max-width: 400px) {
-  .feedback-app-navbar-profile-container {
-    font-size: 12px;
-  }
-}
-
 .feedback-app-profile-avatar {
   border-radius: 50%;
   width: 40px;
@@ -122,14 +116,6 @@ html {
   .feedback-app-profile-avatar {
     margin-right: 0;
     margin-left: 20px;
-  }
-}
-
-@media (max-width: 400px) {
-  .feedback-app-profile-avatar {
-    width: 25px;
-    height: 25px;
-    margin-left: 10px;
   }
 }
 
@@ -451,6 +437,17 @@ html {
   display: none;
   flex-direction: column;
   width: 100%;
+}
+
+.feedback-app-navbar-dropdown-label-close-container {
+  display: none;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .feedback-app-navbar-dropdown-label-close-container {
+    display: flex;
+  }
 }
 
 .feedback-app-navbar-dropdown-label-close {
@@ -1318,6 +1315,18 @@ html {
   flex-direction: column;
 }
 
+@media (max-width: 1500px) {
+  .admin-profile-form-container {
+    width: 130%;
+  }
+}
+
+@media (max-width: 900px) {
+  .admin-profile-form-container {
+    width: 100%;
+  }
+}
+
 .admin-profile-form-title {
   color: #ec1940;
   -webkit-user-select: none;
@@ -1328,6 +1337,12 @@ html {
   margin-top: 20px;
 }
 
+@media (max-width: 430px) {
+  .admin-profile-form-title {
+    font-size: 20px;
+  }
+}
+
 .company-users-table-container {
   position: relative;
   margin-bottom: 25px;
@@ -1336,6 +1351,7 @@ html {
 .company-users-table {
   border-collapse: collapse;
   border-spacing: 0;
+  width: 100%;
 }
 
 .company-users-table-container {
@@ -1355,6 +1371,30 @@ html {
   text-align: left;
 }
 
+@media (max-width: 1200px) {
+  .company-users-table-head {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 900px) {
+  .company-users-table-head {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 430px) {
+  .company-users-table-head {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 380px) {
+  .company-users-table-head {
+    font-size: 10px;
+  }
+}
+
 .company-users-table-head-content {
   text-align: left;
 }
@@ -1364,7 +1404,6 @@ html {
   top: 0;
   background-color: white;
   width: 100%;
-  display: block;
   border-left: solid 1px #cccccc;
   border-bottom: solid 1px #cccccc;
   padding-left: 5px;
@@ -1373,6 +1412,26 @@ html {
   color: #7a7e81;
   font-weight: bold;
   z-index: 1;
+}
+
+.short-th {
+  display: none;
+}
+
+@media (max-width: 1050px) {
+  .short-th {
+    display: block;
+  }
+}
+
+.long-th {
+  display: block;
+}
+
+@media (max-width: 1050px) {
+  .long-th {
+    display: none;
+  }
 }
 
 .company-users-table-body {
@@ -1394,8 +1453,23 @@ html {
   padding-left: 5px;
 }
 
+@media (max-width: 700px) {
+  .company-users-table-body-data {
+    font-size: 12px;
+    padding: 0;
+    text-align: center;
+  }
+}
+
+@media (max-width: 430px) {
+  .company-users-table-body-data {
+    font-size: 10px;
+  }
+}
+
 .user-status-checkbox {
   display: none;
+  margin: auto;
 }
 
 .user-status-checkbox:checked + .user-status-toggle-outer {
@@ -1404,6 +1478,18 @@ html {
 
 .user-status-checkbox:checked + .user-status-toggle-outer .user-status-toggle-inner {
   transform: translate(20px);
+}
+
+@media (max-width: 550px) {
+  .user-status-checkbox:checked + .user-status-toggle-outer .user-status-toggle-inner {
+    transform: translate(15px);
+  }
+}
+
+@media (max-width: 430px) {
+  .user-status-checkbox {
+    display: block;
+  }
 }
 
 .user-status-toggle-outer {
@@ -1418,6 +1504,19 @@ html {
   transition: background-color ease-in-out 0.3s;
 }
 
+@media (max-width: 550px) {
+  .user-status-toggle-outer {
+    width: 35px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 430px) {
+  .user-status-toggle-outer {
+    display: none;
+  }
+}
+
 .user-status-toggle-inner {
   display: block;
   position: absolute;
@@ -1428,6 +1527,13 @@ html {
   top: 2px;
   left: 2px;
   transition: transform ease-in-out 0.3s;
+}
+
+@media (max-width: 550px) {
+  .user-status-toggle-inner {
+    height: 15px;
+    width: 15px;
+  }
 }
 
 .users-table-button {
@@ -1446,6 +1552,29 @@ html {
 
 .users-table-button:hover {
   background-color: #ff7d95;
+}
+
+@media (max-width: 700px) {
+  .users-table-button {
+    font-size: 12px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 430px) {
+  .table-button-large-screen-text {
+    display: none;
+  }
+}
+
+.table-button-small-screen-text {
+  display: none;
+}
+
+@media (max-width: 430px) {
+  .table-button-small-screen-text {
+    display: block;
+  }
 }
 
 .users-table-center {
@@ -1476,6 +1605,14 @@ html {
   padding: 25px;
   border-radius: 5px;
   box-shadow: 4px 4px 8px #363636;
+}
+
+@media (max-width: 900px) {
+  .admin-edit-user-form {
+    margin-bottom: auto;
+    margin-top: 10px;
+    width: 80%;
+  }
 }
 
 .admin-edit-user-form-close {
@@ -1516,11 +1653,24 @@ html {
   flex-direction: row;
 }
 
+@media (max-width: 900px) {
+  .admin-options-container {
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
 .admin-add-new-user-form {
   width: 50%;
   margin-right: 50px;
   display: flex;
   flex-direction: column;
+}
+
+@media (max-width: 900px) {
+  .admin-add-new-user-form {
+    width: 100%;
+  }
 }
 
 .admin-forms-title {
@@ -1570,8 +1720,15 @@ html {
 }
 
 .admin-user-input-label-visible {
-  opacity: 1;
-  visibility: visible;
+  color: #ec1940;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 25px;
+  transition: all ease-in-out 0.3s;
 }
 
 .admin-add-new-user-select {
@@ -1659,6 +1816,13 @@ html {
   width: 50%;
 }
 
+@media (max-width: 900px) {
+  .admin-stats-time-container {
+    width: 100%;
+    margin-bottom: 25px;
+  }
+}
+
 .admin-user-stats-container {
   display: flex;
   flex-direction: column;
@@ -1674,6 +1838,7 @@ html {
 .admin-user-stats-info {
   margin-left: auto;
   color: #ec1940;
+  text-align: right;
 }
 
 .admin-feedback-time-form {

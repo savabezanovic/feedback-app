@@ -36,7 +36,7 @@ html {
     font-size: 16px;
     width: 250px;
     transition: opacity ease-in .1s .7s, max-height ease-in-out .8s;
-    z-index: 1;
+    z-index: 10;
     @media(max-width: 900px) {
         position: absolute;
         top: 0;
@@ -93,9 +93,6 @@ html {
         flex-direction: row-reverse;
         text-align: right;
     }
-    @media (max-width: 400px) {
-        font-size: 12px;
-    }
 }
 
 .feedback-app-profile-avatar {
@@ -107,12 +104,6 @@ html {
         margin-right: 0;
         margin-left: 20px;
     }
-    @media (max-width: 400px) {
-        width: 25px;
-        height: 25px;
-        margin-left: 10px;
-    }
-
 }
 
 .feedback-app-navbar-profile-name {
@@ -378,6 +369,14 @@ html {
     display: none;
     flex-direction: column;
     width: 100%;
+}
+
+.feedback-app-navbar-dropdown-label-close-container {
+    display: none;
+    width: 100%;
+    @media (max-width: 900px) {
+        display: flex;
+    }
 }
 
 .feedback-app-navbar-dropdown-label-close {
@@ -1101,9 +1100,17 @@ html {
 
 //// ADMIN /////
 
+
+
 .admin-profile-form-container {
     display: flex;
     flex-direction: column;
+    @media (max-width: 1500px) {
+        width: 130%;
+    }
+    @media (max-width: 900px) {
+        width: 100%;
+    }
 }
 
 .admin-profile-form-title {
@@ -1111,6 +1118,9 @@ html {
     user-select: none;
     margin-bottom: 20px;
     margin-top: 20px;
+    @media (max-width:430px) {
+        font-size: 20px;
+    }
 }
 
 .company-users-table-container {
@@ -1121,7 +1131,7 @@ html {
 .company-users-table {
     border-collapse: collapse; 
     border-spacing: 0;
-
+    width: 100%;
 }
 
 .company-users-table-container {
@@ -1139,6 +1149,18 @@ html {
 
 .company-users-table-head {
     text-align: left;
+    @media (max-width: 1200px) {
+        font-size: 12px;
+    }
+    @media (max-width: 900px) {
+        font-size: 14px;
+    }
+    @media (max-width: 430px) {
+        font-size: 11px;
+    }
+    @media(max-width:380px) {
+        font-size: 10px;
+    }
 }
 
 .company-users-table-head-content {
@@ -1148,7 +1170,6 @@ html {
         top: 0;
         background-color: white;
         width: 100%;
-        display: block;
         border-left: solid 1px #cccccc;
         border-bottom: solid 1px #cccccc;
         padding-left: 5px;
@@ -1157,6 +1178,20 @@ html {
         color: #7a7e81;
         font-weight: bold;
         z-index: 1;
+    }
+}
+
+.short-th {
+    display: none;
+    @media (max-width: 1050px) {
+        display: block;
+    }
+}
+
+.long-th {
+    display: block;
+    @media (max-width: 1050px) {
+        display: none;
     }
 }
 
@@ -1176,16 +1211,31 @@ html {
     font-size: 14px;
     text-align: left;
     padding-left: 5px;
+    @media (max-width: 700px) {
+        font-size: 12px;
+        padding: 0;
+        text-align: center;
+    }
+    @media (max-width: 430px) {
+        font-size: 10px;
+    }
+
 }
 
 .user-status-checkbox {
     display: none;
+    margin: auto;
     &:checked + .user-status-toggle-outer {
         background-color: #ec1940;
-
         .user-status-toggle-inner {
             transform: translate(20px);
+            @media (max-width: 550px) {
+                transform: translate(15px);
+            } 
         }
+    }
+    @media (max-width: 430px) {
+        display: block;
     }
 }
 
@@ -1199,6 +1249,13 @@ html {
     position: relative;
     margin: auto;
     transition: background-color ease-in-out .3s;
+    @media (max-width: 550px) {
+        width: 35px;
+        height: 20px;
+    }
+    @media (max-width: 430px) {
+       display: none;
+    }
 }
 
 .user-status-toggle-inner {
@@ -1211,6 +1268,10 @@ html {
     top: 2px;
     left: 2px;
     transition: transform ease-in-out .3s;
+    @media (max-width: 550px) {
+        height: 15px;
+        width: 15px;
+    }
 }
 
 .users-table-button {
@@ -1228,7 +1289,25 @@ html {
     &:hover {
         background-color: #ff7d95;
     }
+    @media (max-width: 700px) {
+        font-size: 12px;
+        padding: 8px;
+    }
 }
+
+.table-button-large-screen-text {
+    @media (max-width:430px) {
+        display: none;    
+    }
+}
+
+.table-button-small-screen-text {
+    display: none;
+    @media (max-width:430px) {
+        display: block;
+    }
+}
+
 
 .users-table-center {
     text-align: center;
@@ -1260,6 +1339,12 @@ html {
     padding: 25px;
     border-radius: 5px;
     box-shadow: 4px 4px 8px #363636;
+    @media (max-width: 900px) {
+        margin-bottom: auto;
+        margin-top: 10px;
+        width: 80%;
+    }
+
 }
 
 .admin-edit-user-form-close {
@@ -1295,6 +1380,10 @@ html {
 .admin-options-container {
     display: flex;
     flex-direction: row;
+    @media (max-width: 900px) {
+        flex-direction: column;
+        justify-content: center;
+    }
 }
 
 .admin-add-new-user-form {
@@ -1302,6 +1391,9 @@ html {
     margin-right: 50px;
     display: flex;
     flex-direction: column;
+    @media (max-width: 900px) {
+        width: 100%;
+    }
 }
 
 .admin-forms-title {
@@ -1345,8 +1437,12 @@ html {
 }
 
 .admin-user-input-label-visible {
-    opacity: 1;
-    visibility: visible;
+    color: #ec1940;
+    user-select: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 25px;
+    transition: all ease-in-out .3s;
 }
 
 .admin-add-new-user-select {
@@ -1422,6 +1518,10 @@ html {
     display: flex;
     flex-direction: column;
     width: 50%;
+    @media (max-width: 900px) {
+        width: 100%;
+        margin-bottom: 25px;
+    }
 }
 
 .admin-user-stats-container {
@@ -1439,6 +1539,7 @@ html {
 .admin-user-stats-info {
     margin-left: auto;
     color: #ec1940;
+    text-align: right;
 }
 
 .admin-feedback-time-form {

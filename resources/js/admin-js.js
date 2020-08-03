@@ -17,8 +17,13 @@ $(document).ready(function () {
                                         </label>
                                     </td>
                                     <td class="company-users-table-body-data users-table-center">
-                                        <button id="${e.id}" class="users-table-button js-edit-user" data-id=${e.id}>Edit</button>
-                                        ${e.id.toString() === $('.js-logged-admin').attr('id') ? '<span></span>' : `<button class="users-table-button" id="delete-user" data-id=${e.id}>Delete</button>`}
+                                        <button id="${e.id}" class="users-table-button js-edit-user" data-id=${e.id}>
+                                            <span class="table-button-large-screen-text">Edit</span><span class="table-button-small-screen-text">&#9998;</span>
+                                        </button>
+                                        ${e.id.toString() === $('.js-logged-admin').attr('id') ? '<span></span>' : 
+                                        `<button class="users-table-button" id="delete-user" data-id=${e.id}>
+                                            <span class="table-button-large-screen-text">Delete</span><span class="table-button-small-screen-text">&#10006;</span>
+                                        </button>`}
                                     </td>
                                 </tr>`
                 });            

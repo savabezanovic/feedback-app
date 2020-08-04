@@ -906,6 +906,18 @@ html {
   flex-direction: column;
 }
 
+@media (max-width: 1350px) {
+  .login-form-container {
+    margin-left: 250px;
+  }
+}
+
+@media (max-width: 900px) {
+  .login-form-container {
+    margin: auto;
+  }
+}
+
 .login-form-title {
   color: #616161;
   font-size: 60px;
@@ -913,17 +925,16 @@ html {
   margin-bottom: 15px;
 }
 
+@media (max-width: 1350px) {
+  .login-form-title {
+    font-size: 40px;
+  }
+}
+
 .login-form-input-container {
   width: 100%;
   display: flex;
   flex-direction: column;
-}
-
-@media (max-width: 900px) {
-  .login-form-input-container {
-    margin: auto;
-    width: 90%;
-  }
 }
 
 .login-form-input-label {

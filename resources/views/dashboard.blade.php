@@ -28,13 +28,13 @@
             @forelse(auth()->user()->teammates() as $user)
             @if($user->hasFeedback())
             <li id="{{$user->id}}" class="feedback-app-navabar-users-list-item js-feedback-app-teammate js-teammate-{{$user->id}} already-reviewed">
-                <img src="{{$user->profile->picture}}" class="feedback-app-navbar-users-list-image" />
+                <img data-id="user-image-{{$user->id}}" src="{{$user->profile->picture}}" class="feedback-app-navbar-users-list-image js-users-image-nav" />
                 {{$user->first_name}} {{$user->last_name}}
                 <img src="images/user-reviewed.png" alt="check mark" style="display:block" class="feedback-app-navbar-users-list-reviewed js-reviewed-checkmark-{{$user->id}}">
             </li>
             @else
             <li id="{{$user->id}}" class="feedback-app-navabar-users-list-item js-feedback-app-teammate js-teammate-{{$user->id}}">
-                <img src="{{$user->profile->picture}}" class="feedback-app-navbar-users-list-image" />
+                <img data-id="user-image-{{$user->id}}" src="{{$user->profile->picture}}" class="feedback-app-navbar-users-list-image js-users-image-nav" />
                 {{$user->first_name}} {{$user->last_name}}
                 <img src="images/user-reviewed.png" alt="check mark" class="feedback-app-navbar-users-list-reviewed js-reviewed-checkmark-{{$user->id}}">
             </li>
@@ -168,15 +168,14 @@
             @forelse(auth()->user()->activeFeedbacks() as $feedback)
             <div class="logged-user-feedback">
                 <div class="feedbacks-user-container">
-                    <img class="profile-form-image" src="https://cdn3.vectorstock.com/i/thumb-large/17/72/halloween-red-smiling-monster-avatar-vector-26041772.jpg" alt="user icon">
+                    <img data-id="user-image-{{$feedback->creator->id}}" class="profile-form-image js-user-image-comment" src="https://cdn3.vectorstock.com/i/thumb-large/17/72/halloween-red-smiling-monster-avatar-vector-26041772.jpg" alt="user icon">
                     <div>{{$feedback->creator->first_name}} {{$feedback->creator->last_name}}
                         <div class="feedbacks-user-profession"></div>
                     </div>
                     <div class="logged-user-stars-contianer feedbacks-stars-container">
                         <div class="logged-user-stars-rating feedbacks-user-rating">
                             <span class="js-logged-user-stars-rating">
-                                5
-                                <!-- @if($feedback->creator->averageFeedbackScore()){{round($feedback->creator->averageFeedbackScore(), 1)}} @else (0) @endif -->
+                                @if($feedback->creator->averageFeedbackScore()){{round($feedback->creator->averageFeedbackScore(), 1)}} @else 0 @endif 
                             </span>
                         </div>
                         <div class="stars-layer-1 feedbacks-rating-stars">
@@ -385,6 +384,14 @@
                 teammate.style.backgroundColor = "transparent"
             });
             document.querySelector('.js-logged-user-container').style.display = "block"
+        })
+
+        document.querySelectorAll('.js-user-image-comment').forEach(userImage => {
+            document.querySelectorAll('.js-users-image-nav').forEach(navUserImage => {
+                if (userImage.getAttribute("data-id") === navUserImage.getAttribute("data-id")) {
+                    userImage.setAttribute("src", navUserImage.getAttribute('src'))
+                }
+            }) 
         })
 
         document.querySelectorAll('.js-submit').forEach(submitButton => {

@@ -14,8 +14,12 @@ $(document).ready(function () {
                                     <div class="super-admin-admin-name">${admin.first_name} ${admin.last_name}</div>
                                     <div class="super-admin-admin-email">${admin.email}</div>
                                     <div class="super-admin-admin-company-name">${companyName}</div>
-                                    <button class="super-admin-button super-admin-admins-button js-super-admin-edit-admin" id=${admin.id}>EDIT ADMIN</button>
-                                    <button data-id="${admin.id}" class="super-admin-button super-admin-admins-button js-super-admin-delete-admin">DELETE ADMIN</button>
+                                    <button class="super-admin-button super-admin-admins-button js-super-admin-edit-admin" id=${admin.id}>
+                                        <span class="super-admin-admin-button-large-screen">Edit Admin</span><span class="super-admin-admin-button-small-screen">&#9998;</span>                                    
+                                    </button>
+                                    <button data-id="${admin.id}" class="super-admin-button super-admin-admins-button super-admin-admins-button-delete js-super-admin-delete-admin">
+                                        <span class="super-admin-admin-button-large-screen">Delete</span><span class="super-admin-admin-button-small-screen">&#10006;</span>
+                                    </button>
                                </div>`
                 });
                 $('.js-all-admins').append(output);
@@ -232,8 +236,12 @@ $(document).ready(function () {
                     output += `<div class="skill-container js-job-title-container" name="${skill.name}">
                     <div class="skill-name">${skill.name}</div>
                     <input type="text" id="edit-skill-${skill.id}" data-id="${skill.id}" name="skill-edit-${skill.id}" class="super-admin-input change-skill-input js-change-skill-name-${skill.id} js-input-textarea" placeholder="Change skill name"/>
-                    <button class="super-admin-button js-change-skill-name" data-id="${skill.id}">Change</button>
-                    <button data-id="${skill.id}" class="super-admin-button skill-delete-button js-delete-skill">Delete</button>
+                    <button class="super-admin-button skill-button js-change-skill-name" data-id="${skill.id}">
+                        <span class="super-skills-button-large-screen">Change</span><span class="super-skills-button-small-screen">&#9998;</span>                                    
+                    </button>
+                    <button data-id="${skill.id}" class="super-admin-button skill-button js-delete-skill">
+                        <span class="super-skills-button-large-screen">Delete</span><span class="super-skills-button-small-screen">&#10006;</span>                                    
+                    </button>
                 </div>`
                     
                     

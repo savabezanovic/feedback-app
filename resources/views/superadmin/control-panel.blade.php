@@ -2,16 +2,14 @@
 
 @section('users')
 
-<div class="user-box">
-    <div class="user superadmin-media-user">
-        <img src="https://source.unsplash.com/random" class="user-image">
-        <div class="user-status">
-            <form action="{{route('logout')}}" method="POST">
-                @csrf
-                <p class="user-name">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</p>
-                <span><button type="submit" class="logout-btn">Log out</button></span>
-            </form>
-        </div>
+<div class="feedback-app-navbar-profile-container js-logged-admin" id="{{auth()->user()->id}}">
+    <img src="{{auth()->user()->profile->picture}}" alt="profile avatar" class="feedback-app-profile-avatar">
+    <div>
+        <div class="feedback-app-navbar-profile-name">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</div>
+        <form action="{{route('logout')}}" method="POST">
+            @csrf
+            <button type="submit" class="feedback-app-navbar-profile-logout">Log out</button>
+        </form>
     </div>
 </div>
 
@@ -27,13 +25,13 @@
             <label for="job-titles" class="navigation-label js-navigation-label">Job Titles</label>
             <label for="skills" class="navigation-label js-navigation-label">Skills</label>
         </div>
-        <input type="radio" id="companies-panel" name="navigation-radio" class="navigation-radio js-navigation-radio" checked/>
+        <input type="radio" id="companies-panel" name="navigation-radio" class="navigation-radio js-navigation-radio" />
         <div class="navigation-div">
             <h3 class="super-admin-titles">Companies Panel</h3>
             <div class="add-a-company-container">
                 <label for="add-a-company" name="add-company" class="add-admin-label add-a-company-label js-input-textarea-label">Add a company</label>
                 <input id="add-a-company" name="add-company" class="super-admin-input add-a-company-input js-company-name js-input-textarea" value="" placeholder="Add a company" >
-                <button class="super-admin-button js-add-company-btn">ADD</button>
+                <button class="super-admin-button add-company-button js-add-company-btn">ADD</button>
                 <div class="super-admin-add-company-error js-add-company-error "></div>
 
             </div>
@@ -130,7 +128,7 @@
             </div>
         </div>
 
-        <input type="radio" id="job-titles" name="navigation-radio" class="navigation-radio js-navigation-radio" />
+        <input type="radio" id="job-titles" name="navigation-radio" class="navigation-radio js-navigation-radio"  />
         <div class="navigation-div">
             <h3 class="super-admin-titles">Job Titles Panel</h3>
             <div class="add-job-title-input-container">
@@ -146,13 +144,13 @@
             </div>
         </div>
 
-        <input type="radio" id="skills" name="navigation-radio" class="navigation-radio js-navigation-radio" />
+        <input type="radio" id="skills" name="navigation-radio" class="navigation-radio js-navigation-radio" checked/>
         <div class="navigation-div">
         <h3 class="super-admin-titles">Skills Panel</h3>
             <div class="add-new-skill-container">
             <label for="add-new-skill" name="skill-name" class="add-admin-label add-a-skill-label js-add-skill-label js-input-textarea-label">Add new skill</label>
             <input class="super-admin-input add-new-skill-input js-add-new-skill js-input-textarea" id="add-new-skill" name="skill-name" placeholder="Add new skill">
-            <button class="super-admin-button js-add-new-skill-button">ADD</button>
+            <button class="super-admin-button add-new-skill-button js-add-new-skill-button">ADD</button>
             <div class="super-admin-add-skill-error js-add-skill-error"></div>
             </div>
             <label for="search-skills" name="skills-search" class="add-admin-label add-a-skill-label js-input-textarea-label">Search Skills</label>

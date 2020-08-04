@@ -10,8 +10,12 @@ $(document).ready(function () {
                         `<div class="job-title-container js-job-title-container" name="${job.name}">
                             <div class="job-name">${job.name}</div>
                             <input type="text" id="edit-job-${job.id}" data-id="${job.id}" name="job-edit-${job.id}" class="super-admin-input edit-job-name js-input-textarea" placeholder="Change job name"/>
-                            <button class="super-admin-button js-change-job-name" data-id="${job.id}">Change</button>
-                            <button data-id="${job.id}" class="super-admin-button job-delete-button js-delete-job">Delete</button>
+                            <button class="super-admin-button jobs-button js-change-job-name" data-id="${job.id}">
+                                <span class="super-jobs-button-large-screen">Change</span><span class="super-jobs-button-small-screen">&#9998;</span>                                    
+                            </button>
+                            <button data-id="${job.id}" class="super-admin-button jobs-button js-delete-job">
+                                <span class="super-jobs-button-large-screen">Delete</span><span class="super-jobs-button-small-screen">&#10006;</span>                                    
+                            </button>
                         </div>`
                     }
                 });

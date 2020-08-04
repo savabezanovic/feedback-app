@@ -13,9 +13,13 @@ $(document).ready(function(){
                                     <label for="active-${company.id}" class="super-admin-toggle-outer">
                                             <span class="super-admin-toggle-inner"></span>
                                     </label>
-                                    <input type="text" placeholder="Change company name" class="js-change-company-name-input-${company.id} super-admin-input " />
-                                    <button data-id=${company.id} class="super-admin-button super-admin-company-button js-change-company-name">CHANGE</button>
-                                    <button data-id="${company.id}" class="super-admin-button super-admin-company-button js-delete-company">DELETE</button>
+                                    <input type="text" placeholder="Change name" class="js-change-company-name-input-${company.id} super-admin-input super-admin-company-input js-input-textarea" />
+                                    <button data-id=${company.id} class="super-admin-button super-admin-company-button js-change-company-name">
+                                        <span class="super-admin-company-button-large-screen">Change</span><span class="super-admin-company-button-small-screen">&#9998;</span>                                    
+                                    </button>
+                                    <button data-id="${company.id}" class="super-admin-button super-admin-company-button js-delete-company">
+                                        <span class="super-admin-company-button-large-screen">Delete</span><span class="super-admin-company-button-small-screen">&#10006;</span>
+                                    </button>
                                </div>`;
                 });
                 $('.js-companies').append(output);
@@ -46,7 +50,9 @@ $(document).ready(function(){
             .done(function(data){
                 $('.js-companies').empty().append(getCompany);
                 $('#company-id').append('<option value="'+ data.company.id +'">'+ name +'</option>');
-                $('.js-company').val("");
+                $('.js-company-name').val("");
+                $('.js-company-name').css("border-color", "#d3d4d5");
+                $('.add-a-company-label').css({"opacity":"0","visibility":"hidden"})
             })
     };
     //DELETE COMPANY

@@ -25,7 +25,7 @@
             <label for="job-titles" class="navigation-label js-navigation-label">Job Titles</label>
             <label for="skills" class="navigation-label js-navigation-label">Skills</label>
         </div>
-        <input type="radio" id="companies-panel" name="navigation-radio" class="navigation-radio js-navigation-radio" />
+        <input type="radio" id="companies-panel" name="navigation-radio" class="navigation-radio js-navigation-radio" checked/>
         <div class="navigation-div">
             <h3 class="super-admin-titles">Companies Panel</h3>
             <div class="add-a-company-container">
@@ -144,7 +144,7 @@
             </div>
         </div>
 
-        <input type="radio" id="skills" name="navigation-radio" class="navigation-radio js-navigation-radio" checked/>
+        <input type="radio" id="skills" name="navigation-radio" class="navigation-radio js-navigation-radio" />
         <div class="navigation-div">
         <h3 class="super-admin-titles">Skills Panel</h3>
             <div class="add-new-skill-container">
@@ -248,13 +248,6 @@
         $('.js-add-new-skill-button').click(addSkill);
 
         $(document).on('click', ".js-super-admin-delete-admin", deleteAdmin);
-
-        $(".js-super-admin-edit-admin").click(editAdmin);
-
-        $('.js-edit-close').click(closeEdit);
-
-        $('.js-update-password').click(updatePassword);
-
 
         $('.js-add-position-btn').click(addJobTitle);
 

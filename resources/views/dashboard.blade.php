@@ -411,12 +411,14 @@
                     const slectedUserReview = `${skill.id}-${userId}`
                     skillRatings[slectedUserReview] = $(`input[name="${slectedUserReview}"]:checked`).val();
                 });
-
+                if (Object.values(skillRatings).includes(undefined)) {
+                    alert("Please rate all skills")
+                    return
+                } 
                 $.post('feedback/store', {
                         data: feedbacks,
                         ratings: skillRatings,
                         skills: allSkills,
-                        success: function() {}
                     }).done(function() {
                         $(`.js-profile-form-continer-${userId}`).hide();
                         $(".js-feedback-app-teammate").css("background-color", "transparent")

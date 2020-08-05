@@ -57,9 +57,9 @@ $(document).ready(function(){
     };
     //DELETE COMPANY
 
-    window.deleteCompany = function(e) {
+    window.deleteCompany = function() {
 
-        let id =  e.target.getAttribute("data-id");
+        let id =  this.getAttribute("data-id");
         $.ajax (
             {
                 url: "/superadmin/companies/" + id + "/delete",
@@ -76,7 +76,7 @@ $(document).ready(function(){
     //UPDATE COMPANY
 
     window.editCompany = function(e) {
-        let  id =  e.target.getAttribute("data-id");
+        let  id =  this.getAttribute("data-id");
         let active = $(`#active-${id}`).is(":checked") ? 1 : 0;
         let name =  !$(`.js-change-company-name-input-${id}`).val() ? $(`.js-current-company-name-${id}`).html() : $(`.js-change-company-name-input-${id}`).val();
         $.ajax (

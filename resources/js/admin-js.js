@@ -4,24 +4,24 @@ $(document).ready(function () {
             '/admin/users', function (data) {
                 let output = [];
 
-                $.each(data.users, function (i, e) {
-                    output += `<tr class="company-users-table-body-row js-user-del${e.id}">
-                                    <td class="company-users-table-body-data"> ${e.first_name}  </td><td class="company-users-table-body-data">  ${e.last_name}  </td>
-                                    <td class="company-users-table-body-data">${e.email}</td>
-                                    <td class="company-users-table-body-data">${e.profile.job_title !== null ? e.profile.job_title.name : "No job title"}</td>
+                $.each(data.users, function (i, user) {
+                    output += `<tr class="company-users-table-body-row js-user-del${user.id}">
+                                    <td class="company-users-table-body-data"> ${user.first_name}  </td><td class="company-users-table-body-data">  ${user.last_name}  </td>
+                                    <td class="company-users-table-body-data">${user.email}</td>
+                                    <td class="company-users-table-body-data">${user.profile.job_title !== null ? user.profile.job_title.name : "No job title"}</td>
                                     <td class="user-status-dot company-users-table-body-data">
-                                    <input class="user-status-checkbox" data-id="${e.id}" name="chk-box" id="chk-box-${e.id}" value="1" type="checkbox" ${e.active === 1 ? "checked" : ""} 
-                                    ${e.id.toString() === $('.js-logged-admin').attr('id') ? "disabled" : ""}>
-                                        <label for="chk-box-${e.id}" class="user-status-toggle-outer">
+                                    <input class="user-status-checkbox" data-id="${user.id}" name="chk-box" id="chk-box-${user.id}" value="1" type="checkbox" ${user.active === 1 ? "checked" : ""} 
+                                    ${user.id.toString() === $('.js-logged-admin').attr('id') ? "disabled" : ""}>
+                                        <label for="chk-box-${user.id}" class="user-status-toggle-outer">
                                             <span class="user-status-toggle-inner"></span>
                                         </label>
                                     </td>
                                     <td class="company-users-table-body-data users-table-center">
-                                        <button id="${e.id}" class="users-table-button js-edit-user" data-id=${e.id}>
+                                        <button id="${user.id}" class="users-table-button js-edit-user" data-id=${user.id}>
                                             <span class="table-button-large-screen-text">Edit</span><span class="table-button-small-screen-text">&#9998;</span>
                                         </button>
-                                        ${e.id.toString() === $('.js-logged-admin').attr('id') ? '<span></span>' : 
-                                        `<button class="users-table-button" id="delete-user" data-id=${e.id}>
+                                        ${user.id.toString() === $('.js-logged-admin').attr('id') ? '<span></span>' : 
+                                        `<button class="users-table-button" id="delete-user" data-id=${user.id}>
                                             <span class="table-button-large-screen-text">Delete</span><span class="table-button-small-screen-text">&#10006;</span>
                                         </button>`}
                                     </td>
@@ -29,9 +29,8 @@ $(document).ready(function () {
                 });            
                 $('.js-admins-list').append(output);
                 $(".js-edit-user").click(editUser);
-                function editUser(e){
-                    id = e.target.getAttribute('id');
-                    console.log(id)
+                function editUser(){
+                    id = this.getAttribute('id');
                     $.get('/admin/users/'+id, function(data){
                             $('.js-edit-fname').val(data.user.first_name);
                             $('.js-edit-lname').val(data.user.last_name);
@@ -277,9 +276,9 @@ $(document).ready(function () {
 
 // DELETE USER
 
-    window.deleteUser = function(e) {
+    window.deleteUser = function() {
 
-        var id = e.target.getAttribute("data-id");
+        var id = this.getAttribute("data-id");
 
         console.log(id)
         $.ajax (

@@ -23,7 +23,6 @@ $(document).ready(function () {
                                </div>`
                 });
                 $('.js-all-admins').append(output);
-                $(".js-super-admin-edit-admin").click(editAdmin);
                 function editAdmin(){
                     id = $(this).attr('id');
                     $.get('/superadmin/admins/'+id+'/update', function(data){
@@ -57,6 +56,8 @@ $(document).ready(function () {
                    
                     $('.js-edit-admin-form').css({"visibility" : "visible", "opacity": "1"})
                 }
+                $(".js-super-admin-edit-admin").click(editAdmin);
+
             }
         )
     };
@@ -244,14 +245,6 @@ $(document).ready(function () {
                     </button>
                 </div>`
                     
-                    
-                    // '<p class="media-list"><span style="margin:auto 0; margin-right:10px">'+ e.name + '</span>' +
-                    //     '<button data-id="'+ e.id +
-                    //     '" class="delete-skill super-admin-btn" name="delete-skill">DEL</button>'+
-                    //     '<i style="margin:auto 0" class="add fas fa-plus-circle js-skill-show" data-id="'+ e.id +'"></i>'+
-                    //     '<span class="hide js-skill-hide'+ e.id +'"><button data-id="'+ e.id +
-                    //     '"class="edit-skill super-admin-btn" name="edit-skill">Update</button><input data-id="'+ e.id +
-                    //     '"class="js-edit-skill-name'+ e.id +'" placeholder="Update skill name"></span><br><span class="hidden js-edit-skill'+ e.id +'"><br><br></span></p>';
                 });
                 $('.js-skills').append(output);
             }
@@ -287,9 +280,9 @@ $(document).ready(function () {
 
     // delete skill
 
-    window.deleteSkill = function(e) {
+    window.deleteSkill = function() {
 
-        let id =  e.target.getAttribute("data-id");
+        let id =  this.getAttribute('data-id')
         $.ajax (
             {
                 url: "/superadmin/skills/" + id + "/delete",
@@ -325,9 +318,9 @@ $(document).ready(function () {
 
     // delete admin
 
-    window.deleteAdmin = function(e) {
+    window.deleteAdmin = function() {
 
-        let id = e.target.getAttribute("data-id");
+        let id = this.getAttribute("data-id");
         $.ajax (
             {
                 url: "/superadmin/users/" + id + "/delete",
@@ -355,12 +348,5 @@ $(document).ready(function () {
     });
 
 
-    window.editAdmin = function(){
-        $(".edit-modal").show();
-    };
-
-    window.closeEdit = function(){
-        $('.edit-modal').hide();
-    }
 
 });

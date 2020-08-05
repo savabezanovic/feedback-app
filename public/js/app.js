@@ -32648,15 +32648,14 @@ $(document).ready(function () {
   window.getUsers = function () {
     $.get('/admin/users', function (data) {
       var output = [];
-      $.each(data.users, function (i, e) {
-        output += "<tr class=\"company-users-table-body-row js-user-del".concat(e.id, "\">\n                                    <td class=\"company-users-table-body-data\"> ").concat(e.first_name, "  </td><td class=\"company-users-table-body-data\">  ").concat(e.last_name, "  </td>\n                                    <td class=\"company-users-table-body-data\">").concat(e.email, "</td>\n                                    <td class=\"company-users-table-body-data\">").concat(e.profile.job_title !== null ? e.profile.job_title.name : "No job title", "</td>\n                                    <td class=\"user-status-dot company-users-table-body-data\">\n                                    <input class=\"user-status-checkbox\" data-id=\"").concat(e.id, "\" name=\"chk-box\" id=\"chk-box-").concat(e.id, "\" value=\"1\" type=\"checkbox\" ").concat(e.active === 1 ? "checked" : "", " \n                                    ").concat(e.id.toString() === $('.js-logged-admin').attr('id') ? "disabled" : "", ">\n                                        <label for=\"chk-box-").concat(e.id, "\" class=\"user-status-toggle-outer\">\n                                            <span class=\"user-status-toggle-inner\"></span>\n                                        </label>\n                                    </td>\n                                    <td class=\"company-users-table-body-data users-table-center\">\n                                        <button id=\"").concat(e.id, "\" class=\"users-table-button js-edit-user\" data-id=").concat(e.id, ">\n                                            <span class=\"table-button-large-screen-text\">Edit</span><span class=\"table-button-small-screen-text\">&#9998;</span>\n                                        </button>\n                                        ").concat(e.id.toString() === $('.js-logged-admin').attr('id') ? '<span></span>' : "<button class=\"users-table-button\" id=\"delete-user\" data-id=".concat(e.id, ">\n                                            <span class=\"table-button-large-screen-text\">Delete</span><span class=\"table-button-small-screen-text\">&#10006;</span>\n                                        </button>"), "\n                                    </td>\n                                </tr>");
+      $.each(data.users, function (i, user) {
+        output += "<tr class=\"company-users-table-body-row js-user-del".concat(user.id, "\">\n                                    <td class=\"company-users-table-body-data\"> ").concat(user.first_name, "  </td><td class=\"company-users-table-body-data\">  ").concat(user.last_name, "  </td>\n                                    <td class=\"company-users-table-body-data\">").concat(user.email, "</td>\n                                    <td class=\"company-users-table-body-data\">").concat(user.profile.job_title !== null ? user.profile.job_title.name : "No job title", "</td>\n                                    <td class=\"user-status-dot company-users-table-body-data\">\n                                    <input class=\"user-status-checkbox\" data-id=\"").concat(user.id, "\" name=\"chk-box\" id=\"chk-box-").concat(user.id, "\" value=\"1\" type=\"checkbox\" ").concat(user.active === 1 ? "checked" : "", " \n                                    ").concat(user.id.toString() === $('.js-logged-admin').attr('id') ? "disabled" : "", ">\n                                        <label for=\"chk-box-").concat(user.id, "\" class=\"user-status-toggle-outer\">\n                                            <span class=\"user-status-toggle-inner\"></span>\n                                        </label>\n                                    </td>\n                                    <td class=\"company-users-table-body-data users-table-center\">\n                                        <button id=\"").concat(user.id, "\" class=\"users-table-button js-edit-user\" data-id=").concat(user.id, ">\n                                            <span class=\"table-button-large-screen-text\">Edit</span><span class=\"table-button-small-screen-text\">&#9998;</span>\n                                        </button>\n                                        ").concat(user.id.toString() === $('.js-logged-admin').attr('id') ? '<span></span>' : "<button class=\"users-table-button\" id=\"delete-user\" data-id=".concat(user.id, ">\n                                            <span class=\"table-button-large-screen-text\">Delete</span><span class=\"table-button-small-screen-text\">&#10006;</span>\n                                        </button>"), "\n                                    </td>\n                                </tr>");
       });
       $('.js-admins-list').append(output);
       $(".js-edit-user").click(editUser);
 
-      function editUser(e) {
-        id = e.target.getAttribute('id');
-        console.log(id);
+      function editUser() {
+        id = this.getAttribute('id');
         $.get('/admin/users/' + id, function (data) {
           $('.js-edit-fname').val(data.user.first_name);
           $('.js-edit-lname').val(data.user.last_name);
@@ -32904,8 +32903,8 @@ $(document).ready(function () {
   }; // DELETE USER
 
 
-  window.deleteUser = function (e) {
-    var id = e.target.getAttribute("data-id");
+  window.deleteUser = function () {
+    var id = this.getAttribute("data-id");
     console.log(id);
     $.ajax({
       url: "/admin/users/" + id,
@@ -33158,8 +33157,8 @@ $(document).ready(function () {
   }; //DELETE COMPANY
 
 
-  window.deleteCompany = function (e) {
-    var id = e.target.getAttribute("data-id");
+  window.deleteCompany = function () {
+    var id = this.getAttribute("data-id");
     $.ajax({
       url: "/superadmin/companies/" + id + "/delete",
       type: 'DELETE',
@@ -33174,7 +33173,7 @@ $(document).ready(function () {
 
 
   window.editCompany = function (e) {
-    var id = e.target.getAttribute("data-id");
+    var id = this.getAttribute("data-id");
     var active = $("#active-".concat(id)).is(":checked") ? 1 : 0;
     var name = !$(".js-change-company-name-input-".concat(id)).val() ? $(".js-current-company-name-".concat(id)).html() : $(".js-change-company-name-input-".concat(id)).val();
     $.ajax({
@@ -33575,7 +33574,6 @@ $(document).ready(function () {
         output += "<div class=\"super-admin-admin-container\">\n                                    <div class=\"super-admin-admin-name\">".concat(admin.first_name, " ").concat(admin.last_name, "</div>\n                                    <div class=\"super-admin-admin-email\">").concat(admin.email, "</div>\n                                    <div class=\"super-admin-admin-company-name\">").concat(companyName, "</div>\n                                    <button class=\"super-admin-button super-admin-admins-button js-super-admin-edit-admin\" id=").concat(admin.id, ">\n                                        <span class=\"super-admin-admin-button-large-screen\">Edit Admin</span><span class=\"super-admin-admin-button-small-screen\">&#9998;</span>                                    \n                                    </button>\n                                    <button data-id=\"").concat(admin.id, "\" class=\"super-admin-button super-admin-admins-button super-admin-admins-button-delete js-super-admin-delete-admin\">\n                                        <span class=\"super-admin-admin-button-large-screen\">Delete</span><span class=\"super-admin-admin-button-small-screen\">&#10006;</span>\n                                    </button>\n                               </div>");
       });
       $('.js-all-admins').append(output);
-      $(".js-super-admin-edit-admin").click(editAdmin);
 
       function editAdmin() {
         id = $(this).attr('id');
@@ -33611,6 +33609,8 @@ $(document).ready(function () {
           "opacity": "1"
         });
       }
+
+      $(".js-super-admin-edit-admin").click(editAdmin);
     });
   };
 
@@ -33831,13 +33831,7 @@ $(document).ready(function () {
     $.get('/superadmin/skills', function (data) {
       var output = [];
       data.skills.forEach(function (skill) {
-        output += "<div class=\"skill-container js-job-title-container\" name=\"".concat(skill.name, "\">\n                    <div class=\"skill-name\">").concat(skill.name, "</div>\n                    <input type=\"text\" id=\"edit-skill-").concat(skill.id, "\" data-id=\"").concat(skill.id, "\" name=\"skill-edit-").concat(skill.id, "\" class=\"super-admin-input change-skill-input js-change-skill-name-").concat(skill.id, " js-input-textarea\" placeholder=\"Change skill name\"/>\n                    <button class=\"super-admin-button skill-button js-change-skill-name\" data-id=\"").concat(skill.id, "\">\n                        <span class=\"super-skills-button-large-screen\">Change</span><span class=\"super-skills-button-small-screen\">&#9998;</span>                                    \n                    </button>\n                    <button data-id=\"").concat(skill.id, "\" class=\"super-admin-button skill-button js-delete-skill\">\n                        <span class=\"super-skills-button-large-screen\">Delete</span><span class=\"super-skills-button-small-screen\">&#10006;</span>                                    \n                    </button>\n                </div>"); // '<p class="media-list"><span style="margin:auto 0; margin-right:10px">'+ e.name + '</span>' +
-        //     '<button data-id="'+ e.id +
-        //     '" class="delete-skill super-admin-btn" name="delete-skill">DEL</button>'+
-        //     '<i style="margin:auto 0" class="add fas fa-plus-circle js-skill-show" data-id="'+ e.id +'"></i>'+
-        //     '<span class="hide js-skill-hide'+ e.id +'"><button data-id="'+ e.id +
-        //     '"class="edit-skill super-admin-btn" name="edit-skill">Update</button><input data-id="'+ e.id +
-        //     '"class="js-edit-skill-name'+ e.id +'" placeholder="Update skill name"></span><br><span class="hidden js-edit-skill'+ e.id +'"><br><br></span></p>';
+        output += "<div class=\"skill-container js-job-title-container\" name=\"".concat(skill.name, "\">\n                    <div class=\"skill-name\">").concat(skill.name, "</div>\n                    <input type=\"text\" id=\"edit-skill-").concat(skill.id, "\" data-id=\"").concat(skill.id, "\" name=\"skill-edit-").concat(skill.id, "\" class=\"super-admin-input change-skill-input js-change-skill-name-").concat(skill.id, " js-input-textarea\" placeholder=\"Change skill name\"/>\n                    <button class=\"super-admin-button skill-button js-change-skill-name\" data-id=\"").concat(skill.id, "\">\n                        <span class=\"super-skills-button-large-screen\">Change</span><span class=\"super-skills-button-small-screen\">&#9998;</span>                                    \n                    </button>\n                    <button data-id=\"").concat(skill.id, "\" class=\"super-admin-button skill-button js-delete-skill\">\n                        <span class=\"super-skills-button-large-screen\">Delete</span><span class=\"super-skills-button-small-screen\">&#10006;</span>                                    \n                    </button>\n                </div>");
       });
       $('.js-skills').append(output);
     });
@@ -33875,8 +33869,8 @@ $(document).ready(function () {
   }; // delete skill
 
 
-  window.deleteSkill = function (e) {
-    var id = e.target.getAttribute("data-id");
+  window.deleteSkill = function () {
+    var id = this.getAttribute('data-id');
     $.ajax({
       url: "/superadmin/skills/" + id + "/delete",
       type: 'DELETE',
@@ -33906,8 +33900,8 @@ $(document).ready(function () {
   }; // delete admin
 
 
-  window.deleteAdmin = function (e) {
-    var id = e.target.getAttribute("data-id");
+  window.deleteAdmin = function () {
+    var id = this.getAttribute("data-id");
     $.ajax({
       url: "/superadmin/users/" + id + "/delete",
       type: 'DELETE',
@@ -33931,14 +33925,6 @@ $(document).ready(function () {
     field.toggle();
     $(this).toggleClass('fa-plus-circle fa-minus-circle');
   });
-
-  window.editAdmin = function () {
-    $(".edit-modal").show();
-  };
-
-  window.closeEdit = function () {
-    $('.edit-modal').hide();
-  };
 });
 
 /***/ }),

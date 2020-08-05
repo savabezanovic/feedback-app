@@ -12,7 +12,7 @@
         </form>
     </div>
 </div>
-
+<a href="{{ url('/dashboard') }}" class="feedback-app-navbar-admin-links">Go to dashboard</a>
 @endsection
 
 @section('content')

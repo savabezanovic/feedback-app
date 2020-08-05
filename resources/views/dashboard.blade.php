@@ -15,6 +15,9 @@
         </form>
     </div>
 </div>
+@isset (auth()->user()->role[0]->name)
+        @if ( auth()->user()->role[0]->name == "admin") <a href="{{ url('/admin') }}" class="feedback-app-navbar-admin-links">Go to admin page</a> @else '' @endif
+@endisset
 <div class="feedback-app-navbar-teammates-search-container">
     <div class="feedback-app-navbar-your-teammates">Your teammates</div>
     <input type="checkbox" id="teammatesCheckbox" class="feedback-app-navbar-your-teammates-checkbox">

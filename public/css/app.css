@@ -92,6 +92,7 @@ html {
   font-size: 16px;
   margin-bottom: 25px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 }
 
@@ -106,6 +107,12 @@ html {
   }
 }
 
+@media (max-width: 325px) {
+  .feedback-app-navbar-profile-container {
+    font-size: 14px;
+  }
+}
+
 .feedback-app-profile-avatar {
   border-radius: 50%;
   width: 40px;
@@ -117,6 +124,14 @@ html {
   .feedback-app-profile-avatar {
     margin-right: 0;
     margin-left: 20px;
+  }
+}
+
+@media (max-width: 325px) {
+  .feedback-app-profile-avatar {
+    width: 35px;
+    height: 35px;
+    margin-left: 15px;
   }
 }
 
@@ -149,6 +164,30 @@ html {
 @media (max-width: 400px) {
   .feedback-app-navbar-profile-logout {
     margin-top: 2px;
+  }
+}
+
+.feedback-app-navbar-admin-links {
+  text-decoration: none;
+  color: #a7a9ab;
+  font-size: 14px;
+  display: block;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  width: 100%;
+  transition: color ease-in-out 0.3s;
+}
+
+.feedback-app-navbar-admin-links:hover {
+  text-decoration: underline;
+  color: white;
+}
+
+@media (max-width: 900px) {
+  .feedback-app-navbar-admin-links {
+    text-align: right;
+    padding-right: 25px;
+    margin-top: 0;
   }
 }
 

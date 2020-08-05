@@ -85,6 +85,7 @@ html {
     font-size: 16px;
     margin-bottom: 25px;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     @media (max-width: 900px) {
         margin-left: auto;
@@ -93,6 +94,9 @@ html {
         margin-top: 20px;
         flex-direction: row-reverse;
         text-align: right;
+    }
+    @media (max-width: 325px) {
+        font-size: 14px;
     }
 }
 
@@ -105,6 +109,13 @@ html {
         margin-right: 0;
         margin-left: 20px;
     }
+    @media (max-width: 325px) {
+        width: 35px;
+        height: 35px;
+        margin-left: 15px;
+    
+    }
+
 }
 
 .feedback-app-navbar-profile-name {
@@ -131,6 +142,26 @@ html {
     }
 }
 
+
+.feedback-app-navbar-admin-links {
+    text-decoration: none;
+    color: #a7a9ab;
+    font-size: 14px;
+    display: block;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    width: 100%;
+    transition: color ease-in-out .3s;
+    &:hover {
+        text-decoration: underline;
+        color: white;
+    }
+    @media (max-width: 900px) {
+        text-align: right;
+        padding-right: 25px;
+        margin-top: 0;
+    }
+}
 
 .feedback-app-navbar-teammates-search-container {
     @media (max-width: 900px) {

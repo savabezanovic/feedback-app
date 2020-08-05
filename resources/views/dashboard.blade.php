@@ -173,7 +173,7 @@
                 <div class="feedbacks-user-container">
                     <img data-id="user-image-{{$feedback->creator->id}}" class="profile-form-image js-user-image-comment" src="https://cdn3.vectorstock.com/i/thumb-large/17/72/halloween-red-smiling-monster-avatar-vector-26041772.jpg" alt="user icon">
                     <div>{{$feedback->creator->first_name}} {{$feedback->creator->last_name}}
-                        <div class="feedbacks-user-profession"></div>
+                        <div class="feedbacks-user-profession js-feedbacks-user-profession">@if ($feedback->creator->profile->jobTitle !== null){{$feedback->creator->profile->jobTitle->name}}@else No job title @endif</div>
                     </div>
                     <div class="logged-user-stars-contianer feedbacks-stars-container">
                         <div class="logged-user-stars-rating feedbacks-user-rating">

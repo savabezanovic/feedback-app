@@ -6,7 +6,7 @@ $(document).ready(function(){
             '/superadmin/companies', function (data) {
                 let output = [];
                 data.companies.forEach(company => {
-                    output += `<div class="super-admin-company-container js-super-company-container" name=${company.name}>
+                    output += `<div class="super-admin-company-container js-super-company-container" name="${company.name}">
                                     <div class="super-admin-company-name js-current-company-name-${company.id}">${company.name}</div>
                                     <div class="super-admin-company-activity">${company.active === 1 ? "&#10004;" : "&#10006;"}</div>
                                     <input type="checkbox" id="active-${company.id}" ${company.active === 1 ? "checked" : ""} class="super-admin-company-checkbox"/>

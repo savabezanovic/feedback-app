@@ -234,7 +234,7 @@ $(document).ready(function () {
             '/superadmin/skills', function (data) {
                 let output = [];
                 data.skills.forEach(function (skill) {
-                    output += `<div class="skill-container js-job-title-container" name="${skill.name}">
+                    output += `<div class="skill-container js-skill-container" name="${skill.name}">
                     <div class="skill-name">${skill.name}</div>
                     <input type="text" id="edit-skill-${skill.id}" data-id="${skill.id}" name="skill-edit-${skill.id}" class="super-admin-input change-skill-input js-change-skill-name-${skill.id} js-input-textarea" placeholder="Change skill name"/>
                     <button class="super-admin-button skill-button js-change-skill-name" data-id="${skill.id}">

@@ -172,6 +172,7 @@
 
         function SearchItems(searchField, ItemNameTag) {
             document.querySelectorAll(ItemNameTag).forEach(item => {
+                console.log(item.attributes.name.value)
                 if (searchField.value !== '' && !item.attributes.name.value.toLowerCase().includes(searchField.value.toLowerCase())) {
                     item.style.display = 'none';
                 } else if (searchField.value !== '' && item.attributes.name.value.toLowerCase().includes(searchField.value.toLowerCase())) {
@@ -185,7 +186,7 @@
 
         document.querySelector('.js-search-jobs').addEventListener('input', function() {SearchItems(this, ".js-job-title-container")})
 
-        document.querySelector('.js-search-skills').addEventListener('input', function() {SearchItems(this, ".js-job-title-container")})
+        document.querySelector('.js-search-skills').addEventListener('input', function() {SearchItems(this, ".js-skill-container")})
 
         document.querySelectorAll('.js-input-textarea').forEach(textarea => {
             textarea.addEventListener('input', function() {

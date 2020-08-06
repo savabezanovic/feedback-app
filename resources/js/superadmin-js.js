@@ -223,7 +223,7 @@ $(document).ready(function () {
                 getAdmins();
                 $('.js-add-admin-input').val("");
                 $('.js-input-textarea').css("border-color","#d3d4d5")
-                $('.js-input-textarea-label').css({"opacity": "0", "visibility" : "hidden"})
+                $('.js-add-admin-input-label').css({"opacity": "0", "visibility" : "hidden"})
                 
             })
     };

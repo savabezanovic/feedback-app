@@ -32717,18 +32717,22 @@ $(document).ready(function () {
     $.ajax({
       url: "/admin/users",
       type: "post",
-      // Type of request to be send, called as method
       data: form_data,
       contentType: false,
       cache: false,
       processData: false,
-      success: function success(data) // A function to be called if request succeeds
-      {
+      success: function success(data) {
         console.log(data.request);
         console.log("ajax inside submit");
         alert('User added');
         $(".js-admins-list").empty().append(getUsers);
-        $('.input-clear').val('');
+        $('.js-add-user-input').val('');
+        $('.js-add-user-input').css('border-color', '#d3d4d5');
+        $('.js-add-user-input-label').css({
+          "opacity": 0,
+          "visibility": "hidden"
+        });
+        $('.js-image-upload-custom').html("Upload an image <img class=\"admin-add-new-user-image-upload-icon\" src=\"images/upload-icon.png\" alt=\"upload\">");
         $(".js-statistics").load(location.href + " .js-statistics>*", "");
       },
       error: function error(data) {
@@ -33827,7 +33831,7 @@ $(document).ready(function () {
       getAdmins();
       $('.js-add-admin-input').val("");
       $('.js-input-textarea').css("border-color", "#d3d4d5");
-      $('.js-input-textarea-label').css({
+      $('.js-add-admin-input-label').css({
         "opacity": "0",
         "visibility": "hidden"
       });

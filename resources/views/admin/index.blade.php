@@ -106,21 +106,21 @@ Please input correct data!
     <div class="admin-options-container">
         <form id="form" action="" method="post" enctype="multipart/form-data" class="admin-add-new-user-form">
             <div class="admin-forms-title">Add a new user to the team</div>
-            <label for="first-name" class="admin-user-input-label js-input-textarea-label" name="first_name">First Name</label>
-            <input type="text" class="admin-user-input js-input-textarea" id="first-name" name="first_name" placeholder="First Name" />
+            <label for="first-name" class="admin-user-input-label js-input-textarea-label js-add-user-input-label" name="first_name">First Name</label>
+            <input type="text" class="admin-user-input js-input-textarea js-add-user-input" id="first-name" name="first_name" placeholder="First Name" />
             <div class="admin-add-user-error js-error-add-user-first-name"></div>
-            <label for="last-name" class="admin-user-input-label js-input-textarea-label" name="last_name">Last Name</label>
-            <input type="text" class="admin-user-input js-input-textarea" id="last-name" name="last_name" placeholder="Last Name" />
+            <label for="last-name" class="admin-user-input-label js-input-textarea-label js-add-user-input-label" name="last_name">Last Name</label>
+            <input type="text" class="admin-user-input js-input-textarea js-add-user-input" id="last-name" name="last_name" placeholder="Last Name" />
             <div class="admin-add-user-error js-error-add-user-last-name"></div>
-            <label for="email" class="admin-user-input-label js-input-textarea-label" name="email">Email</label>
-            <input type="email" class="admin-user-input js-input-textarea" id="email" name="email" placeholder="E-Mail" />
+            <label for="email" class="admin-user-input-label js-input-textarea-label js-add-user-input-label" name="email">Email</label>
+            <input type="email" class="admin-user-input js-input-textarea js-add-user-input" id="email" name="email" placeholder="E-Mail" />
             <div class="admin-add-user-error js-error-add-user-mail"></div>
             <input type="hidden" name="company_id" id="company-id" value="{{auth()->user()->company_id}}">
-            <label for="password" class="admin-user-input-label js-input-textarea-label" name="password">Pasword</label>
-            <input class="input-clear admin-user-input js-input-textarea" type="password" name="password" id="password" placeholder="User password">
+            <label for="password" class="admin-user-input-label js-input-textarea-label js-add-user-input-label" name="password">Pasword</label>
+            <input class="admin-user-input js-input-textarea js-add-user-input" type="password" name="password" id="password" placeholder="User password">
             <div class="admin-add-user-error js-error-add-user-password"></div>
-            <label for="password_confirmation" class="admin-user-input-label js-input-textarea-label" name="password_confirmation">Confirm Password</label>
-            <input class="input-clear admin-user-input js-input-textarea" type="password" name="password_confirmation" id="password-confirm" placeholder="Confirm password">
+            <label for="password_confirmation" class="admin-user-input-label js-input-textarea-label js-add-user-input-label" name="password_confirmation">Confirm Password</label>
+            <input class=" admin-user-input js-input-textarea js-add-user-input" type="password" name="password_confirmation" id="password-confirm" placeholder="Confirm password">
             <label for="job-title" class="admin-add-new-user-select-label">Select position for the new user:</label>
             <select name="job_title_id" id="job-title" class="admin-add-new-user-select">
                 @forelse($positions as $position)
@@ -135,7 +135,7 @@ Please input correct data!
             </select>
             <label for="image" class="admin-add-new-user-select-label">Upload an image for the new user:</label>
             <label for="image" class="admin-add-new-user-image-upload-custom js-image-upload-custom">Upload an image <img class="admin-add-new-user-image-upload-icon" src="images/upload-icon.png" alt="upload"></label>
-            <input type="file" name="image" id="image" class="admin-add-new-user-image-upload js-image-upload" accept="image/x-png,image/gif,image/jpeg" />
+            <input type="file" name="image" id="image" class="admin-add-new-user-image-upload js-image-upload js-add-user-input" accept="image/x-png,image/gif,image/jpeg" />
             <div class="admin-add-user-error js-error-add-user-image"></div>
             <button type="submit" class="admin-add-new-user-button js-add-user">Add user</button>
         </form>

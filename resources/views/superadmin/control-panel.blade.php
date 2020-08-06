@@ -54,30 +54,30 @@
                 <h4 class="super-admin-add-admin-title">Add New Admin</h4>
 
                 <div class="add-admin-input-container">
-                    <label for="first-name" name="add-admin-first-name" class="add-admin-label js-input-textarea-label">First Name:</label>
+                    <label for="first-name" name="add-admin-first-name" class="add-admin-label js-input-textarea-label js-add-admin-input-label">First Name:</label>
                     <input class="super-admin-add-admins-input js-add-admin-input js-input-textarea" type="text" name="add-admin-first-name" id="first-name" placeholder="First Name" value="{{old('first_name')}}">
                     <div class="super-admin-add-admin-error js-error-add-admin-first-name"></div>
                 </div>
 
                 <div class="add-admin-input-container">
-                    <label for="last-name" name="add-admin-last-name" class="add-admin-label js-input-textarea-label">Last Name:</label>
+                    <label for="last-name" name="add-admin-last-name" class="add-admin-label js-input-textarea-label js-add-admin-input-label">Last Name:</label>
                     <input class="super-admin-add-admins-input js-add-admin-input js-input-textarea" type="text" name="add-admin-last-name" id="last-name" placeholder="Last Name" value="{{old('last_name')}}">
                     <div class="super-admin-add-admin-error js-error-add-admin-last-name"></div>
                 </div>
                 <div class="add-admin-input-container add-admin-email-container">
-                    <label for="email" name="add-admin-email" class="add-admin-label js-input-textarea-label">Email:</label>
+                    <label for="email" name="add-admin-email" class="add-admin-label js-input-textarea-label js-add-admin-input-label">Email:</label>
                     <input class="super-admin-add-admins-input js-add-admin-input js-input-textarea" type="email" name="add-admin-email" id="email" placeholder="Email" value="{{old('email')}}">
                     <div class="super-admin-add-admin-error js-error-add-admin-email"></div>
                 </div>
 
                 <div class="add-admin-input-container">
-                    <label for="password" name="add-admin-password" class="add-admin-label js-input-textarea-label">Password:</label>
+                    <label for="password" name="add-admin-password" class="add-admin-label js-input-textarea-label js-add-admin-input-label">Password:</label>
                     <input class="super-admin-add-admins-input js-add-admin-input js-input-textarea" type="password" name="add-admin-password" id="password" placeholder="Password" value="{{old('password')}}">
                     <div class="super-admin-add-admin-error js-error-add-admin-password"></div>
                 </div>
 
                 <div class="add-admin-input-container">
-                    <label for="password-confirm" name="add-admin-password_confirmation" class="add-admin-label js-input-textarea-label">Confirm Password:</label>
+                    <label for="password-confirm" name="add-admin-password_confirmation" class="add-admin-label js-input-textarea-label js-add-admin-input-label">Confirm Password:</label>
                     <input class="super-admin-add-admins-input js-add-admin-input js-input-textarea" type="password" name="add-admin-password_confirmation" id="password-confirm" placeholder="Confirm Password">
                 </div>
                 <div class="add-admin-select-container">

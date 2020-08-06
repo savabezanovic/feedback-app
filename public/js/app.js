@@ -32645,6 +32645,12 @@ module.exports = g;
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 $(document).ready(function () {
+  var addUserTimeout1 = false;
+  var addUserTimeout2 = false;
+  var addUserTimeout3 = false;
+  var addUserTimeout4 = false;
+  var addUserTimeout5 = false;
+
   window.getUsers = function () {
     $.get('/admin/users', function (data) {
       var output = [];
@@ -32696,7 +32702,7 @@ $(document).ready(function () {
     });
   };
 
-  window.submitTest = function (e) {
+  window.addUser = function (e) {
     e.preventDefault();
     var form_data = new FormData();
     form_data.append('first_name', $('#first-name').val());
@@ -32727,23 +32733,88 @@ $(document).ready(function () {
       },
       error: function error(data) {
         if (data.responseJSON.errors.first_name) {
-          $('.js-error-first-name').slideDown().text(data.responseJSON.errors.first_name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
+          if (!addUserTimeout1) {
+            addUserTimeout1 = true;
+            $('.js-error-add-user-first-name').text(data.responseJSON.errors.first_name[0]).css({
+              "visibility": "visible",
+              "opacity": 1
+            });
+            setTimeout(function () {
+              $('.js-error-add-user-first-name').css({
+                "opacity": 0,
+                "visibility": "hidden"
+              });
+              addUserTimeout1 = false;
+            }, 3000);
+          }
         }
 
         if (data.responseJSON.errors.last_name) {
-          $('.js-error-last-name').slideDown().text(data.responseJSON.errors.last_name[0]).fadeIn(3000).delay(3000).fadeOut("slow");
+          if (!addUserTimeout2) {
+            addUserTimeout2 = true;
+            $('.js-error-add-user-last-name').text(data.responseJSON.errors.last_name[0]).css({
+              "visibility": "visible",
+              "opacity": 1
+            });
+            setTimeout(function () {
+              $('.js-error-add-user-last-name').css({
+                "opacity": 0,
+                "visibility": "hidden"
+              });
+              addUserTimeout2 = false;
+            }, 3000);
+          }
         }
 
         if (data.responseJSON.errors.email) {
-          $('.js-error-email').slideDown().text(data.responseJSON.errors.email[0]).fadeIn(3000).delay(3000).fadeOut("slow");
+          if (!addUserTimeout3) {
+            addUserTimeout3 = true;
+            $('.js-error-add-user-mail').text(data.responseJSON.errors.email[0]).css({
+              "visibility": "visible",
+              "opacity": 1
+            });
+            setTimeout(function () {
+              $('.js-error-add-user-mail').css({
+                "opacity": 0,
+                "visibility": "hidden"
+              });
+              addUserTimeout3 = false;
+            }, 3000);
+          }
         }
 
         if (data.responseJSON.errors.password) {
-          $('.js-error-password').slideDown().text(data.responseJSON.errors.password[0]).fadeIn(3000).delay(3000).fadeOut("slow");
+          if (!addUserTimeout4) {
+            addUserTimeout4 = true;
+            $('.js-error-add-user-password').text(data.responseJSON.errors.password[0]).css({
+              "visibility": "visible",
+              "opacity": 1
+            });
+            setTimeout(function () {
+              $('.js-error-add-user-password').css({
+                "opacity": 0,
+                "visibility": "hidden"
+              });
+              addUserTimeout4 = false;
+            }, 3000);
+          }
         }
 
         if (data.responseJSON.errors.picture) {
-          $('.js-error-picture').slideDown().text(data.responseJSON.errors.picture[0]).fadeIn(3000).delay(3000).fadeOut("slow");
+          if (!addUserTimeout5) {
+            addUserTimeout5 = true;
+            $('.js-error-add-user-image').text(data.responseJSON.errors.picture[0]).css({
+              "visibility": "visible",
+              "opacity": 1
+            });
+            setTimeout(function () {
+              $('.js-error-add-user-image').css({
+                "opacity": 0,
+                "visibility": "hidden"
+              });
+              addUserTimeout5 = false;
+            }, 3000);
+          }
         }
       }
     });
@@ -32835,71 +32906,6 @@ $(document).ready(function () {
         }
       }
     }).done();
-  }; //ADD USER MODAL BUTTON
-
-
-  window.showNew = function () {
-    var ix = $(this).index();
-    $('.js-admin-modal').toggle(ix === '1' ? '0' : '1');
-    $('.js-interactive-text').toggle(ix === '0' ? '1' : '0');
-
-    if ($(this).text() == "New user") {
-      $(this).text("Close");
-    } else {
-      $(this).text("New user");
-    }
-  }; //EDIT FEEDBACK TIME MODAL BUTTON
-
-
-  window.showTime = function () {
-    var ix = $(this).index();
-    $('.js-tab-2').toggle(ix === '1' ? '0' : '1');
-    $('.js-feedback-interval').toggle(ix === '0' ? '1' : '0');
-
-    if ($(this).text() == "Edit time") {
-      $(this).text("Close");
-    } else {
-      $(this).text("Edit time");
-    }
-  }; //SHOW STATS BUTTON
-
-
-  window.showStats = function () {
-    var ix = $(this).index();
-    $('.js-statistics').toggle(ix === '1' ? '0' : '1');
-    $('.js-stats-info').toggle(ix === '0' ? '1' : '0');
-
-    if ($(this).text() == "Statistics") {
-      $(this).text("Close");
-    } else {
-      $(this).text("Statistics");
-    }
-  }; //MOBILE VIEW TEST
-
-
-  window.testScreen = function () {
-    var width = window.innerWidth;
-
-    if (width < 430) {
-      var mediaUsers = function mediaUsers() {
-        $('.js-admin-modal').toggle();
-        $('.js-interactive-text').toggle();
-      };
-
-      var mediaTime = function mediaTime() {
-        $('.js-tab-2').toggle();
-        $('.js-feedback-interval').toggle();
-      };
-
-      var mediaStats = function mediaStats() {
-        $('.js-statistics').toggle();
-        $('.js-stats-info').toggle();
-      };
-
-      $('.js-media-show').click(mediaUsers);
-      $('.js-media-time').click(mediaTime);
-      $('.js-media-stats').click(mediaStats);
-    }
   }; // DELETE USER
 
 

@@ -261,9 +261,6 @@
         $(document).on('click', ".js-delete-company", deleteCompany);
 
         $(document).on('click', ".js-change-company-name", editCompany);
-
-        //Job Titles Pagination
-        $(document).on('click', '.pagination a', getPage);
     });
 </script>
 @endsection

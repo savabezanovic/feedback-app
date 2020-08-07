@@ -69,7 +69,7 @@ Please input correct data!
             <label class="admin-user-input-label js-input-textarea-label " name="user-password" for="password1">Password</label>
             <input type="password" name="user-password" id="password1" placeholder="New password" class="admin-user-input js-input-textarea js-edit-user-input">
             <div name="email-edit" class="admin-user-edit-error js-edit-error-password">Passowrds must match</div>
-            <label  class="admin-user-input-label js-input-textarea-label" name="edit-password-confirmation" for="password-confirm1">Password Confirm</label>
+            <label class="admin-user-input-label js-input-textarea-label" name="edit-password-confirmation" for="password-confirm1">Password Confirm</label>
             <input type="password" name="edit-password-confirmation" id="password-confirm1" placeholder="Confirm new password" class="admin-user-input js-input-textarea js-edit-user-input">
             <div name="email-edit" class="admin-user-edit-error js-edit-error-password">Passowrds must match</div>
             <label class="admin-user-input-label-visible" for="job-title">Positions:</label>
@@ -87,19 +87,19 @@ Please input correct data!
                 @endforelse
 
             </select>
-          
+
             <label for="file" class="admin-add-new-user-select-label">Change image for the user:</label>
             <label for="file" class="admin-add-new-user-image-upload-custom js-image-upload-edit">Upload an image <img class="admin-add-new-user-image-upload-icon" src="images/upload-icon.png" alt="upload"></label>
             <span class="hidden js-error-edit-user-picture"><br>add pic greska<br></span>
             <button class="admin-edit-user-form-button js-update-user">Update</button>
 
             {{-- <form name="picture-form" id="picture-form" enctype="multipart/form-data">--}}
-                        <label for="add-img" style="display: none;">Add profile picture</label>
-                        <br>
-                        <form  action="" method="post" enctype="multipart/form-data">
-                            <input type="file" name="file" id="file" style="display: none;" accept="image/x-png,image/gif,image/jpeg">
-                        </form>
-                        {{-- </form>--}}
+            <label for="add-img" style="display: none;">Add profile picture</label>
+            <br>
+            <form action="" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" id="file" style="display: none;" accept="image/x-png,image/gif,image/jpeg">
+            </form>
+            {{-- </form>--}}
 
         </form>
     </div>
@@ -147,18 +147,18 @@ Please input correct data!
                 <div class="admin-user-stats">Inactive users:<div class="admin-user-stats-info">{{count(auth()->user()->company->inactiveUsers())}}</div>
                 </div>
                 <div class="admin-user-stats">Highest rating:<div class="admin-user-stats-info">
-                    @isset($highest['user']) {{$highest['user']}} @endisset 
-                    @empty($highest['user']) No User @endempty
-                    @isset($highest['score']) ({{$highest['score']}}) @endisset
-                    @empty($highest['score']) No Score @endempty
-                </div>
+                        @isset($highest['user']) {{$highest['user']}} @endisset
+                        @empty($highest['user']) No User @endempty
+                        @isset($highest['score']) ({{$highest['score']}}) @endisset
+                        @empty($highest['score']) No Score @endempty
+                    </div>
                 </div>
                 <div class="admin-user-stats">Lowest rating:<div class="admin-user-stats-info">
-                    @isset($lowest['user']) {{$lowest['user']}} @endisset 
-                    @empty($lowest['user']) No User @endempty
-                    @isset($lowest['score']) ({{$lowest['score']}}) @endisset
-                    @empty($lowest['score']) No Score @endempty
-                </div>
+                        @isset($lowest['user']) {{$lowest['user']}} @endisset
+                        @empty($lowest['user']) No User @endempty
+                        @isset($lowest['score']) ({{$lowest['score']}}) @endisset
+                        @empty($lowest['score']) No Score @endempty
+                    </div>
                 </div>
             </div>
             <form class="admin-feedback-time-form">

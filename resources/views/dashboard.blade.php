@@ -16,7 +16,7 @@
     </div>
 </div>
 @isset (auth()->user()->role[0]->name)
-        @if ( auth()->user()->role[0]->name == "admin") <a href="{{ url('/admin') }}" class="feedback-app-navbar-admin-links">Go to admin page</a> @else '' @endif
+@if ( auth()->user()->role[0]->name == "admin") <a href="{{ url('/admin') }}" class="feedback-app-navbar-admin-links">Go to admin page</a> @else '' @endif
 @endisset
 <div class="feedback-app-navbar-teammates-search-container">
     <div class="feedback-app-navbar-your-teammates">Your teammates</div>
@@ -115,7 +115,7 @@
         </div>
         <div class="logged-user-average-score-container">
             <div class="logged-user-stars-contianer logged-user-stars-container-overall">
-            <div class="logged-user-average-score">AVERAGE SCORE</div>
+                <div class="logged-user-average-score">AVERAGE SCORE</div>
                 <div class="logged-user-stars-rating logged-user-stars-rating-overall"><span class="js-logged-user-stars-rating">{{number_format(auth()->user()->averageFeedbackScore(), 1, '.', '')}}</span>
                 </div>
                 <div class="stars-layer-1 stars-layer-1-overall">
@@ -178,7 +178,7 @@
                     <div class="logged-user-stars-contianer feedbacks-stars-container">
                         <div class="logged-user-stars-rating feedbacks-user-rating">
                             <span class="js-logged-user-stars-rating">
-                                @if($feedback->creator->averageFeedbackScore()){{round($feedback->creator->averageFeedbackScore(), 1)}} @else 0 @endif 
+                                @if($feedback->creator->averageFeedbackScore()){{round($feedback->creator->averageFeedbackScore(), 1)}} @else 0 @endif
                             </span>
                         </div>
                         <div class="stars-layer-1 feedbacks-rating-stars">
@@ -394,7 +394,7 @@
                 if (userImage.getAttribute("data-id") === navUserImage.getAttribute("data-id")) {
                     userImage.setAttribute("src", navUserImage.getAttribute('src'))
                 }
-            }) 
+            })
         })
 
         document.querySelectorAll('.js-submit').forEach(submitButton => {
@@ -414,7 +414,7 @@
                 if (Object.values(skillRatings).includes(undefined)) {
                     alert("Please rate all skills")
                     return
-                } 
+                }
                 $.post('feedback/store', {
                         data: feedbacks,
                         ratings: skillRatings,

@@ -25,19 +25,19 @@
             <label for="job-titles" class="navigation-label js-navigation-label">Job Titles</label>
             <label for="skills" class="navigation-label js-navigation-label">Skills</label>
         </div>
-        <input type="radio" id="companies-panel" name="navigation-radio" class="navigation-radio js-navigation-radio" checked/>
+        <input type="radio" id="companies-panel" name="navigation-radio" class="navigation-radio js-navigation-radio" checked />
         <div class="navigation-div">
             <h3 class="super-admin-titles">Companies Panel</h3>
             <div class="add-a-company-container">
                 <label for="add-a-company" name="add-company" class="add-admin-label add-a-company-label js-input-textarea-label">Add a company</label>
-                <input id="add-a-company" name="add-company" class="super-admin-input add-a-company-input js-company-name js-input-textarea" value="" placeholder="Add a company" >
+                <input id="add-a-company" name="add-company" class="super-admin-input add-a-company-input js-company-name js-input-textarea" value="" placeholder="Add a company">
                 <button class="super-admin-button add-company-button js-add-company-btn">ADD</button>
                 <div class="super-admin-add-company-error js-add-company-error "></div>
 
             </div>
             <div class="add-a-company-container">
-            <label for="search-company" name="search-a-company" class="add-admin-label add-a-company-label js-input-textarea-label">Search company</label>
-            <input class="super-admin-input super-admin-search-company js-super-search-comapny js-input-textarea" id="search-company" name="search-a-company" type="text" placeholder="Search company">
+                <label for="search-company" name="search-a-company" class="add-admin-label add-a-company-label js-input-textarea-label">Search company</label>
+                <input class="super-admin-input super-admin-search-company js-super-search-comapny js-input-textarea" id="search-company" name="search-a-company" type="text" placeholder="Search company">
             </div>
             <div class="all-companies-container js-companies">
             </div>
@@ -81,7 +81,7 @@
                     <input class="super-admin-add-admins-input js-add-admin-input js-input-textarea" type="password" name="add-admin-password_confirmation" id="password-confirm" placeholder="Confirm Password">
                 </div>
                 <div class="add-admin-select-container">
-                <label for="company-id" name="company-id" class="add-admin-label-visible js-input-textarea-label">Company:</label>
+                    <label for="company-id" name="company-id" class="add-admin-label-visible js-input-textarea-label">Company:</label>
 
                     <select class="super-admin-add-admins-select" name="company-id" id="company-id">
                         @forelse($companies as $company)
@@ -100,35 +100,35 @@
             <div class="edit-admin-form-container js-edit-admin-form">
                 <div class="edit-admin-form">
                     <div class="edit-admin-form-close js-edit-admin-form-close">&#10006;</div>
-                        <h4 class="super-admin-add-admin-title">Edit Admin</h4>
-                        <label for="first_name" name="first_name" class="add-admin-label js-input-textarea-label">First name:</label>
-                        <input id="first_name" name="first_name" type="text" class="super-admin-input edit-admin-input js-input-textarea" placeholder="First Name">
-                        <div class="super-admin-add-admin-error js-error-admin-edit-first-name"></div>
+                    <h4 class="super-admin-add-admin-title">Edit Admin</h4>
+                    <label for="first_name" name="first_name" class="add-admin-label js-input-textarea-label">First name:</label>
+                    <input id="first_name" name="first_name" type="text" class="super-admin-input edit-admin-input js-input-textarea" placeholder="First Name">
+                    <div class="super-admin-add-admin-error js-error-admin-edit-first-name"></div>
 
-                        <label for="last-name" name="last-name" class="add-admin-label js-input-textarea-label">Last name:</label>
-                        <input id="last_name" name="last-name" type="text" class="super-admin-input edit-admin-input js-input-textarea" placeholder="Last Name">
-                        <div class="super-admin-add-admin-error js-error-admin-edit-last-name"></div>
+                    <label for="last-name" name="last-name" class="add-admin-label js-input-textarea-label">Last name:</label>
+                    <input id="last_name" name="last-name" type="text" class="super-admin-input edit-admin-input js-input-textarea" placeholder="Last Name">
+                    <div class="super-admin-add-admin-error js-error-admin-edit-last-name"></div>
 
-                        <label for="email" name="email" class="add-admin-label js-input-textarea-label">Email:</label>
-                        <input id="admin-email" name="email" type="email" class="super-admin-input edit-admin-input js-input-textarea" placeholder="Email">
-                        <div class="super-admin-add-admin-error js-error-admin-edit-email"></div>
+                    <label for="email" name="email" class="add-admin-label js-input-textarea-label">Email:</label>
+                    <input id="admin-email" name="email" type="email" class="super-admin-input edit-admin-input js-input-textarea" placeholder="Email">
+                    <div class="super-admin-add-admin-error js-error-admin-edit-email"></div>
 
-                        <label for="password1" name="password" class="add-admin-label js-input-textarea-label">Password:</label>
-                        <input class="js-admin super-admin-input edit-admin-input js-input-textarea" type="password" name="password" id="password1" placeholder="Password">
-                        <div class="super-admin-add-admin-error js-error-admin-edit-password"></div>
+                    <label for="password1" name="password" class="add-admin-label js-input-textarea-label">Password:</label>
+                    <input class="js-admin super-admin-input edit-admin-input js-input-textarea" type="password" name="password" id="password1" placeholder="Password">
+                    <div class="super-admin-add-admin-error js-error-admin-edit-password"></div>
 
-                        <label for="password-confirm1" name="password_confirmation" class="add-admin-label js-input-textarea-label">Confirm Passowrd:</label>
-                        <input class="js-admin super-admin-input edit-admin-input js-input-textarea" type="password" name="password_confirmation" id="password-confirm1" placeholder="Confirm Passowrd">
+                    <label for="password-confirm1" name="password_confirmation" class="add-admin-label js-input-textarea-label">Confirm Passowrd:</label>
+                    <input class="js-admin super-admin-input edit-admin-input js-input-textarea" type="password" name="password_confirmation" id="password-confirm1" placeholder="Confirm Passowrd">
 
-                        <input type="hidden" name="hidden_id" id="hidden_id">
-                        <button style="padding: 5px;" type="button" class="super-admin-button js-edit-admin-btn">Save Changes</button>
+                    <input type="hidden" name="hidden_id" id="hidden_id">
+                    <button style="padding: 5px;" type="button" class="super-admin-button js-edit-admin-btn">Save Changes</button>
                 </div>
-                
+
                 <input type="hidden" name="hidden_id" id="hidden_id">
             </div>
         </div>
 
-        <input type="radio" id="job-titles" name="navigation-radio" class="navigation-radio js-navigation-radio"  />
+        <input type="radio" id="job-titles" name="navigation-radio" class="navigation-radio js-navigation-radio" />
         <div class="navigation-div">
             <h3 class="super-admin-titles">Job Titles Panel</h3>
             <div class="add-job-title-input-container">
@@ -146,12 +146,12 @@
 
         <input type="radio" id="skills" name="navigation-radio" class="navigation-radio js-navigation-radio" />
         <div class="navigation-div">
-        <h3 class="super-admin-titles">Skills Panel</h3>
+            <h3 class="super-admin-titles">Skills Panel</h3>
             <div class="add-new-skill-container">
-            <label for="add-new-skill" name="skill-name" class="add-admin-label add-a-skill-label js-add-skill-label js-input-textarea-label">Add new skill</label>
-            <input class="super-admin-input add-new-skill-input js-add-new-skill js-input-textarea" id="add-new-skill" name="skill-name" placeholder="Add new skill">
-            <button class="super-admin-button add-new-skill-button js-add-new-skill-button">ADD</button>
-            <div class="super-admin-add-skill-error js-add-skill-error"></div>
+                <label for="add-new-skill" name="skill-name" class="add-admin-label add-a-skill-label js-add-skill-label js-input-textarea-label">Add new skill</label>
+                <input class="super-admin-input add-new-skill-input js-add-new-skill js-input-textarea" id="add-new-skill" name="skill-name" placeholder="Add new skill">
+                <button class="super-admin-button add-new-skill-button js-add-new-skill-button">ADD</button>
+                <div class="super-admin-add-skill-error js-add-skill-error"></div>
             </div>
             <label for="search-skills" name="skills-search" class="add-admin-label add-a-skill-label js-input-textarea-label">Search Skills</label>
             <input class="super-admin-input super-job-input search-job-input js-search-skills js-input-textarea" type="text" id="search-skills" name="skills-search" placeholder="Search Skills">
@@ -182,11 +182,17 @@
                 }
             });
         }
-        document.querySelector('.js-super-search-comapny').addEventListener('input', function() {SearchItems(this, ".js-super-company-container")})
+        document.querySelector('.js-super-search-comapny').addEventListener('input', function() {
+            SearchItems(this, ".js-super-company-container")
+        })
 
-        document.querySelector('.js-search-jobs').addEventListener('input', function() {SearchItems(this, ".js-job-title-container")})
+        document.querySelector('.js-search-jobs').addEventListener('input', function() {
+            SearchItems(this, ".js-job-title-container")
+        })
 
-        document.querySelector('.js-search-skills').addEventListener('input', function() {SearchItems(this, ".js-skill-container")})
+        document.querySelector('.js-search-skills').addEventListener('input', function() {
+            SearchItems(this, ".js-skill-container")
+        })
 
         document.querySelectorAll('.js-input-textarea').forEach(textarea => {
             textarea.addEventListener('input', function() {
@@ -234,7 +240,10 @@
         })
 
         $('.js-edit-admin-form-close').click(function() {
-            $('.js-edit-admin-form').css({"opacity" : "0", "visibility" : "hidden"})
+            $('.js-edit-admin-form').css({
+                "opacity": "0",
+                "visibility": "hidden"
+            })
         })
 
         $('.js-edit-admin-btn').click(updateAdmin);

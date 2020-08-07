@@ -33205,6 +33205,9 @@ $(document).ready(function () {
       $('.js-companies').empty().append(getCompany);
       $("#company-id option[value='" + id + "']").remove();
       $('#company-id').append('<option value="' + id + '">' + name + '</option>');
+      setTimeout(function () {
+        $('.js-all-admins').empty().append(getAdmins);
+      }, 100);
     });
   };
 });

@@ -33178,7 +33178,9 @@ $(document).ready(function () {
     }).done(function (data) {
       $('.js-companies').empty().append(getCompany);
       $("#company-id option[value='" + id + "']").remove();
-      $('.js-all-admins').empty().append(getAdmins);
+      setTimeout(function () {
+        $('.js-all-admins').empty().append(getAdmins);
+      }, 100);
     });
   }; //UPDATE COMPANY
 

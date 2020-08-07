@@ -92,7 +92,6 @@ html {
   font-size: 16px;
   margin-bottom: 25px;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
 }
 
@@ -101,9 +100,10 @@ html {
     margin-left: auto;
     margin-bottom: 0;
     margin-right: 20px;
-    margin-top: 20px;
+    margin-top: 13px;
     flex-direction: row-reverse;
     text-align: right;
+    font-size: 14px;
   }
 }
 
@@ -142,10 +142,18 @@ html {
       -ms-user-select: none;
           user-select: none;
   z-index: 1;
+  max-width: 129px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .feedback-app-navbar-profile-name:hover {
   text-decoration: underline;
+  white-space: initial;
+  text-overflow: initial;
+  overflow: visible;
+  overflow-wrap: break-word;
 }
 
 .feedback-app-navbar-profile-logout {

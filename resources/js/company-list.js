@@ -70,7 +70,9 @@ $(document).ready(function(){
             }).done(function (data) {
             $('.js-companies').empty().append(getCompany);
             $("#company-id option[value='"+id+"']").remove();
-            $('.js-all-admins').empty().append(getAdmins);
+            setTimeout(() => {
+                $('.js-all-admins').empty().append(getAdmins);
+            },100)
         })
     };
 
